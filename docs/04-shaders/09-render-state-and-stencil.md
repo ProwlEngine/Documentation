@@ -90,6 +90,3 @@ Stencil { Ref 1 Comp Always Pass Replace }
 Stencil { Ref 1 Comp Equal }
 ```
 
-## Mistakes the parser catches
-
-Typos such as `Culll` report `Unknown command`. Duplicate tag keys, property names and pass names are errors pointing at the second one. A pass without a `GLSLPROGRAM` block, or a block without `ENDGLSL`, is rejected with the line and column.

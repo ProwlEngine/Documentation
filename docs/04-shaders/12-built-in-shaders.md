@@ -76,6 +76,3 @@ Every texture can read from UV0 or UV1 through its `UV` property, except paralla
 | `Refraction` | Refracting glass and water surfaces through the scene colour | `_RefractionStrength`, `_NoiseScale`, `_Tint`, `_BlurRadius`, `_BlurSteps` |
 | `DefaultUI`, `DefaultText`, `DefaultTextMesh` | The GameObject UI and text | |
 | `Gizmos`, `GizmoIcon`, `Invalid` | Editor drawing, and the pink invalid shader | |
-
-> [!TIP]
-> The built-in shaders are the best examples of hand-written passes. Grass shows vertex animation with translucency, Refraction shows the scene colour, and Terrain shows texture arrays of layers. Read them in the engine's `Assets/Defaults/Shaders` folder.

@@ -91,4 +91,4 @@ public sealed class SkySwitcher : Component
 The built-in skies are a good reference: `Procedural`, `Gradient`, `Cubemap`, `Panorama` and `SixSided`. Load one with `Shader.LoadDefault(DefaultShader.GradientSky)`, or create one with `SceneEnvironment.CreateSkyMaterial(BuiltInSky.Procedural)`.
 
 > [!TIP]
-> Keep a sky cheap and free of high-frequency noise. It is also rendered into the sky probe, where tiny stars blur away into the ambient light.
+> It is also rendered into the sky probe so keep your skies cheap.
