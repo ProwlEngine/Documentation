@@ -78,15 +78,19 @@ Operations: `Keep`, `Zero`, `Replace`, `IncrementAndClamp`, `DecrementAndClamp`,
 
 ![Objects visible only through a stencil portal window](images/stencil-portal.gif)
 
-The window marks its pixels, then the world behind it draws only there.
+The window marks its pixels, then the world behind it draws only there. The window draws first, leaves the colour and depth as they are, and only writes the stencil.
 
 ```glsl
 // On the window shader
+Tags { "LightMode" = "Forward" "RenderQueue" = "1990" }
+ZWrite Off
+Blend Zero One
 Stencil { Ref 1 Comp Always Pass Replace }
 ```
 
 ```glsl
 // On the shader for objects seen through the portal
+Tags { "LightMode" = "Forward" "RenderQueue" = "2010" }
 Stencil { Ref 1 Comp Equal }
 ```
 

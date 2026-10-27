@@ -66,7 +66,10 @@ Everything else comes from the Lit model: albedo with alpha, normal maps, transl
 ### Drive the wind from C#
 
 ```csharp
+using System;
+
 using Prowl.Runtime;
+using Prowl.Runtime.Resources;
 using Prowl.Vector;
 
 public sealed class WindZone : Component
