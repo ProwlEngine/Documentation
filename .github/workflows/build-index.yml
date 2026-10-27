@@ -1,0 +1,41 @@
+name: Build content index
+
+# Regenerates index.json whenever docs or news change, so the website can draw the
+# docs sidebar, news list and search without calling the GitHub API.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "news/**"
+      - "scripts/build-index.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build index.json
+        run: node scripts/build-index.mjs
+
+      - name: Commit index.json if it changed
+        run: |
+          if git diff --quiet -- index.json; then
+            echo "index.json is already up to date"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.json
+          git commit -m "Update index.json"
+          git push
