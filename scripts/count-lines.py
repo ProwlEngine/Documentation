@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Counts executable lines of C# in every Anthology library and writes stats.json.
 
-    python scripts/count-lines.py
+    python scripts/count-lines.py                                   # inside an Anthology checkout
+    python scripts/count-lines.py --root .anthology --out stats.json  # from another repository
 
 Counted: every line with code on it. Not counted: blank lines, comments (//, ///, /* */),
 `using` and `global using` directives, lines made only of brackets and separators such as
@@ -128,7 +129,7 @@ def main() -> int:
         print("Run this from inside the repository, or pass --root <path>.", file=sys.stderr)
         return 1
     ROOT = root
-    OUT = os.path.join(ROOT, "stats.json")
+    OUT = os.path.abspath(sys.argv[sys.argv.index("--out") + 1]) if "--out" in sys.argv else os.path.join(ROOT, "stats.json")
     libraries = {}
     for lib in sorted(os.listdir(ROOT)):
         lib_dir = os.path.join(ROOT, lib)
