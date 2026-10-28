@@ -1,0 +1,41 @@
+name: Count lines
+
+# Recounts executable lines per library into stats.json, which the Prowl website reads.
+# Runs only by hand: Actions > Count lines > Run workflow.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: line-counts
+  cancel-in-progress: true
+
+jobs:
+  count:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Count lines
+        run: python scripts/count-lines.py
+
+      - name: Commit stats.json if it changed
+        run: |
+          # Staged first, so a brand new stats.json counts as a change too
+          git add stats.json
+          if git diff --cached --quiet -- stats.json; then
+            echo "Line counts unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update line counts"
+          git pull --rebase origin main
+          git push origin HEAD:main
