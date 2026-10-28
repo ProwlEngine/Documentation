@@ -1,0 +1,757 @@
+{
+  "version": 1,
+  "docs": [
+    {
+      "type": "folder",
+      "slug": "getting-started",
+      "title": "Getting started",
+      "description": "Install Prowl, make a first scene in the editor or in code, and learn the rules that catch people out.",
+      "path": "docs/01-getting-started/index.md",
+      "headings": [],
+      "order": 1,
+      "children": [
+        {
+          "type": "page",
+          "slug": "getting-started/installation",
+          "title": "Installation",
+          "description": "Requirements, downloading a release and building from source.",
+          "path": "docs/01-getting-started/01-installation.md",
+          "headings": [
+            "Requirements",
+            "Download a release",
+            "Build from source",
+            "1. Clone both repositories side by side",
+            "2. Turn on local Anthology",
+            "3. Open the solution and run",
+            "Other ways to switch",
+            "Building against NuGet instead",
+            "Run the samples"
+          ],
+          "order": 1
+        },
+        {
+          "type": "page",
+          "slug": "getting-started/editor",
+          "title": "Getting started with the editor",
+          "description": "Create a project, build a small scene, write a script, play it and build it.",
+          "path": "docs/01-getting-started/02-editor.md",
+          "headings": [
+            "1. Create a project",
+            "2. Find your way around",
+            "3. Build a scene",
+            "4. Add physics",
+            "5. Write a script",
+            "6. Play, pause and save",
+            "7. Build it",
+            "Next steps"
+          ],
+          "order": 2
+        },
+        {
+          "type": "page",
+          "slug": "getting-started/runtime",
+          "title": "Getting started with the runtime",
+          "description": "A game built entirely in code with Prowl.Runtime, with no editor involved.",
+          "path": "docs/01-getting-started/03-runtime.md",
+          "headings": [
+            "Set up the project",
+            "The game class",
+            "The component",
+            "Next steps"
+          ],
+          "order": 3
+        },
+        {
+          "type": "page",
+          "slug": "getting-started/things-to-know",
+          "title": "Things to know first",
+          "description": "The rules of Prowl's scripting, scenes, physics and rendering that catch new developers out most often.",
+          "path": "docs/01-getting-started/04-things-to-know.md",
+          "headings": [
+            "Components",
+            "Checking objects",
+            "Scenes and objects",
+            "Physics",
+            "Rendering"
+          ],
+          "order": 4
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "slug": "scripting",
+      "title": "Scripting",
+      "description": "Components, GameObjects, scenes, input and async code in C#.",
+      "path": "docs/02-scripting/index.md",
+      "headings": [],
+      "order": 2,
+      "children": [
+        {
+          "type": "page",
+          "slug": "scripting/components",
+          "title": "Components",
+          "description": "The component lifecycle, attributes and the rules that keep scripts safe.",
+          "path": "docs/02-scripting/01-components.md",
+          "headings": [
+            "A complete component",
+            "Lifecycle",
+            "Attributes",
+            "Analyzers"
+          ],
+          "order": 1
+        },
+        {
+          "type": "page",
+          "slug": "scripting/gameobjects-and-scenes",
+          "title": "GameObjects and scenes",
+          "description": "Creating, finding, parenting and destroying objects, and loading scenes.",
+          "path": "docs/02-scripting/02-gameobjects-and-scenes.md",
+          "headings": [
+            "GameObjects",
+            "Spawning and destroying",
+            "Transform",
+            "Scenes"
+          ],
+          "order": 2
+        },
+        {
+          "type": "page",
+          "slug": "scripting/input-and-time",
+          "title": "Input and time",
+          "description": "Keyboard, mouse, input actions and the Time class.",
+          "path": "docs/02-scripting/03-input-and-time.md",
+          "headings": [
+            "Time",
+            "Direct input",
+            "Input actions",
+            "Logging"
+          ],
+          "order": 3
+        },
+        {
+          "type": "page",
+          "slug": "scripting/async-with-gametask",
+          "title": "Async with GameTask",
+          "description": "Wait, hop threads and cancel cleanly with the GameTask API.",
+          "path": "docs/02-scripting/04-async-with-gametask.md",
+          "headings": [
+            "Waiting",
+            "Moving work off the main thread",
+            "Cancellation"
+          ],
+          "order": 4
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "slug": "rendering",
+      "title": "Rendering",
+      "description": "Materials, cameras, post processing and lights in the Vulkan renderer.",
+      "path": "docs/03-rendering/index.md",
+      "headings": [],
+      "order": 3,
+      "children": [
+        {
+          "type": "page",
+          "slug": "rendering/materials",
+          "title": "Materials",
+          "description": "Standard shader properties, linear colour and per-object materials.",
+          "path": "docs/03-rendering/01-materials.md",
+          "headings": [
+            "Colours are linear",
+            "Standard shader properties",
+            "Setting properties in code",
+            "Opaque, cutout and transparent",
+            "Writing your own"
+          ],
+          "order": 1
+        },
+        {
+          "type": "page",
+          "slug": "rendering/cameras-and-post-processing",
+          "title": "Cameras and post processing",
+          "description": "Anti-aliasing, volume profiles, bloom and tonemapping.",
+          "path": "docs/03-rendering/02-cameras-and-post-processing.md",
+          "headings": [
+            "Camera defaults",
+            "Volume profiles",
+            "Tonemapping",
+            "Custom post effects",
+            "A custom tonemapper"
+          ],
+          "order": 2
+        },
+        {
+          "type": "page",
+          "slug": "rendering/lights",
+          "title": "Lights",
+          "description": "Light types, shadows and baked lighting.",
+          "path": "docs/03-rendering/03-lights.md",
+          "headings": [
+            "Light types",
+            "Shadows",
+            "Baked lighting"
+          ],
+          "order": 3
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "slug": "shaders",
+      "title": "Shaders",
+      "description": "How Prowl's shader system works, from quick surface shaders to hand-written passes.",
+      "path": "docs/04-shaders/index.md",
+      "headings": [
+        "Two ways to write a shader",
+        "What a shader file looks like",
+        "The workflow in the editor",
+        "In this section"
+      ],
+      "order": 4,
+      "children": [
+        {
+          "type": "page",
+          "slug": "shaders/your-first-shader",
+          "title": "Your first shader",
+          "description": "Build a pulsing, glowing surface shader step by step.",
+          "path": "docs/04-shaders/01-your-first-shader.md",
+          "headings": [
+            "1. Create the file",
+            "2. Add properties",
+            "3. Write the surface function",
+            "4. Use it",
+            "Next"
+          ],
+          "order": 1
+        },
+        {
+          "type": "page",
+          "slug": "shaders/surface-shaders",
+          "title": "Surface shaders",
+          "description": "The Surface block and its Vertex and Lighting blocks, every field of the surface data, and worked examples.",
+          "path": "docs/04-shaders/02-surface-shaders.md",
+          "headings": [
+            "The three parts",
+            "How it works",
+            "GraphiteSurfaceData",
+            "Normal maps in surface code",
+            "Example: a detail normal map",
+            "Depth passes",
+            "Keywords you can test",
+            "Example: tint by height",
+            "Example: world-space dissolve",
+            "Example: vertex colour masks",
+            "When to write passes instead"
+          ],
+          "order": 2
+        },
+        {
+          "type": "page",
+          "slug": "shaders/properties-and-attributes",
+          "title": "Properties and attributes",
+          "description": "Property types, defaults, inspector attributes and the C# material API.",
+          "path": "docs/04-shaders/03-properties-and-attributes.md",
+          "headings": [
+            "Declaring properties",
+            "Types",
+            "Reading properties in GLSL",
+            "Attributes",
+            "The material API"
+          ],
+          "order": 3
+        },
+        {
+          "type": "page",
+          "slug": "shaders/writing-passes",
+          "title": "Writing passes",
+          "description": "Pass blocks, pass types, the GLSL sections, vertex inputs and the helpers you need.",
+          "path": "docs/04-shaders/04-writing-passes.md",
+          "headings": [
+            "Anatomy of a pass",
+            "Pass types",
+            "The GLSL sections",
+            "Vertex inputs",
+            "Relative and world",
+            "A complete unlit shader",
+            "The G-buffer",
+            "Useful per-draw data"
+          ],
+          "order": 4
+        },
+        {
+          "type": "page",
+          "slug": "shaders/vertex-animation",
+          "title": "Vertex animation",
+          "description": "Move vertices for wind, waves and wobble with a Surface Vertex block, or with hand-written passes.",
+          "path": "docs/04-shaders/05-vertex-animation.md",
+          "headings": [
+            "GraphiteSurfaceVertex",
+            "Example: foliage in the wind",
+            "Drive the wind from C",
+            "Example: water waves with correct normals",
+            "Hand-written passes"
+          ],
+          "order": 5
+        },
+        {
+          "type": "page",
+          "slug": "shaders/custom-lighting",
+          "title": "Custom lighting and toon shading",
+          "description": "Replace how surfaces are lit with a Lighting block, add outlines with a Draw Pass, or take full control with hand-written passes.",
+          "path": "docs/04-shaders/06-custom-lighting.md",
+          "headings": [
+            "The Lighting block",
+            "What the BRDF receives",
+            "What the ambient function receives",
+            "A toon shader",
+            "Ideas for further styling",
+            "Outlines",
+            "Full control: hand-written passes",
+            "Building on the default",
+            "The lighting building blocks"
+          ],
+          "order": 6
+        },
+        {
+          "type": "page",
+          "slug": "shaders/transparency-and-screen-effects",
+          "title": "Transparency and screen effects",
+          "description": "Transparent surfaces, refraction with the scene colour, and soft edges with the scene depth.",
+          "path": "docs/04-shaders/07-transparency-and-screen-effects.md",
+          "headings": [
+            "Transparency with the standard shaders",
+            "Transparency in your own passes",
+            "Refraction: reading the scene colour",
+            "Soft edges: reading the scene depth"
+          ],
+          "order": 7
+        },
+        {
+          "type": "page",
+          "slug": "shaders/variants-and-globals",
+          "title": "Variants and globals",
+          "description": "Compile features in and out with variants, and share values across every material with globals.",
+          "path": "docs/04-shaders/08-variants-and-globals.md",
+          "headings": [
+            "Variants",
+            "Setting variants",
+            "Global axes",
+            "Keep the count down",
+            "Globals"
+          ],
+          "order": 8
+        },
+        {
+          "type": "page",
+          "slug": "shaders/render-state-and-stencil",
+          "title": "Render state and stencil",
+          "description": "Culling, depth, blending, colour masks, depth bias and the stencil buffer.",
+          "path": "docs/04-shaders/09-render-state-and-stencil.md",
+          "headings": [
+            "Culling",
+            "Depth",
+            "Blending",
+            "Colour mask and alpha to coverage",
+            "Stencil",
+            "Example: a portal window"
+          ],
+          "order": 9
+        },
+        {
+          "type": "page",
+          "slug": "shaders/include-library",
+          "title": "Include library reference",
+          "description": "The Graphite and Prowl include files and the functions they provide.",
+          "path": "docs/04-shaders/10-include-library.md",
+          "headings": [
+            "Relative and world",
+            "How includes resolve",
+            "Graphite/Vertex.glsl",
+            "Graphite/Core.glsl",
+            "View data",
+            "Graphite/Passes.glsl",
+            "Graphite/Lighting.glsl",
+            "Graphite/Standard/Standard.glsl",
+            "Graphite/Decals.glsl",
+            "Standard lighting entry points",
+            "Graphite/PBR.glsl",
+            "Graphite/SceneColor.glsl and SceneDepth.glsl",
+            "Graphite/Sky.glsl",
+            "Graphite/Debug.glsl",
+            "Prowl/Common.glsl"
+          ],
+          "order": 10
+        },
+        {
+          "type": "page",
+          "slug": "shaders/custom-skies",
+          "title": "Custom skies",
+          "description": "Write a sky shader that also lights the scene through the sky probe.",
+          "path": "docs/04-shaders/11-custom-skies.md",
+          "headings": [
+            "A stylized sky with stars",
+            "Using it"
+          ],
+          "order": 11
+        },
+        {
+          "type": "page",
+          "slug": "shaders/built-in-shaders",
+          "title": "Built-in shaders",
+          "description": "Every shader that ships with Graphite and Prowl, what it is for, and its properties.",
+          "path": "docs/04-shaders/12-built-in-shaders.md",
+          "headings": [
+            "Lit",
+            "Unlit",
+            "Skies",
+            "Graphite utility shaders",
+            "Prowl shaders"
+          ],
+          "order": 12
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "slug": "animation",
+      "title": "Animation",
+      "description": "Animators, avatars, clips and animation graphs for characters, creatures and props.",
+      "path": "docs/05-animation/index.md",
+      "headings": [
+        "Importing a character",
+        "Rig type",
+        "Clip settings",
+        "Playing clips without a graph",
+        "The Animator",
+        "Bones are GameObjects",
+        "In this section"
+      ],
+      "order": 5,
+      "children": [
+        {
+          "type": "page",
+          "slug": "animation/graph-basics",
+          "title": "Graph basics",
+          "description": "How animation graphs work - states, Enter and Exit gates, and transitions.",
+          "path": "docs/05-animation/01-graph-basics.md",
+          "headings": [
+            "Creating a graph",
+            "Nodes and pins",
+            "State machines",
+            "The gate rule",
+            "Default state and Any State",
+            "Transitions",
+            "Finishing states",
+            "Triggers",
+            "Example: idle, jump and land",
+            "Sub-graphs",
+            "Editing graphs from the terminal"
+          ],
+          "order": 1
+        },
+        {
+          "type": "page",
+          "slug": "animation/parameters-and-values",
+          "title": "Parameters and values",
+          "description": "Parameters your scripts set, and the value nodes that turn them into decisions.",
+          "path": "docs/05-animation/02-parameters-and-values.md",
+          "headings": [
+            "Parameters",
+            "Value nodes",
+            "Constants",
+            "Maths and tests",
+            "Smoothing",
+            "Vectors and targets",
+            "Names",
+            "Virtual parameters",
+            "Recipes"
+          ],
+          "order": 2
+        },
+        {
+          "type": "page",
+          "slug": "animation/locomotion",
+          "title": "Locomotion",
+          "description": "Build a complete walk, run and strafe setup with stride warping and foot grounding.",
+          "path": "docs/05-animation/03-locomotion.md",
+          "headings": [
+            "What you need",
+            "Step 1: a speed-driven blend",
+            "The script",
+            "Step 2: let the graph read the movement itself",
+            "Step 3: stop the feet sliding",
+            "Step 4: strafing with Blend 2D",
+            "Step 5: turning on the spot",
+            "Step 6: starts and stops",
+            "Step 7: feet on uneven ground",
+            "The finished graph"
+          ],
+          "order": 3
+        },
+        {
+          "type": "page",
+          "slug": "animation/root-motion",
+          "title": "Root motion",
+          "description": "Let animation move the character, through the Animator or a CharacterController.",
+          "path": "docs/05-animation/04-root-motion.md",
+          "headings": [
+            "Extraction",
+            "Using root motion",
+            "Directly on the Animator",
+            "Through a CharacterController",
+            "Shaping root motion in the graph",
+            "Example: jump onto a ledge"
+          ],
+          "order": 4
+        },
+        {
+          "type": "page",
+          "slug": "animation/ik-and-constraints",
+          "title": "IK and constraints",
+          "description": "Reach, look, aim and grip with IK, and add secondary motion with spring bones.",
+          "path": "docs/05-animation/05-ik-and-constraints.md",
+          "headings": [
+            "Targets",
+            "Two Bone IK",
+            "IK Rig",
+            "Look At",
+            "Aim Constraint and Copy Transform",
+            "Smooth weights, no popping",
+            "Example: hands on a steering wheel",
+            "Secondary motion",
+            "Ragdolls"
+          ],
+          "order": 5
+        },
+        {
+          "type": "page",
+          "slug": "animation/layers-and-masks",
+          "title": "Layers and masks",
+          "description": "Combine animations per body part, and add motion on top with additive layers.",
+          "path": "docs/05-animation/06-layers-and-masks.md",
+          "headings": [
+            "Layer",
+            "Layer Stack",
+            "Masks",
+            "Example: shoot while running",
+            "Additive animation",
+            "Muscle Layer",
+            "Mirroring"
+          ],
+          "order": 6
+        },
+        {
+          "type": "page",
+          "slug": "animation/clip-events",
+          "title": "Clip events",
+          "description": "Mark moments and stretches in clips for gameplay, foot sync, transitions and warping.",
+          "path": "docs/05-animation/07-clip-events.md",
+          "headings": [
+            "Event kinds",
+            "Foot events and sync",
+            "Transition windows",
+            "Named events in the graph",
+            "Named events in scripts"
+          ],
+          "order": 7
+        },
+        {
+          "type": "page",
+          "slug": "animation/node-reference",
+          "title": "Node reference",
+          "description": "Every built-in animation graph node, with its inputs and settings.",
+          "path": "docs/05-animation/08-node-reference.md",
+          "headings": [
+            "Sources",
+            "Animation Pose",
+            "Clip",
+            "External Pose",
+            "Graph Output",
+            "Graph Slot",
+            "Reference Pose",
+            "Sub Graph",
+            "Zero Pose",
+            "Logic",
+            "Choose Pose at Random",
+            "Choose Pose by Condition",
+            "Choose Pose by Index",
+            "Sequence",
+            "State Done",
+            "State Machine",
+            "State Output",
+            "State Query",
+            "Blending",
+            "Blend 1D",
+            "Blend 2D",
+            "Crossfade",
+            "Layer",
+            "Layer Stack",
+            "Make Additive",
+            "Muscle Layer",
+            "Velocity Blend",
+            "Weighted Blend",
+            "Locomotion",
+            "Character Motion",
+            "Foot Grounding",
+            "Foot Lock",
+            "Orientation Warp",
+            "Root Motion",
+            "Stride Warp",
+            "Target Warp",
+            "Turn Warp",
+            "Rig",
+            "Aim Constraint",
+            "Copy Transform",
+            "IK Rig",
+            "Look At",
+            "Ragdoll",
+            "Spring Bones",
+            "Twist Distribution",
+            "Two Bone IK",
+            "Modify",
+            "Inertial Blend",
+            "Mirror",
+            "Passthrough",
+            "Pose Smoothing",
+            "Pose Snapshot",
+            "Speed Scale",
+            "Masks",
+            "Blend Masks",
+            "Bone Mask",
+            "Choose Mask",
+            "Mask Asset",
+            "Channels",
+            "Drive Channels",
+            "Driven Channel",
+            "Read Channel",
+            "Events",
+            "Event Fired",
+            "Foot Phase",
+            "Transition Window",
+            "Values",
+            "Angle",
+            "Choose Number",
+            "Compare",
+            "Curve",
+            "Ease",
+            "Flag",
+            "Hold Value",
+            "In Range",
+            "Logic",
+            "Make Vector",
+            "Maths",
+            "Name",
+            "Name Matches",
+            "Name To Number",
+            "Negate Vector",
+            "Noise",
+            "Number",
+            "Offset Target",
+            "Parameter",
+            "Remap",
+            "Spring",
+            "Target Info",
+            "Timer",
+            "Vector",
+            "Vector Component",
+            "Virtual Parameter",
+            "Whole Number"
+          ],
+          "order": 8
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "slug": "physics",
+      "title": "Physics",
+      "description": "Rigidbodies, collisions, triggers, character controllers and queries.",
+      "path": "docs/06-physics/index.md",
+      "headings": [],
+      "order": 6,
+      "children": [
+        {
+          "type": "page",
+          "slug": "physics/rigidbodies-and-collisions",
+          "title": "Rigidbodies and collisions",
+          "description": "Motion types, forces, collision callbacks and trigger volumes.",
+          "path": "docs/06-physics/01-rigidbodies-and-collisions.md",
+          "headings": [
+            "Rigidbody3D",
+            "Colliders",
+            "Collision callbacks",
+            "Triggers"
+          ],
+          "order": 1
+        },
+        {
+          "type": "page",
+          "slug": "physics/character-controller",
+          "title": "Character controller",
+          "description": "Moving a player with CharacterController, including gravity and jumping.",
+          "path": "docs/06-physics/02-character-controller.md",
+          "headings": [
+            "The basics",
+            "A first-person mover",
+            "Things to know"
+          ],
+          "order": 2
+        },
+        {
+          "type": "page",
+          "slug": "physics/raycasts-and-queries",
+          "title": "Raycasts and queries",
+          "description": "Raycasts, sphere casts, overlaps and query filters.",
+          "path": "docs/06-physics/03-raycasts-and-queries.md",
+          "headings": [
+            "Raycasts",
+            "Other queries",
+            "Filters"
+          ],
+          "order": 3
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "slug": "editor",
+      "title": "Editor",
+      "description": "The Prowl editor and the command-line tool that drives it.",
+      "path": "docs/07-editor/index.md",
+      "headings": [],
+      "order": 7,
+      "children": [
+        {
+          "type": "page",
+          "slug": "editor/prowl-cli",
+          "title": "Prowl CLI",
+          "description": "Drive a running editor from the terminal, scripts or AI agents.",
+          "path": "docs/07-editor/01-prowl-cli.md",
+          "headings": [
+            "Verbs",
+            "Addressing things",
+            "A typical session"
+          ],
+          "order": 1
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "slug": "anthology",
+      "title": "Anthology libraries",
+      "description": "Use Prowl's systems on their own, without the engine.",
+      "path": "docs/08-anthology/index.md",
+      "headings": [
+        "Install one",
+        "The libraries"
+      ],
+      "order": 8,
+      "children": []
+    }
+  ],
+  "news": []
+}
