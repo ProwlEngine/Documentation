@@ -1,0 +1,56 @@
+name: Build API reference
+
+# Rebuilds api/ (the website's Scripting API section) from the source of Prowl.Runtime,
+# Prowl.Editor and every Anthology library. Runs only by hand: Actions > Build API reference > Run workflow.
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: api-reference
+  cancel-in-progress: true
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The code being documented lives in these two repositories
+      - name: Check out Prowl
+        uses: actions/checkout@v4
+        with:
+          repository: ProwlEngine/Prowl
+          path: .prowl
+
+      - name: Check out Anthology
+        uses: actions/checkout@v4
+        with:
+          repository: ProwlEngine/Anthology
+          path: .anthology
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the C# parser
+        run: pip install tree-sitter==0.25.2 tree-sitter-c-sharp==0.23.1
+
+      - name: Build the API reference
+        run: python scripts/build-api.py --prowl .prowl --anthology .anthology --out api
+
+      - name: Commit api/ if it changed
+        run: |
+          git add -A api
+          if git diff --cached --quiet -- api; then
+            echo "API reference unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Update API reference"
+          git pull --rebase origin main
+          git push origin HEAD:main
