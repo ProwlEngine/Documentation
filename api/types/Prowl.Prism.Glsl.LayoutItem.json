@@ -1,0 +1,1 @@
+{"id":"Prowl.Prism.Glsl.LayoutItem","name":"LayoutItem","display":"LayoutItem","kind":"record","assembly":"Prowl.Prism","namespace":"Prowl.Prism.Glsl","outer":null,"signature":"public sealed record LayoutItem(string Name, Expr? Value)","bases":[],"docs":{},"attributes":[],"members":[],"source":{"repo":"ProwlEngine/Anthology","path":"Prism/Prism/Glsl/Ast.cs","line":94}}

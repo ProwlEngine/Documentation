@@ -1,0 +1,1 @@
+{"id":"Prowl.Graphite.Rendering.ViewLayers","name":"ViewLayers","display":"ViewLayers","kind":"struct","assembly":"Prowl.Graphite","namespace":"Prowl.Graphite.Rendering","outer":null,"signature":"public struct ViewLayers","bases":[],"docs":{},"attributes":["InlineArray"],"members":[],"source":{"repo":"ProwlEngine/Anthology","path":"Graphite/Rendering/Renderer.cs","line":136}}

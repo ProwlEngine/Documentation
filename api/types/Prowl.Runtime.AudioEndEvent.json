@@ -1,0 +1,1 @@
+{"id":"Prowl.Runtime.AudioEndEvent","name":"AudioEndEvent","display":"AudioEndEvent","kind":"delegate","assembly":"Prowl.Runtime","namespace":"Prowl.Runtime","outer":null,"signature":"public delegate void AudioEndEvent()","bases":[],"docs":{},"attributes":[],"members":[],"source":{"repo":"ProwlEngine/Prowl","path":"Prowl.Runtime/Components/Audio/AudioSource.cs","line":16}}

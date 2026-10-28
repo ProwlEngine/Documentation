@@ -1,0 +1,1 @@
+{"id":"Prowl.Echo.ReflectionUtils","name":"ReflectionUtils","display":"ReflectionUtils","kind":"class","assembly":"Prowl.Echo","namespace":"Prowl.Echo","outer":null,"signature":"public static class ReflectionUtils","bases":[],"docs":{},"attributes":["RequiresUnreferencedCode"],"members":[],"source":{"repo":"ProwlEngine/Anthology","path":"Echo/Echo/ReflectionUtils.cs","line":117}}

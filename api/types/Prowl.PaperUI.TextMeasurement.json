@@ -1,0 +1,1 @@
+{"id":"Prowl.PaperUI.TextMeasurement","name":"TextMeasurement","display":"TextMeasurement","kind":"class","assembly":"Prowl.Paper","namespace":"Prowl.PaperUI","outer":null,"signature":"public static class TextMeasurement","bases":[],"docs":{},"attributes":[],"members":[],"source":{"repo":"ProwlEngine/Anthology","path":"Paper/Paper/TextMeasurement.cs","line":7}}

@@ -1,0 +1,1 @@
+{"id":"Prowl.Scaffold.Size","name":"Size","display":"Size","kind":"record struct","assembly":"Prowl.Scaffold","namespace":"Prowl.Scaffold","outer":null,"signature":"public readonly record struct Size(float Width, float Height)","bases":[],"docs":{},"attributes":[],"members":[],"source":{"repo":"ProwlEngine/Anthology","path":"Scaffold/Scaffold/Primitives.cs","line":25}}
