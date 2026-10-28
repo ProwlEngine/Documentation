@@ -753,5 +753,54 @@
       "children": []
     }
   ],
-  "news": []
+  "news": [],
+  "showcase": [
+    {
+      "slug": "solar-system",
+      "title": "Solar System",
+      "author": "Wulferis",
+      "authorUrl": "",
+      "summary": "Planets, moons and a galaxy sky, rendered in Prowl.",
+      "date": "2026-10-28",
+      "cover": "showcase/solar-system/mars.webp",
+      "images": [
+        "showcase/solar-system/mars.webp",
+        "showcase/solar-system/exoplanet.webp",
+        "showcase/solar-system/galaxy-moonrise.webp"
+      ],
+      "tags": [
+        "space",
+        "rendering"
+      ],
+      "pick": true,
+      "links": {},
+      "feature": [
+        {
+          "image": "showcase/solar-system/mars.webp",
+          "title": "Mars",
+          "caption": "Seen from orbit.",
+          "width": "full",
+          "align": "left",
+          "fade": true
+        },
+        {
+          "image": "showcase/solar-system/exoplanet.webp",
+          "title": "An exoplanet",
+          "caption": "Half in night.",
+          "width": "narrow",
+          "align": "right",
+          "fade": true
+        },
+        {
+          "image": "showcase/solar-system/galaxy-moonrise.webp",
+          "title": "Moonrise, galaxy-side",
+          "caption": "A galaxy skybox over moon terrain.",
+          "width": "full",
+          "align": "left",
+          "fade": true
+        }
+      ],
+      "path": "showcase/solar-system/index.md"
+    }
+  ]
 }

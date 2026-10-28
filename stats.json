@@ -1,0 +1,6 @@
+{
+  "version": 1,
+  "counts": "Executable lines: no comments, blank lines, using directives or bracket-only lines; no tests, samples or benchmarks.",
+  "total": 0,
+  "libraries": {}
+}
