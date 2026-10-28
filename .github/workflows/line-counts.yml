@@ -1,7 +1,7 @@
 name: Count lines
 
-# Recounts executable lines per library into stats.json, which the Prowl website reads.
-# Runs only by hand: Actions > Count lines > Run workflow.
+# Recounts executable lines in every Anthology library into stats.json, which the Prowl
+# website reads. Runs only by hand: Actions > Count lines > Run workflow.
 
 on:
   workflow_dispatch:
@@ -19,12 +19,19 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # The code being counted lives in the Anthology repository
+      - name: Check out Anthology
+        uses: actions/checkout@v4
+        with:
+          repository: ProwlEngine/Anthology
+          path: .anthology
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
       - name: Count lines
-        run: python scripts/count-lines.py
+        run: python scripts/count-lines.py --root .anthology --out stats.json
 
       - name: Commit stats.json if it changed
         run: |
