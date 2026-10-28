@@ -39,7 +39,7 @@ Body text. Use `##` and `###` for headings; they build the "On this page" list a
 
 ## Writing a news post
 
-Name the file `YYYY-MM-DD-slug.md`:
+Copy `news/_template.md` to `news/YYYY-MM-DD-slug.md`, fill it in, and put its images in `news/images/`. The template explains every field. Its frontmatter looks like this:
 
 ```markdown
 ---
@@ -61,6 +61,55 @@ tags: [release]
 - Images use relative paths too: `![Alt text](images/picture.webp)`.
 - GitHub-style callouts are supported: `> [!NOTE]`, `> [!TIP]`, `> [!IMPORTANT]`, `> [!WARNING]`.
 - Fenced code blocks are highlighted. Tag them: ` ```csharp `, ` ```bash `, ` ```glsl `, ` ```json `.
+
+## Adding your project to the showcase
+
+Anyone can add a project made with Prowl to the website's showcase with a pull request.
+
+1. Copy `showcase/_template` to `showcase/<your-project>`. The folder name becomes the project's link.
+2. Put your images in that folder: a cover and any screenshots. 16:9 works best; WebP, PNG and JPG are fine.
+3. Fill in `index.md`. Only `title` and `cover` are required.
+4. Open a pull request.
+
+| Field | Meaning |
+| --- | --- |
+| `title`, `summary` | The name, and one sentence for the grid |
+| `author`, `author_url` | Who made it, and where to find them |
+| `cover` | The image shown in the grid and at the top of the project page |
+| `images` | Screenshots for the gallery, in order |
+| `tags` | Filters on the showcase page, such as `[game, 2d, vr]` |
+| `date` | `YYYY-MM-DD`; newest projects are listed first |
+| `website`, `steam`, `itch`, `github`, `video` | Links shown as buttons on the project page |
+| `pick` | Maintainers set `true` for Contributor picks at the top of the page |
+
+### Featured images
+
+`feature` lists the big captioned images shown when your project is a Contributor pick, and at the top of its page: full-width shots that fade into the black background. Without it, your cover is used.
+
+```yaml
+feature:
+  - image: mars.webp
+    title: Mars
+    caption: Seen from orbit.
+    width: full
+  - image: exoplanet.webp
+    title: An exoplanet
+    caption: Half in night.
+    width: narrow
+    align: right
+```
+
+| Key | Values |
+| --- | --- |
+| `image` | A file in your project folder |
+| `title`, `caption` | The label on the image. Both optional |
+| `width` | `full` (edge to edge, the default), `wide` or `narrow` |
+| `align` | Where the label sits: `left` (default), `right` or `center` |
+| `fade` | `true` (default) fades the top and bottom into black; `false` shows the image's edges |
+
+Images on black backgrounds, such as space or night scenes, look best, because their edges disappear into the page.
+
+The text under the frontmatter is the project page, in Markdown.
 
 ## Images, GIFs and video
 
@@ -97,8 +146,3 @@ It prints warnings for missing titles, bad dates and covers that do not exist.
 If `index.json` is missing, the website falls back to reading the folder structure through the
 GitHub API. That works, but it is rate limited to 60 requests an hour per visitor, so keep
 `index.json` in the repository.
-
-## Sample content
-
-The pages and posts included to start with are samples written for the website. Replace or edit
-them freely. The news dates in particular are placeholders.
