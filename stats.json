@@ -1,6 +1,87 @@
 {
   "version": 1,
   "counts": "Executable lines: no comments, blank lines, using directives or bracket-only lines; no tests, samples or benchmarks.",
-  "total": 0,
-  "libraries": {}
+  "total": 196193,
+  "libraries": {
+    "Aperture": {
+      "lines": 19626,
+      "files": 127
+    },
+    "Clay": {
+      "lines": 7223,
+      "files": 97
+    },
+    "Crumb": {
+      "lines": 416,
+      "files": 7
+    },
+    "Echo": {
+      "lines": 5193,
+      "files": 56
+    },
+    "Ember": {
+      "lines": 3315,
+      "files": 50
+    },
+    "Graphite": {
+      "lines": 33982,
+      "files": 339
+    },
+    "Motion": {
+      "lines": 9471,
+      "files": 75
+    },
+    "Origami": {
+      "lines": 27486,
+      "files": 113
+    },
+    "Paper": {
+      "lines": 6353,
+      "files": 44
+    },
+    "Photonic": {
+      "lines": 2675,
+      "files": 33
+    },
+    "Prism": {
+      "lines": 16765,
+      "files": 28
+    },
+    "Quill": {
+      "lines": 5579,
+      "files": 26
+    },
+    "Quire": {
+      "lines": 800,
+      "files": 5
+    },
+    "Recast": {
+      "lines": 22304,
+      "files": 328
+    },
+    "Rosetta": {
+      "lines": 270,
+      "files": 8
+    },
+    "Scaffold": {
+      "lines": 909,
+      "files": 4
+    },
+    "Scribe": {
+      "lines": 3871,
+      "files": 22
+    },
+    "Slang": {
+      "lines": 3310,
+      "files": 77
+    },
+    "Unwrapper": {
+      "lines": 3259,
+      "files": 30
+    },
+    "Vector": {
+      "lines": 23386,
+      "files": 104
+    }
+  }
 }
