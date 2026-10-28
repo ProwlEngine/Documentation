@@ -18,8 +18,21 @@ import os
 import re
 import sys
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, "stats.json")
+def find_root():
+    """The Anthology checkout: --root if given, else the nearest folder holding Anthology.slnx,
+    searching up from the current directory, then from this script's folder."""
+    if "--root" in sys.argv:
+        return os.path.abspath(sys.argv[sys.argv.index("--root") + 1])
+    for start in (os.getcwd(), os.path.dirname(os.path.abspath(__file__))):
+        d = os.path.abspath(start)
+        while True:
+            if os.path.isfile(os.path.join(d, "Anthology.slnx")):
+                return d
+            parent = os.path.dirname(d)
+            if parent == d:
+                break
+            d = parent
+    return None
 
 SKIP_DIR = re.compile(r"(^|/)(obj|bin|\.git|\.github|scripts|[^/]*tests?|[^/]*samples?|benchmarks?)(/|$)", re.I)
 GENERATED = (".g.cs", ".Designer.cs", ".generated.cs", "AssemblyInfo.cs")
@@ -109,6 +122,13 @@ def count_file(path: str) -> int:
 
 
 def main() -> int:
+    root = find_root()
+    if not root or not os.path.isdir(root):
+        print("error: could not find the Anthology checkout (no Anthology.slnx above the current folder).", file=sys.stderr)
+        print("Run this from inside the repository, or pass --root <path>.", file=sys.stderr)
+        return 1
+    ROOT = root
+    OUT = os.path.join(ROOT, "stats.json")
     libraries = {}
     for lib in sorted(os.listdir(ROOT)):
         lib_dir = os.path.join(ROOT, lib)
@@ -127,6 +147,12 @@ def main() -> int:
                     lines += count_file(os.path.join(dirpath, name))
         if files:
             libraries[lib] = {"lines": lines, "files": files}
+
+    if not libraries:
+        # Never publish an empty count: the website would have nothing to show
+        print(f"error: found no C# libraries under {ROOT}; stats.json was not written.", file=sys.stderr)
+        print("Folders seen: " + ", ".join(sorted(os.listdir(ROOT))), file=sys.stderr)
+        return 1
 
     stats = {
         "version": 1,
