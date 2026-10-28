@@ -9,6 +9,8 @@ on:
     paths:
       - "docs/**"
       - "news/**"
+      - "showcase/**"
+      - ".github/workflows/**"
       - "scripts/build-index.mjs"
   workflow_dispatch:
 

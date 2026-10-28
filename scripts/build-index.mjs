@@ -14,24 +14,44 @@ const SKIP_DIRS = new Set(["images", "media", "assets"]);   // image folders are
 const warnings = [];
 
 // ---------- frontmatter ----------
-// A small YAML subset: `key: value`, quoted strings, and `[a, b, c]` lists.
 export function parseFrontmatter(text) {
   const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?/.exec(text);
   if (!m) return { data: {}, body: text };
+  return { data: parseYamlLite(m[1]), body: text.slice(m[0].length) };
+}
+
+// A small YAML subset: `key: value`, quoted strings, `[a, b]` lists, and a key followed by an indented
+// list of `- key: value` entries, as used by `feature:` in showcase projects.
+export function parseYamlLite(src) {
   const data = {};
-  for (const line of m[1].split(/\r?\n/)) {
-    const kv = /^([A-Za-z0-9_-]+)\s*:\s*(.*)$/.exec(line);
+  const lines = src.split(/\r?\n/);
+  for (let i = 0; i < lines.length; i++) {
+    const kv = /^([A-Za-z0-9_-]+)\s*:\s*(.*)$/.exec(lines[i]);
     if (!kv) continue;
-    let v = kv[2].trim();
-    if (v.startsWith("[") && v.endsWith("]")) {
-      v = v.slice(1, -1).split(",").map(s => unquote(s.trim())).filter(Boolean);
-    } else {
-      v = unquote(v);
-      if (/^-?\d+(\.\d+)?$/.test(v)) v = Number(v);
+    const raw = kv[2].trim();
+    if (raw !== "") { data[kv[1]] = scalar(raw); continue; }
+    const items = []; let cur = null;
+    while (i + 1 < lines.length && /^(\s+|-\s)/.test(lines[i + 1])) {
+      let t = lines[++i].trim();
+      if (!t || t.startsWith("#")) continue;
+      if (t.startsWith("- ")) {
+        t = t.slice(2).trim();
+        const inner = /^([A-Za-z0-9_-]+)\s*:\s*(.*)$/.exec(t);
+        if (inner) { cur = {}; items.push(cur); cur[inner[1]] = scalar(inner[2].trim()); }
+        else { cur = null; items.push(scalar(t)); }
+      } else {
+        const inner = /^([A-Za-z0-9_-]+)\s*:\s*(.*)$/.exec(t);
+        if (inner && cur) cur[inner[1]] = scalar(inner[2].trim());
+      }
     }
-    data[kv[1]] = v;
+    data[kv[1]] = items.length ? items : "";
   }
-  return { data, body: text.slice(m[0].length) };
+  return data;
+}
+function scalar(v) {
+  if (v.startsWith("[") && v.endsWith("]")) return v.slice(1, -1).split(",").map(s => unquote(s.trim())).filter(Boolean);
+  v = unquote(v);
+  return /^-?\d+(\.\d+)?$/.test(v) ? Number(v) : v;
 }
 function unquote(s) {
   return (s.startsWith('"') && s.endsWith('"')) || (s.startsWith("'") && s.endsWith("'")) ? s.slice(1, -1) : s;
@@ -122,11 +142,65 @@ function readNews() {
     .sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 }
 
+// ---------- showcase ----------
+// One folder per project: showcase/<slug>/index.md, with its images beside it.
+function readShowcase() {
+  if (!existsSync(join(ROOT, "showcase"))) return [];
+  const out = [];
+  for (const name of readdirSync(join(ROOT, "showcase"))) {
+    if (name.startsWith("_") || name.startsWith(".")) continue;   // _template and drafts
+    const dir = rel("showcase", name);
+    if (!statSync(join(ROOT, dir)).isDirectory()) continue;
+    const path = rel(dir, "index.md");
+    if (!existsSync(join(ROOT, path))) { warnings.push(`${dir}: no index.md`); continue; }
+    const { data, body } = parseFrontmatter(read(path));
+    const file = f => posix.normalize(posix.join(dir, String(f)));
+    const images = [].concat(data.images || []).filter(Boolean).map(file);
+    const cover = data.cover ? file(data.cover) : images[0] || null;
+    for (const img of [cover, ...images].filter(Boolean))
+      if (!existsSync(join(ROOT, img))) warnings.push(`${path}: image ${img} does not exist`);
+    if (!data.title) warnings.push(`${path}: no title`);
+    if (!cover) warnings.push(`${path}: no cover image`);
+    // Contributor picks and project pages render these as full-width images with captions
+    const feature = [].concat(data.feature || []).filter(f => f && typeof f === "object" && f.image).map(f => {
+      const image = file(f.image);
+      if (!existsSync(join(ROOT, image))) warnings.push(`${path}: feature image ${image} does not exist`);
+      return {
+        image,
+        title: f.title ? String(f.title) : "",
+        caption: f.caption ? String(f.caption) : "",
+        width: ["full", "wide", "narrow"].includes(f.width) ? f.width : "full",
+        align: ["left", "right", "center"].includes(f.align) ? f.align : "left",
+        fade: String(f.fade).toLowerCase() !== "false",
+      };
+    });
+    const links = {};
+    for (const k of ["website", "steam", "itch", "github", "video", "download"]) if (data[k]) links[k] = String(data[k]);
+    out.push({
+      slug: name.toLowerCase(),
+      title: data.title || firstHeading(body) || prettify(name),
+      author: data.author ? String(data.author) : "",
+      authorUrl: data.author_url ? String(data.author_url) : "",
+      summary: data.summary ? String(data.summary) : "",
+      date: String(data.date || ""),
+      cover,
+      images,
+      tags: [].concat(data.tags || []).map(String),
+      pick: data.pick === true || String(data.pick) === "true",
+      links,
+      feature,
+      path,
+    });
+  }
+  return out.sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title));
+}
+
 // ---------- write ----------
 const index = {
   version: 1,
   docs: existsSync(join(ROOT, "docs")) ? walkDocs("docs", []) : [],
   news: readNews(),
+  showcase: readShowcase(),
 };
 writeFileSync(join(ROOT, "index.json"), JSON.stringify(index, null, 2) + "\n");
 
@@ -147,6 +221,6 @@ const missing = [];
 })("docs");
 
 const count = n => n.reduce((s, x) => s + (x.type === "page" ? 1 : 1 + count(x.children)), 0);
-console.log(`index.json: ${count(index.docs)} docs entries, ${index.news.length} news posts`);
+console.log(`index.json: ${count(index.docs)} docs entries, ${index.news.length} news posts, ${index.showcase.length} showcase projects`);
 for (const w of warnings) console.warn("warning: " + w);
 if (missing.length) console.log(`${missing.length} images still to capture (see SCREENSHOTS.md); the website shows placeholders for them`);
