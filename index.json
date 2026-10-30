@@ -772,7 +772,6 @@
         "space",
         "rendering"
       ],
-      "pick": true,
       "links": {},
       "feature": [
         {
@@ -800,6 +799,8 @@
           "fade": true
         }
       ],
+      "pick": true,
+      "pickOrder": 0,
       "path": "showcase/solar-system/index.md"
     }
   ]
