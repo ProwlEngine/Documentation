@@ -1,0 +1,5 @@
+# Contributor picks: the projects shown at the top of the showcase page, in this order.
+# One project folder name per line. Maintainers only; changes need a maintainer's review.
+# When this file lists nothing, the showcase shows three projects at random instead.
+
+solar-system

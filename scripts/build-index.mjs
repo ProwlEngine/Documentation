@@ -145,6 +145,11 @@ function readNews() {
 // ---------- showcase ----------
 // One folder per project: showcase/<slug>/index.md, with its images beside it.
 function readShowcase() {
+  const picksPath = join(ROOT, "showcase", "picks.txt");
+  const picks = existsSync(picksPath)
+    ? readFileSync(picksPath, "utf8").split(/\r?\n/).map(l => l.replace(/#.*/, "").trim().toLowerCase()).filter(Boolean)
+    : [];
+
   if (!existsSync(join(ROOT, "showcase"))) return [];
   const out = [];
   for (const name of readdirSync(join(ROOT, "showcase"))) {
@@ -154,6 +159,7 @@ function readShowcase() {
     const path = rel(dir, "index.md");
     if (!existsSync(join(ROOT, path))) { warnings.push(`${dir}: no index.md`); continue; }
     const { data, body } = parseFrontmatter(read(path));
+    if (data.pick !== undefined) warnings.push(`${path}: "pick" is ignored; Contributor picks are set in showcase/picks.txt`);
     const file = f => posix.normalize(posix.join(dir, String(f)));
     const images = [].concat(data.images || []).filter(Boolean).map(file);
     const cover = data.cover ? file(data.cover) : images[0] || null;
@@ -186,13 +192,23 @@ function readShowcase() {
       cover,
       images,
       tags: [].concat(data.tags || []).map(String),
-      pick: data.pick === true || String(data.pick) === "true",
       links,
       feature,
+      pick: picks.includes(name.toLowerCase()),
+      pickOrder: picks.includes(name.toLowerCase()) ? picks.indexOf(name.toLowerCase()) : null,
       path,
     });
   }
   return out.sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title));
+}
+function checkPicks(showcase) {
+  const picksPath = join(ROOT, "showcase", "picks.txt");
+  if (!existsSync(picksPath)) return;
+  const slugs = new Set(showcase.map(p => p.slug));
+  for (const l of readFileSync(picksPath, "utf8").split(/\r?\n/)) {
+    const slug = l.replace(/#.*/, "").trim().toLowerCase();
+    if (slug && !slugs.has(slug)) warnings.push(`showcase/picks.txt: no project folder named "${slug}"`);
+  }
 }
 
 // ---------- write ----------
@@ -202,6 +218,7 @@ const index = {
   news: readNews(),
   showcase: readShowcase(),
 };
+checkPicks(index.showcase);
 writeFileSync(join(ROOT, "index.json"), JSON.stringify(index, null, 2) + "\n");
 
 // Images referenced by Markdown that do not exist yet: the website shows placeholders for them

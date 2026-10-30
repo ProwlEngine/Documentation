@@ -12,7 +12,6 @@ steam:
 itch:
 github:
 video:
-pick: false
 # Optional: the big captioned images shown on Contributor picks and at the top of your page.
 # width: full, wide or narrow. align: left, right or center. fade: true or false.
 feature:

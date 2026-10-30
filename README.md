@@ -80,7 +80,11 @@ Anyone can add a project made with Prowl to the website's showcase with a pull r
 | `tags` | Filters on the showcase page, such as `[game, 2d, vr]` |
 | `date` | `YYYY-MM-DD`; newest projects are listed first |
 | `website`, `steam`, `itch`, `github`, `video` | Links shown as buttons on the project page |
-| `pick` | Maintainers set `true` for Contributor picks at the top of the page |
+
+### Contributor picks
+
+The projects at the top of the showcase page are chosen by maintainers in `showcase/picks.txt`:
+one project folder name per line, in the order they should appear.
 
 ### Featured images
 

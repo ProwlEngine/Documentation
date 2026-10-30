@@ -7,7 +7,6 @@ date: 2026-10-28
 cover: mars.webp
 images: [mars.webp, exoplanet.webp, galaxy-moonrise.webp]
 tags: [space, rendering]
-pick: true
 feature:
   - image: mars.webp
     title: Mars
