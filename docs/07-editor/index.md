@@ -8,3 +8,4 @@ The editor is built with Paper, Prowl's immediate-mode UI. It includes the scene
 ![The full Prowl editor](images/editor-overview.png)
 
 - [Prowl CLI](01-prowl-cli.md)
+- [Project structure](02-project-structure.md)
