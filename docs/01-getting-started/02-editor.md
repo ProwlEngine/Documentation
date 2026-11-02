@@ -41,7 +41,7 @@ Closed a panel? Every one is under **Window › General**. Panels dock, resize a
 ## 4. Add physics
 
 1. Select the cube. In the inspector, **Add Component** › **Rigidbody3D**, then **Box Collider**.
-2. Select the plane and add a **Box Collider**, sized to cover it, so the cube has something to land on.
+2. Select the plane and add a **Mesh Collider**, so the cube has something to land on.
 3. Press **F5** to play. The cube falls and lands. Press **F5** again to stop.
 
 ![The cube falling onto the plane in play mode](images/first-scene-physics.gif)
