@@ -13,6 +13,9 @@ Create a console project targeting .NET 10, and reference `Prowl.Runtime` from y
 dotnet new console -n MyGame
 ```
 
+> [!NOTE]
+> In the future Prowl.Runtime will be available as a nuget package. You'll be able to include it like you do any other nuget packages.
+
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
