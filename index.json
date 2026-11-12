@@ -82,7 +82,7 @@
       "type": "folder",
       "slug": "scripting",
       "title": "Scripting",
-      "description": "Components, GameObjects, scenes, input and async code in C#.",
+      "description": "Components, GameObjects, scenes and worlds, scene loading, input and async code in C#.",
       "path": "docs/02-scripting/index.md",
       "headings": [],
       "order": 2,
@@ -105,7 +105,7 @@
           "type": "page",
           "slug": "scripting/gameobjects-and-scenes",
           "title": "GameObjects and scenes",
-          "description": "Creating, finding, parenting and destroying objects, and loading scenes.",
+          "description": "Creating, finding, parenting and destroying objects, and where scenes fit in.",
           "path": "docs/02-scripting/02-gameobjects-and-scenes.md",
           "headings": [
             "GameObjects",
@@ -141,6 +141,47 @@
             "Cancellation"
           ],
           "order": 4
+        },
+        {
+          "type": "page",
+          "slug": "scripting/scenes-and-worlds",
+          "title": "Scenes and worlds",
+          "description": "Scene assets, live worlds and sections, finding objects, the main camera, persistent objects and when a world ends.",
+          "path": "docs/02-scripting/05-scenes-and-worlds.md",
+          "headings": [
+            "Scenes, worlds and sections",
+            "The active world",
+            "Main and other worlds",
+            "Sections",
+            "Finding objects",
+            "The main camera",
+            "Objects that survive a load",
+            "When a world or section ends",
+            "World events",
+            "Common mistakes"
+          ],
+          "order": 5
+        },
+        {
+          "type": "page",
+          "slug": "scripting/loading-scenes",
+          "title": "Loading scenes",
+          "description": "Scene fields, loading a level, additive loading and streaming, opening a scene as its own world, loading screens and the build list.",
+          "path": "docs/02-scripting/06-loading-scenes.md",
+          "headings": [
+            "Scene fields",
+            "Loading a level",
+            "Additive loading",
+            "Opening a scene as its own world",
+            "A loading screen",
+            "Waiting and failure",
+            "The build list",
+            "Reference",
+            "Loading",
+            "SceneLoad",
+            "LoadOptions"
+          ],
+          "order": 6
         }
       ]
     },
@@ -148,7 +189,7 @@
       "type": "folder",
       "slug": "rendering",
       "title": "Rendering",
-      "description": "Materials, cameras, post processing and lights in the Vulkan renderer.",
+      "description": "Materials, cameras, post processing, lights, environment and water in the Vulkan renderer.",
       "path": "docs/03-rendering/index.md",
       "headings": [],
       "order": 3,
@@ -157,13 +198,17 @@
           "type": "page",
           "slug": "rendering/materials",
           "title": "Materials",
-          "description": "Standard shader properties, linear colour and per-object materials.",
+          "description": "The OpenPBR Lit shader, its properties and maps, linear colour and emission in nits.",
           "path": "docs/03-rendering/01-materials.md",
           "headings": [
             "Colours are linear",
-            "Standard shader properties",
+            "The Lit shader",
+            "Maps",
+            "Optional layers cost nothing until used",
+            "Emission is in nits",
             "Setting properties in code",
             "Opaque, cutout and transparent",
+            "Unlit",
             "Writing your own"
           ],
           "order": 1
@@ -172,10 +217,11 @@
           "type": "page",
           "slug": "rendering/cameras-and-post-processing",
           "title": "Cameras and post processing",
-          "description": "Anti-aliasing, volume profiles, bloom and tonemapping.",
+          "description": "Exposure, anti-aliasing, volume profiles, bloom and tonemapping.",
           "path": "docs/03-rendering/02-cameras-and-post-processing.md",
           "headings": [
             "Camera defaults",
+            "Exposure and physical light",
             "Volume profiles",
             "Tonemapping",
             "Custom post effects",
@@ -187,14 +233,58 @@
           "type": "page",
           "slug": "rendering/lights",
           "title": "Lights",
-          "description": "Light types, shadows and baked lighting.",
+          "description": "Light components, real world units and presets, shadows and baked lighting.",
           "path": "docs/03-rendering/03-lights.md",
           "headings": [
             "Light types",
+            "Units and presets",
+            "Colour and temperature",
+            "Range",
             "Shadows",
+            "Layers",
             "Baked lighting"
           ],
           "order": 3
+        },
+        {
+          "type": "page",
+          "slug": "rendering/environment",
+          "title": "Sky, fog and clouds",
+          "description": "The scene environment: sky, ambient light, fog, volumetric fog and volumetric clouds.",
+          "path": "docs/03-rendering/04-environment.md",
+          "headings": [
+            "Sky",
+            "Ambient light",
+            "Fog",
+            "Volumetric fog",
+            "Fog volumes",
+            "Volumetric clouds"
+          ],
+          "order": 4
+        },
+        {
+          "type": "page",
+          "slug": "rendering/ocean",
+          "title": "Ocean",
+          "description": "An FFT ocean to the horizon, with foam, wakes, currents, floating bodies and lakes.",
+          "path": "docs/03-rendering/05-ocean.md",
+          "headings": [
+            "Waves",
+            "Water",
+            "Working with the water"
+          ],
+          "order": 5
+        },
+        {
+          "type": "page",
+          "slug": "rendering/quality",
+          "title": "Quality levels",
+          "description": "Low to Ultra quality levels, the PBR tier, shadow distance and render scale.",
+          "path": "docs/03-rendering/06-quality.md",
+          "headings": [
+            "From code"
+          ],
+          "order": 6
         }
       ]
     },
@@ -231,12 +321,14 @@
           "type": "page",
           "slug": "shaders/surface-shaders",
           "title": "Surface shaders",
-          "description": "The Surface block and its Vertex and Lighting blocks, every field of the surface data, and worked examples.",
+          "description": "The Surface block and its Vertex and Lighting blocks, the surface inputs, the OpenPBR parameters, and worked examples.",
           "path": "docs/04-shaders/02-surface-shaders.md",
           "headings": [
             "The three parts",
             "How it works",
             "GraphiteSurfaceData",
+            "PBRParams",
+            "UnlitParams",
             "Normal maps in surface code",
             "Example: a detail normal map",
             "Depth passes",
@@ -244,6 +336,7 @@
             "Example: tint by height",
             "Example: world-space dissolve",
             "Example: vertex colour masks",
+            "Example: car paint",
             "When to write passes instead"
           ],
           "order": 2
@@ -259,6 +352,7 @@
             "Types",
             "Reading properties in GLSL",
             "Attributes",
+            "Maps",
             "The material API"
           ],
           "order": 3
@@ -277,6 +371,7 @@
             "Relative and world",
             "A complete unlit shader",
             "The G-buffer",
+            "Brightness and exposure",
             "Useful per-draw data"
           ],
           "order": 4
@@ -308,10 +403,9 @@
             "What the ambient function receives",
             "A toon shader",
             "Ideas for further styling",
-            "Outlines",
-            "Full control: hand-written passes",
             "Building on the default",
-            "The lighting building blocks"
+            "Outlines",
+            "Full control: hand-written passes"
           ],
           "order": 6
         },
@@ -324,6 +418,7 @@
           "headings": [
             "Transparency with the standard shaders",
             "Transparency in your own passes",
+            "Transmission",
             "Refraction: reading the scene colour",
             "Soft edges: reading the scene depth"
           ],
@@ -339,6 +434,7 @@
             "Variants",
             "Setting variants",
             "Global axes",
+            "Where pragmas count",
             "Keep the count down",
             "Globals"
           ],
@@ -368,18 +464,19 @@
           "path": "docs/04-shaders/10-include-library.md",
           "headings": [
             "Relative and world",
+            "Light is exposed",
             "How includes resolve",
             "Graphite/Vertex.glsl",
             "Graphite/Core.glsl",
+            "Graphite/Math.glsl",
             "View data",
             "Graphite/Passes.glsl",
             "Graphite/Lighting.glsl",
+            "Graphite/PBR",
             "Graphite/Standard/Standard.glsl",
             "Graphite/Decals.glsl",
-            "Standard lighting entry points",
-            "Graphite/PBR.glsl",
             "Graphite/SceneColor.glsl and SceneDepth.glsl",
-            "Graphite/Sky.glsl",
+            "Graphite/Sky.glsl and Skies.glsl",
             "Graphite/Debug.glsl",
             "Prowl/Common.glsl"
           ],
@@ -389,10 +486,11 @@
           "type": "page",
           "slug": "shaders/custom-skies",
           "title": "Custom skies",
-          "description": "Write a sky shader that also lights the scene through the sky probe.",
+          "description": "Write a sky with a Surface Sky block or a hand-written pass, which also lights the scene through the sky probe.",
           "path": "docs/04-shaders/11-custom-skies.md",
           "headings": [
             "A stylized sky with stars",
+            "A hand-written sky pass",
             "Using it"
           ],
           "order": 11
@@ -719,7 +817,7 @@
       "type": "folder",
       "slug": "editor",
       "title": "Editor",
-      "description": "The Prowl editor and the command-line tool that drives it.",
+      "description": "The Prowl editor, editing several scenes at once, and the command-line tool that drives it.",
       "path": "docs/07-editor/index.md",
       "headings": [],
       "order": 7,
@@ -733,9 +831,30 @@
           "headings": [
             "Verbs",
             "Addressing things",
+            "Scenes",
             "A typical session"
           ],
           "order": 1
+        },
+        {
+          "type": "page",
+          "slug": "editor/multi-scene-editing",
+          "title": "Multi scene editing",
+          "description": "Editing several scenes at once, the active scene, moving objects between scenes, saving, play mode and baking.",
+          "path": "docs/07-editor/02-multi-scene-editing.md",
+          "headings": [
+            "Opening scenes",
+            "Scene headers",
+            "The active scene",
+            "Moving objects between scenes",
+            "References between scenes",
+            "Saving",
+            "Play mode",
+            "Baking with several scenes",
+            "Build settings",
+            "Editor scripting"
+          ],
+          "order": 2
         }
       ]
     },
