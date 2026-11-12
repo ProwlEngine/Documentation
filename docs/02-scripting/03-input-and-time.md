@@ -7,6 +7,18 @@ description: Keyboard, mouse, input actions and the Time class.
 
 `Time.DeltaTime`, `Time.UnscaledDeltaTime`, `Time.FixedDeltaTime`, `Time.TimeScale`, `Time.FrameCount` and `Time.TimeSinceStartup`.
 
+Every world has its own clock. The scaled values, `DeltaTime`, `SmoothDeltaTime`, `TimeSinceStartup`, `TimeScale`, `EffectiveTimeScale` and `FixedAlpha`, read the clock of the world your code runs in, so a paused world's time stands still while a menu world over it keeps moving. `UnscaledDeltaTime`, `UnscaledTotalTime`, `FixedDeltaTime` and `FrameCount` are shared by every world.
+
+For slow motion or a hit stop, add a modifier rather than setting `TimeScale`, so overlapping effects each remove only their own:
+
+```csharp
+TimeScaleModifier slowMo = Time.AddTimeScaleModifier(0.25f);
+await GameTask.DelayRealtime(2f);
+slowMo.Remove();
+```
+
+`Scene.Clock` is the same clock as a `SceneClock`, for code that needs another world's time. `SceneClock.Defaults` holds the project's time settings, which every new world starts with.
+
 ## Direct input
 
 ```csharp

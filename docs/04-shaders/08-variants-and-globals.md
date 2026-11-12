@@ -18,7 +18,7 @@ Then branch with the preprocessor:
 
 ```glsl
 #ifdef _DETAIL
-    s.BaseColor *= texture(_DetailTex, s.UV * _DetailScale).rgb * 2.0;
+    p.baseColor *= texture(_DetailTex, i.uv * _DetailScale).rgb * 2.0;
 #endif
 
 #if defined(_STYLE_TOON)
@@ -51,10 +51,40 @@ material.RevertKeyword("_DETAIL");   // back to what the properties say
 ### Global axes
 
 ```glsl
-#pragma variant global GRAPHITE_DEBUG OFF ALBEDO NORMALS
+#pragma variant global MYGAME_WEATHER DRY RAIN SNOW
 ```
 
-A `global` axis is set by the renderer or a view, never by a material. The built-in shaders use one for the editor's debug views.
+A `global` axis is set for every material at once, by the renderer, a quality level or your code, never by a material. The first value is the default. The engine's own global axes are:
+
+| Axis | Values | Set by |
+| --- | --- | --- |
+| `PBR_TIER` | `FULL`, `LITE` | The quality level, see [Quality levels](../03-rendering/06-quality.md) |
+| `GRAPHITE_DEBUG` | `UNLIT` (normal drawing), `ALBEDO`, `NORMALS`, `ROUGHNESS`, `METALLIC`, `AO`, `EMISSION`, `LIGHTING` and more | The editor's debug views |
+| `GRAPHITE_DECALS`, `GRAPHITE_LIGHT_MASKS`, `GRAPHITE_CONTACT_SHADOWS` | toggles | On while the scene has decals, light cookies or profiles, or contact hardening shadows |
+| `GRAPHITE_PREPASS` | `DEPTH`, `MOTION`, `NORMALS` | What the camera's effects need from the depth prepass |
+
+A shader that declares one of these must use the same default and only its values, though it may leave values out. A shader declaring `GRAPHITE_DEBUG` with a value `OFF` fails to load.
+
+Set your own global axis from C# by defining it once with its values, then setting it on the renderer:
+
+```csharp
+using Prowl.Runtime;
+
+using GlobalAxis = Prowl.Graphite.Rendering.GlobalAxis;
+
+public sealed class WeatherSwitch : Component
+{
+    private static readonly GlobalAxis Weather = GlobalAxis.Define("MYGAME_WEATHER", "DRY", "RAIN", "SNOW");
+
+    public void LetItSnow() => Graphics.Renderer?.Globals.Set(Weather, "SNOW");
+}
+```
+
+`GlobalAxis.Toggle("NAME")` defines an on and off axis, set with `Globals.Set(axis, true)`.
+
+### Where pragmas count
+
+Pragmas are found in the program and every file it includes, following `#if`, `#ifdef` and `#else` as far as the pass's own defines decide them. A `#pragma variant` inside `#ifdef GRAPHITE_STANDARD_FORWARD` only exists in the Forward pass. A condition on another variant keeps both branches, so no variant loses a pragma.
 
 ### Keep the count down
 

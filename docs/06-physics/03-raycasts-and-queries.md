@@ -3,25 +3,25 @@ title: Raycasts and queries
 description: Raycasts, sphere casts, overlaps and query filters.
 ---
 
-Queries live on each scene's `Physics` and are **main thread only**. Inside a component use `GameObject.Scene.Physics`, since `Scene` there is the component's own property. Elsewhere `Scene.Current.Physics` works.
+Every world has its own physics, and queries are **main thread only**. The static `Physics` class queries the world your code runs in, so a component always hits its own world. `Scene.Physics` inside a component, or `world.Physics` for any world, is the same API on one world in particular.
 
 ![A raycast drawn as a debug line, hitting a collider](images/raycast-debug.png)
 
 ## Raycasts
 
 ```csharp
-if (GameObject.Scene.Physics.Raycast(Transform.Position, Transform.Forward, 100f, out RaycastHit hit))
+if (Physics.Raycast(Transform.Position, Transform.Forward, 100f, out RaycastHit hit))
 {
     Debug.Log($"Hit {hit.Transform.GameObject.Name} at {hit.Point}");
 }
 ```
 
 > [!IMPORTANT]
-> Without a filter the distance comes before the `out` parameter: `Raycast(origin, direction, maxDistance, out hit)`. With a filter, `out` moves before the distance: `Raycast(origin, direction, out hit, maxDistance, filter)`.
+> The distance comes before the `out` parameter, and a filter goes last: `Raycast(origin, direction, maxDistance, out hit, filter)`.
 
 ## Other queries
 
-- `RaycastAll(origin, direction, maxDistance, hits)` fills a list, nearest first.
+- `RaycastAll(origin, direction, maxDistance, hits)` fills a list, nearest first. Pass a filter as the last argument to skip layers or bodies.
 - `Linecast(from, to, out hit)`
 - `SphereCast(origin, radius, direction, maxDistance, out ShapeCastHit hit)`
 - `OverlapSphere(position, radius, hits)` and `OverlapBox(position, size, rotation, hits)`. Box sizes are full extents.

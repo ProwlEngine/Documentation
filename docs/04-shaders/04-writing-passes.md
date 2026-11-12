@@ -35,7 +35,7 @@ Pass
 
 - `Name` is optional, but two passes in one shader may not share a name.
 - Render state commands such as `Cull`, `ZWrite` and `Blend` are covered in [Render state and stencil](09-render-state-and-stencil.md).
-- Each pass has exactly one `GLSLPROGRAM … ENDGLSL` block. The markers are uppercase.
+- Each pass has exactly one `GLSLPROGRAM ... ENDGLSL` block. The markers are uppercase.
 
 ## Pass types
 
@@ -45,11 +45,13 @@ Pass
 | `Prepass` | The depth prepass |
 | `ShadowCaster` | Shadow maps |
 | `Sky` | The sky, see [Custom skies](11-custom-skies.md) |
+| `Transmission` | In place of `Forward` for transmissive materials, see [Transparency](07-transparency-and-screen-effects.md#transmission) |
+| `BackDepth` | The far side of transmissive volumes, as distance along the view ray |
 | `Debug` | The editor's debug views (albedo, normals, lighting and so on) |
 | `ObjectId` | Object picking in the editor |
 | any other name | Drawn by a **Draw Pass** component or a render feature, such as `"Outline"` |
 
-An opaque material shader should normally have **Forward**, **Prepass** and **ShadowCaster** passes. Leave out ShadowCaster and the object casts no shadows.
+An opaque material shader should normally have **Forward**, **Prepass** and **ShadowCaster** passes. Leave out ShadowCaster and an opaque material still casts a shadow, from its plain mesh through `Graphite/DepthCaster`, culled as its Forward pass is. Tag the Forward pass `"Shadows" = "Off"` to cast none, or `"Discards" = "On"` if it discards pixels, which a plain depth caster would get wrong. Blended passes, and passes that write no depth, never cast this way.
 
 > [!IMPORTANT]
 > **Only the first pass with a given `LightMode` is drawn.** For an extra pass such as an outline, give it its own `LightMode` and add a **Draw Pass** component to the scene. See [Outlines](06-custom-lighting.md#outlines).
@@ -61,6 +63,10 @@ Other tags the renderer reads:
 | `"RenderQueue" = "3000"` | The default queue of the shader's materials. 2500 and up is transparent |
 | `"SceneColor" = "Read"` | The pass samples the opaque scene colour |
 | `"SceneDepth" = "Read"` | The pass reads the opaque scene depth |
+| `"BackDepth" = "Read"` | The pass reads the back depth of transmissive volumes |
+| `"ReadsWhen" = "AXIS VALUE"` | The scene reads above only count while a global axis has that value, such as `"PBR_TIER FULL"` |
+| `"Output" = "Premultiplied"` | The pass writes premultiplied colour, so a material's `SurfaceBlend` uses premultiplied factors |
+| `"Shadows" = "Off"`, `"Discards" = "On"` | On a Forward pass: no shadow from the depth only caster, see above |
 
 ## The GLSL sections
 
@@ -90,7 +96,7 @@ Prowl's renderer is GPU-driven: vertices are pulled from a shared buffer rather 
 | `vertexNormal` | `vec3` | `(0, 0, 1)` |
 | `vertexTangent` | `vec4` | `(1, 0, 0, 1)` |
 | `vertexColor` | `vec4` | white |
-| `vertexUV0` … `vertexUV3` | `vec2` | zero |
+| `vertexUV0` ... `vertexUV3` | `vec2` | zero |
 | `vertexBoneIndices`, `vertexBoneWeights` | `uvec4`, `vec4` | zero |
 | `vertexCustom0`, `vertexCustom1` | `vec4` | zero |
 
@@ -149,7 +155,7 @@ Shader "MyGame/VertexColorUnlit"
             void main()
             {
                 fragColor = vColor * _Tint;
-                Graphite_WriteGBuffer(vec3(0.0, 1.0, 0.0), 1.0, 0.0);
+                Graphite_WriteGBuffer(vec3(0.0, 1.0, 0.0), vec3(0.0), 1.0);
             }
         }
         ENDGLSL
@@ -191,13 +197,17 @@ Shader "MyGame/VertexColorUnlit"
 
 ## The G-buffer
 
-An opaque Forward pass writes a thin G-buffer next to its colour: motion vectors, the world normal, and roughness and metallic. Effects such as TAA, motion blur, SSR and ambient occlusion read it. Call `Graphite_WriteGBuffer(worldNormal, roughness, metallic)` from `Graphite/Passes.glsl` in every opaque Forward fragment shader. Your colour goes to `location = 0`.
+An opaque Forward pass writes a thin G-buffer next to its colour: motion vectors, the world normal, and the top specular lobe's reflectance and roughness. Effects such as TAA, motion blur, screen space reflections and ambient occlusion read it. Call `Graphite_WriteGBuffer(worldNormal, reflectance, roughness)` from `Graphite/Passes.glsl` in every opaque Forward fragment shader, with `reflectance` the colour screen space reflections are weighted by, black for none. Your colour goes to `location = 0`.
+
+## Brightness and exposure
+
+The colour a Forward pass writes is already exposed light: the standard shaders multiply light in nits by `Graphite_Exposure()`, which is `1 / (1.2 * 2^EV100)` for the camera drawing. A hand-written pass that writes a plain colour, like the one above, shows the same on screen whatever the exposure, which suits UI and markers. For a glow that sits in the scene like a real light, write `nits * Graphite_Exposure()`. Finish with `Graphite_ApplyFog(color, relativePos)` from `Graphite/Fog.glsl` if it should fog.
 
 ## Useful per-draw data
 
 - `Graphite_View()` returns the camera's [view data](10-include-library.md#view-data): matrices, screen size, jitter and time.
 - `Graphite_InstanceIndex()` is the instance being drawn in an instanced draw.
-- `Graphite_Object()` is the object's record. Its `custom0` holds a per-instance colour in instance batches.
+- `Graphite_Object()` is the object's record. Its `color` is the object's colour, which the standard surfaces multiply into the vertex colour, and `custom0` and `custom1` are free for the engine's own shaders.
 
 > [!NOTE]
 > The library wraps your vertex `main`: it sets up the draw first, then runs your code, then records motion vectors. Write `void main()` as usual.

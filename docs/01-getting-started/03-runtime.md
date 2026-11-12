@@ -41,33 +41,36 @@ public sealed class HelloGame : Game
 {
     public override void Initialize()
     {
-        var scene = new Scene();
+        // The game world, made running and presented before Initialize.
+        SceneInstance world = SceneInstance.Main;
 
         // A light, angled down like an afternoon sun.
         var sun = new GameObject("Sun");
-        sun.AddComponent<Light>().Type = LightType.Directional;
+        sun.AddComponent<DirectionalLight>();
         sun.Transform.LocalEulerAngles = new Float3(50f, 30f, 0f);
-        scene.Add(sun);
+        sun.MoveTo(world);
 
-        // The camera. The "Main Camera" tag marks it as the one to render through.
-        var cameraObject = new GameObject("Main Camera") { Tag = "Main Camera" };
+        // The camera. Camera.Main is the enabled camera with the highest Depth that draws to the screen.
+        var cameraObject = new GameObject("Main Camera");
         var camera = cameraObject.AddComponent<Camera>();
         camera.Profile = VolumeProfile.CreateCameraDefault("Main Camera Profile");   // tonemapping
         cameraObject.Transform.Position = new Float3(0f, 3f, -8f);
         cameraObject.Transform.LookAt(new Float3(0f, 1f, 0f));
-        scene.Add(cameraObject);
+        cameraObject.MoveTo(world);
 
         // A spinning cube with our own component on it.
         var cube = new GameObject("Spinning Cube");
         cube.AddComponent<MeshRenderer>().Mesh = Mesh.CreateCube(Float3.One);
         cube.AddComponent<Spinner>();
         cube.Transform.Position = new Float3(0f, 1.5f, 0f);
-        scene.Add(cube);
-
-        Scene.Load(scene);
+        cube.MoveTo(world);
     }
 }
 ```
+
+`new GameObject` makes a detached object. Each one is set up first and then moved into the world with `MoveTo`, so its components start with their final settings. `world.Create("Name")` makes an object straight in the world instead.
+
+The game binds a world as `SceneInstance.Main` before `Initialize` runs, and levels load into it. Override `CreateMainWorld` to set that world up differently. See [Scenes and worlds](../02-scripting/05-scenes-and-worlds.md).
 
 ## The component
 

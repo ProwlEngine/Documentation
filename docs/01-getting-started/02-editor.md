@@ -82,13 +82,14 @@ public sealed class Spinner : Component
 | **F5** | Play and stop |
 | **F7** | Pause and resume |
 | **Ctrl+N** | New scene |
-| **Ctrl+Shift+S** | Save the scene as a new file |
+| **Ctrl+S** | Save all: every changed scene, plus anything else unsaved |
+| **Ctrl+Shift+S** | Save the active scene as a new file |
 
-Every shortcut can be rebound in **Window › General › Preferences**. Save your scene into the Assets folder before building.
+Every shortcut can be rebound in **Window › General › Preferences**. Save your scene into the Assets folder before building. To work on several scenes at once, see [Multi scene editing](../07-editor/02-multi-scene-editing.md).
 
 ## 7. Build it
 
-Open **Build Settings**, add your scene to the build's scene list, choose a build profile for your platform, and build. The build packs only the assets your scenes use, and precompiles the shader variants they need.
+Open **Build Settings**, click **Add Open** to add the open scenes to the build's scene list (the first one is what the game starts with), choose a build profile for your platform, and build. The build packs only the assets your scenes use, and precompiles the shader variants they need.
 
 ![The Build Settings panel with a scene in the build list](images/build-settings.png)
 

@@ -10,12 +10,12 @@ description: Wait, hop threads and cancel cleanly with the GameTask API.
 ```csharp
 await GameTask.NextFrame();
 await GameTask.Frames(30);
-await GameTask.Delay(1f);           // game time, stops while paused
+await GameTask.Delay(1f);           // game time of this world, stops while it is paused
 await GameTask.DelayRealtime(1f);
 await GameTask.WaitUntil(() => door.IsOpen);
 ```
 
-Await inside a component resumes on the main thread.
+Await inside a component resumes on the main thread, still in the component's world, so `Camera.Main`, `Physics` and `Time` after the await act on the same world as before it. `GameTask.Delay` counts that world's game time, and is cancelled if that world is destroyed.
 
 ## Moving work off the main thread
 
@@ -39,7 +39,14 @@ private async void Paint()
 
 ## Cancellation
 
-When play stops or scripts reload, pending continuations are dropped without running their `finally` blocks. Pass `DestroyCancellationToken` or `GameTask.SessionToken` and catch `OperationCanceledException` when you need to clean up.
+When play stops or scripts reload, pending continuations are dropped without running their `finally` blocks. Pass a token and catch `OperationCanceledException` when you need to clean up:
+
+| Token | Cancelled when |
+| --- | --- |
+| `DestroyCancellationToken` | This component is destroyed |
+| `GameObject.Section!.UnloadToken` | This object's section unloads, for work that must not outlive the level |
+| `Scene.Token` | This world is destroyed, play stops or scripts reload |
+| `GameTask.SessionToken` | Play stops, scripts reload or the game quits |
 
 ```csharp
 try

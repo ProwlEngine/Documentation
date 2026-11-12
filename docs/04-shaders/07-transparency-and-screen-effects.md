@@ -13,11 +13,11 @@ material.Surface = new SurfaceSettings(SurfaceType.Transparent, SurfaceBlend.Alp
 
 | Setting | Values |
 | --- | --- |
-| `SurfaceType` | `Opaque`, `Cutout` (alpha tested against `_AlphaCutoff`), `Transparent` |
+| `SurfaceType` | `Opaque`, `Cutout` (opacity tested against `alpha_cutoff`), `Transparent` |
 | `SurfaceBlend` | `Alpha`, `Premultiplied`, `Additive`, `Multiply` |
 | `SurfaceCull` | `Back`, `Front`, `Off` (double sided, back faces flip their normal) |
 
-Transparent surfaces draw back to front after the opaques and do not write depth. In a surface shader, set `s.Alpha`.
+Transparent surfaces draw back to front after the opaques and do not write depth. In a surface shader, set `p.geometryOpacity`. The Lit model writes premultiplied colour, its passes tagged `"Output" = "Premultiplied"`, so every `SurfaceBlend` applies the opacity once. Transparent surfaces still cast shadows, dithered by their opacity.
 
 A material's surface settings also override the render state and queue of any custom shader.
 
@@ -35,6 +35,20 @@ Pass
 ```
 
 Queues of 2500 and up count as transparent.
+
+## Transmission
+
+Glass, water and other clear materials need no custom shader. Give a Lit material a `transmission_weight` above zero and it draws through its **Transmission** pass in place of Forward, whatever its surface type:
+
+```csharp
+material.SetFloat("transmission_weight", 1f);
+material.SetFloat("specular_roughness", 0.05f);
+material.SetColor("transmission_color", new Color(0.8f, 0.95f, 0.9f, 1f));
+```
+
+It refracts the opaque scene behind it through the surface's IOR (`specular_ior`), blurred by its roughness. A solid object, with `geometry_thin_walled` off, also draws its back faces' depth in a **BackDepth** pass, so the light bends through the whole volume and `transmission_depth` and `transmission_scatter` can tint and cloud it along the way, like coloured glass or murky water. `transmission_dispersion_scale` splits white light into colours. Thin walled materials, such as a window pane or a soap bubble, pass light straight through.
+
+At the `Lite` PBR tier transmissive materials refract the reflection probes instead of the scene, see [Quality levels](../03-rendering/06-quality.md).
 
 ## Refraction: reading the scene colour
 
@@ -98,6 +112,7 @@ Shader "MyGame/Glass"
 - `Graphite_ScreenUV()` is this pixel's screen UV.
 - `Graphite_SampleSceneColor(uv, lod)` samples the scene; each mip level up is a blur twice as wide, which makes frosted glass cheap.
 - The built-in `Refraction` shader (`DefaultShader.Refraction`) is a complete example with noise and a rotating blur.
+- The scene colour is already exposed, so writing it back unchanged looks the same as the scene around it.
 
 ## Soft edges: reading the scene depth
 
@@ -109,6 +124,7 @@ A pass tagged `"SceneDepth" = "Read"` can read the opaque depth. Use it to fade 
 ```glsl
 #include "Graphite/SceneDepth.glsl"
 
+uniform vec4 _Color;
 uniform float _FadeDistance;
 
 void main()

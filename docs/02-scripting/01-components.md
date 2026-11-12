@@ -38,15 +38,19 @@ public sealed class PlayerMover : Component
 
 | Callback | When it runs |
 | --- | --- |
-| `OnAddedToScene()`, `OnEnable()` | When the object enters an active scene |
+| `OnAddedToScene()` | When the object joins a world, in any state, the editor's edit world included |
+| `OnEnable()` | When it is enabled in a running world |
 | `Start()` | Once, before the first `FixedUpdate` or `Update` |
 | `FixedUpdate()` | Every fixed physics step |
 | `Update()`, `LateUpdate()` | Every frame |
-| `OnDisable()`, `OnRemovedFromScene()` | When it leaves the scene |
+| `OnDisable()` | When it is disabled, its world goes dormant, or its section unloads |
+| `OnRemovedFromScene()` | When it leaves its world |
 | `OnDispose()` | When it is destroyed |
 | `OnValidate()` | After a field changes in the inspector |
 
 An exception in a callback is logged and the frame continues.
+
+Everything from `OnEnable` on runs only in a playing world, so not in the editor outside play mode, unless the component has `[ExecuteAlways]`. A paused world skips `Start`, `Update` and `FixedUpdate` but still delivers `OnEnable` and `OnDisable`. Inside any callback, `Scene` is the component's world. See [Scenes and worlds](05-scenes-and-worlds.md).
 
 ## Attributes
 
@@ -78,5 +82,7 @@ Prowl ships Roslyn analyzers that catch scripting mistakes as you type, in the e
 | `PROWLEO002` | Error | `??` or `??=` on an engine object, which keeps a destroyed object instead of the fallback |
 | `PROWLEO003` | Error | `== null`, `!= null`, `is null` or `is not null` on an engine object, which misses destruction |
 | `PROWLTH001` | Warning | A blocking wait such as `.Result` or `.Wait()` in a component, which never returns for asset loads and GameTask waits |
+| `PROWLSC001` | Error | Comparing a live world with a scene asset, which are never equal. Compare `Scene.Source` with the asset |
+| `PROWLSC002` | Warning | A plain `Scene` field on a component, which keeps the scene and everything it uses loaded. Use `AssetRef<Scene>` |
 
 Use `IsValid()` and `IsNotValid()` for engine objects, `await` instead of blocking, and `OnEnable` or `Start` instead of constructors.

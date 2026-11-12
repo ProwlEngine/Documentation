@@ -18,7 +18,7 @@ Shader "MyGame/Pulse"
 }
 ```
 
-This already works. A `Surface "Lit"` block with no code gives you a shader identical to the built-in Lit shader, with all its properties: albedo, normal map, metallic, roughness, emission and the rest.
+This already works. A `Surface "Lit"` block with no code gives you a shader identical to the built-in Lit shader, with all its OpenPBR properties: `base_color`, `specular_roughness`, `base_metalness`, the coat, emission, every map and the rest.
 
 ## 2. Add properties
 
@@ -32,7 +32,8 @@ Shader "MyGame/Pulse"
 {
     Properties
     {
-        _GlowColor("Glow Color", Color) = (1.0, 0.4, 0.1, 1.0) [HDR]
+        _GlowColor("Glow Color", Color) = (1.0, 0.4, 0.1, 1.0)
+        _GlowLuminance("Glow Luminance", Float) = 40000.0
         _GlowSpeed("Glow Speed", Float) = 2.0 [Range(0, 10)]
     }
 
@@ -42,7 +43,7 @@ Shader "MyGame/Pulse"
 }
 ```
 
-Your properties are added to the standard Lit ones, so the material still has its albedo texture, tint and so on.
+Your properties are added to the standard Lit ones, so the material still has its base colour, maps and so on.
 
 ## 3. Write the surface function
 
@@ -51,22 +52,25 @@ Your properties are added to the standard Lit ones, so the material still has it
     {
         GLSLPROGRAM
         uniform vec4 _GlowColor;
+        uniform float _GlowLuminance;
         uniform float _GlowSpeed;
 
-        void Surface(inout Graphite_SurfaceData s)
+        void Surface(inout PBR_Params p, Graphite_SurfaceData i)
         {
             float time = Graphite_View().time.x;
             float pulse = 0.5 + 0.5 * sin(time * _GlowSpeed);
-            s.Emission += _GlowColor.rgb * pulse;
+            p.emissionColor = _GlowColor.rgb;
+            p.emissionLuminance = _GlowLuminance * pulse;
         }
         ENDGLSL
     }
 ```
 
-`Surface` runs for every pixel before lighting. `s` already holds the standard surface built from the material's textures; you change what you want and leave the rest.
+`Surface` runs for every pixel before lighting. `p` already holds the material's inputs, built from its values and maps; you change what you want and leave the rest. `i` tells you about the point being shaded: its UVs, vertex colour, position and normals. It is read only.
 
 - Each property is read by declaring a `uniform` with the same name and a matching type.
 - `Graphite_View()` returns the camera's data. Its `time.x` is the time in seconds.
+- Emission is light the surface gives off: `emissionColor` times `emissionLuminance` in nits. At the default camera exposure, EV100 14, about 20000 nits shows as white, so 40000 glows past it and blooms.
 
 ## 4. Use it
 
@@ -88,6 +92,7 @@ public sealed class PulseSetup : Component
     {
         var material = new Material(PulseShader);
         material.SetColor("_GlowColor", new Color(0.1f, 0.6f, 1f, 1f));
+        material.SetColor("base_color", new Color(0.05f, 0.05f, 0.05f, 1f));
         material.SetFloat("_GlowSpeed", 4f);
         GetComponent<MeshRenderer>()!.Material = material;
     }

@@ -17,10 +17,13 @@ Render state commands go inside a `Pass`, before `GLSLPROGRAM`, in any order. An
 
 | Command | Values | Default |
 | --- | --- | --- |
-| `ZTest` | `Disabled`, `Never`, `Less`, `Equal`, `LessEqual`, `Greater`, `NotEqual`, `GreaterEqual`, `Always` | `LessEqual` |
+| `ZTest` | `Disabled`, `Never`, `Less`, `Equal`, `LessEqual`, `Greater`, `NotEqual`, `GreaterEqual`, `Always` | `GreaterEqual` |
 | `ZWrite` | `On`, `Off` | `On` |
 | `ZClip` | `On`, `Off` (clamp depth instead of clipping) | `On` |
-| `Offset factor units` | Depth bias, for example `Offset -1 -1` to pull toward the camera | none |
+| `Offset factor units` | Depth bias, for example `Offset 1 1` to pull toward the camera | none |
+
+> [!IMPORTANT]
+> Graphite uses **reversed Z**: depth is 1 at the near plane and falls toward 0 far away, so nearer surfaces have the **greater** depth. A normal depth test is `GreaterEqual`, `Less` passes only behind what is already drawn (for x-ray effects through walls), and a positive `Offset` pulls toward the camera. Leave `ZTest` out to get the renderer's default.
 
 ## Blending
 
@@ -65,7 +68,7 @@ Stencil
 | Command | Meaning |
 | --- | --- |
 | `Ref` | The reference value |
-| `ReadMask`, `WriteMask` | Bits compared, bits written |
+| `ReadMask`, `WriteMask` | Bits compared, bits written. Both 255 when left out |
 | `Comp` | `Never`, `Less`, `Equal`, `LessEqual`, `Greater`, `NotEqual`, `GreaterEqual`, `Always` |
 | `Pass` | What happens when stencil and depth both pass |
 | `Fail` | When the stencil test fails |

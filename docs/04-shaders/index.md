@@ -10,8 +10,8 @@ Prowl's shaders are `.shader` files in Graphite's **ShaderDef** format: a short,
 | | Surface shader | Hand-written passes |
 | --- | --- | --- |
 | You write | A `Surface` function, plus optional `Vertex` and `Lighting` blocks | Every pass: vertex and fragment code |
-| You get for free | Lighting, shadows, lightmaps, probes, decals, fog, normal maps, parallax, cutout and transparency | Only what you write |
-| Good for | Colour, normals, roughness, emission, alpha, vertex animation, custom lighting such as toon | Refraction, skies, anything that is not a lit surface |
+| You get for free | The OpenPBR surface with its coat, fuzz, subsurface and transmission, lighting, shadows, lightmaps, probes, decals, fog, normal maps, parallax, cutout and transparency | Only what you write |
+| Good for | Colour, normals, roughness, emission, opacity, vertex animation, custom lighting such as toon, skies | Screen effects, anything that is not a lit surface |
 
 Start with a surface shader. It now covers most effects; reach for passes when you need full control.
 
@@ -24,6 +24,7 @@ Shader "MyGame/Rim"
     {
         _RimColor("Rim Color", Color) = (0.3, 0.6, 1.0, 1.0)
         _RimPower("Rim Power", Float) = 3.0 [Range(0.5, 8)]
+        _RimLuminance("Rim Luminance", Float) = 20000.0
     }
 
     Surface "Lit"
@@ -31,11 +32,13 @@ Shader "MyGame/Rim"
         GLSLPROGRAM
         uniform vec4 _RimColor;
         uniform float _RimPower;
+        uniform float _RimLuminance;
 
-        void Surface(inout Graphite_SurfaceData s)
+        void Surface(inout PBR_Params p, Graphite_SurfaceData i)
         {
-            float rim = 1.0 - max(dot(s.Normal, s.ViewDir), 0.0);
-            s.Emission += _RimColor.rgb * pow(rim, _RimPower);
+            float rim = 1.0 - max(dot(p.geometryNormal, i.viewDir), 0.0);
+            p.emissionColor = _RimColor.rgb;
+            p.emissionLuminance = _RimLuminance * pow(rim, _RimPower);
         }
         ENDGLSL
     }
@@ -44,13 +47,15 @@ Shader "MyGame/Rim"
 }
 ```
 
+Light in Prowl is in real units, so emission is in nits. At the default camera exposure about 20000 nits shows as white, see [Exposure](../03-rendering/02-cameras-and-post-processing.md#exposure-and-physical-light).
+
 ## The workflow in the editor
 
 
 ![A shader open in the built-in code editor, with autocomplete showing](images/shader-editor.png)
 
 1. Create a shader from the project browser's create menu, or add a `.shader` file to your Assets folder.
-2. Open it in the built-in code editor, which autocompletes surface data fields and library functions.
+2. Open it in the built-in code editor, which autocompletes surface fields and library functions.
 3. Save. The shader reimports, and materials using it update.
 4. Create a material, pick your shader, and tune its properties in the inspector.
 

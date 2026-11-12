@@ -74,8 +74,11 @@ Attributes go after the default value, each in brackets.
 | `[Keyword(AXIS)]` | textures | Turns toggle `AXIS` on while a texture is set |
 | `[Toggle(AXIS)]` | Float, Integer | Turns toggle `AXIS` on while the value is not zero |
 | `[KeywordEnum(AXIS)]` | Integer | Sets enum `AXIS` to the value at that index |
+| `[TwoSided]` | Float, Integer | With `[Toggle(AXIS)]`: while the toggle is on the material draws both sides whatever its culling, back faces with the normal flipped |
+| `[Transmissive]` | Float, Integer | With `[Toggle(AXIS)]`: while the toggle is on the material draws as transparent through its `Transmission` pass |
+| `[Map]` | Texture2D | A texture with its own channel, UV set and rotation, see [Maps](#maps) |
 
-The last three connect properties to [variants](08-variants-and-globals.md), so a feature compiles in only while it is used:
+`Keyword`, `Toggle` and `KeywordEnum` connect properties to [variants](08-variants-and-globals.md), so a feature compiles in only while it is used:
 
 ```glsl
 Properties
@@ -85,22 +88,56 @@ Properties
 }
 ```
 
+A toggle several properties drive is on while any of them is. The Lit shader's `specular_roughness_anisotropy` and `coat_roughness_anisotropy` both drive `PBR_ANISOTROPY` this way.
+
+## Maps
+
+A `[Map]` texture carries more than its scale and offset: which channel a scalar input reads, which UV set it samples, and a rotation. The Lit shader's maps are all `[Map]` textures. In GLSL a map `X` gives you:
+
+| Name | Type | Meaning |
+| --- | --- | --- |
+| `X` | `sampler2D` | The texture |
+| `X_ST` | `vec4` | Scale in `xy`, offset in `zw` |
+| `X_Rotation` | `vec2` | The rotation's cosine and sine |
+| `X_Channel` | `int` | 0 to 3 for R to A |
+| `X_UV` | `int` | 0 for UV0, 1 for UV1 |
+| `X_Present` | `bool` | Whether a texture is set |
+
+Inside a surface function, `Graphite_StandardUV(X_UV, X_ST, X_Rotation, i)` gives the UV to sample:
+
+```glsl
+uniform float _Wear;
+uniform sampler2D _WearMap;   // declared as _WearMap("Wear Map", Texture2D) = "white" {} [Map]
+
+void Surface(inout PBR_Params p, Graphite_SurfaceData i)
+{
+    float wear = _Wear;
+    if (_WearMap_Present)
+        wear *= texture(_WearMap, Graphite_StandardUV(_WearMap_UV, _WearMap_ST, _WearMap_Rotation, i))[_WearMap_Channel];
+    p.specularRoughness = mix(p.specularRoughness, 0.9, wear);
+}
+```
+
 ## The material API
 
 ```csharp
 var material = new Material(myShader);
 
-material.SetFloat("_Roughness", 0.3f);
+material.SetFloat("specular_roughness", 0.3f);
 material.SetInt("_Steps", 8);
 material.SetColor("_Tint", new Color(0.8f, 0.2f, 0.1f, 1f));
 material.SetVector("_Wind", new Float4(1f, 0f, 0.5f, 0f));
 material.SetTexture("_MainTex", albedo);
 material.SetTextureScaleOffset("_MainTex", new Float4(4f, 4f, 0f, 0f));   // writes _MainTex_ST
+material.SetTextureChannel("_WearMap", 2);       // [Map] textures: read B
+material.SetTextureUVSet("_WearMap", 1);         // sample UV1
+material.SetTextureRotation("_WearMap", 0.5f);   // radians
 
 material.SetKeyword("_DETAIL", true);
-float roughness = material.GetFloat("_Roughness");
+float roughness = material.GetFloat("specular_roughness");
 ```
 
 - Changing a shared material asset changes every object that uses it. For a per-object value, `Clone()` the material and assign the copy, then dispose clones you no longer need.
 - `material.Surface` sets opaque, cutout or transparent, the blend and the culling. See [Transparency and screen effects](07-transparency-and-screen-effects.md).
 - `material.RenderQueue` and `material.CastShadows` override the shader's defaults.
+- A keyword the shader does not have, or a value its axis does not take, is kept on the material but ignored, with a warning in the console.
