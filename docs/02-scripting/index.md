@@ -3,7 +3,7 @@ title: Scripting
 description: Components, GameObjects, scenes and worlds, scene loading, input and async code in C#.
 ---
 
-Prowl scripts are C# on .NET 10, compiled in-process with Roslyn and hot-reloaded while the editor runs.
+Prowl scripts are C# on .NET 11, compiled in-process with Roslyn and hot-reloaded while the editor runs.
 
 - [Components](01-components.md)
 - [GameObjects and scenes](02-gameobjects-and-scenes.md)

@@ -7,7 +7,7 @@ Prowl.Runtime works on its own. If you would rather build a game in code, or emb
 
 ## Set up the project
 
-Create a console project targeting .NET 10, and reference `Prowl.Runtime` from your clone of the Prowl repository, as the samples do:
+Create a console project targeting .NET 11, and reference `Prowl.Runtime` from your clone of the Prowl repository, as the samples do:
 
 ```bash
 dotnet new console -n MyGame
@@ -17,7 +17,7 @@ dotnet new console -n MyGame
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Prowl\Prowl.Runtime\Prowl.Runtime.csproj" />

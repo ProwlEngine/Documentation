@@ -5,7 +5,7 @@ description: Requirements, downloading a release and building from source.
 
 ## Requirements
 
-- The [.NET 10 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/10.0)
+- The [.NET 11 SDK](https://dotnet.microsoft.com/en-us/download/dotnet/11.0)
 - A GPU and driver with Vulkan 1.2 support
 - Windows, Linux or macOS. On macOS Prowl runs through MoltenVK.
 
