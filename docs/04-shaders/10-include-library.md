@@ -50,32 +50,30 @@ Project includes are inlined on import, each file once. `#pragma once` works.
 | `depth` | Near plane, far distance |
 | `exposure` | This frame's exposure in `x`, last frame's in `y` |
 
-## Graphite/Lighting.glsl
+## Lighting
 
-Fragment stage. Includes Lights, Probes, Ambient and Fog. A shader needing less can include only its part.
+`Graphite/Lighting.glsl` is fragment stage. It includes Lights, Ambient, Probes and Fog. Include only the part you need.
 
-| File | Gives |
-| --- | --- |
-| `Graphite/Lights.glsl` | `Graphite_DirectionalCount()`, `Graphite_GetDirectional(i)` (the sun at 0), `Graphite_DirectionalLightShadow(light, i, pos, geomN)`, `Graphite_BeginLights(pos)` and `Graphite_NextLight(it, L)` to walk the local lights reaching a point, `Graphite_LightRadiance(L)`, `Graphite_LocalLightShadow(L, pos, geomN)` |
-| `Graphite/Ambient.glsl` | `Graphite_IndirectDiffuse(N, lightmapUV)` (lightmap, probes or ambient), `Graphite_AmbientLight(N)`, `Graphite_SkyAmbient(N)` |
-| `Graphite/Probes.glsl` | `Graphite_FindProbes(pos)`, `Graphite_ProbeRadiance(set, N, V, alpha)`, `Graphite_SampleSkyProbe(dir, roughness)` |
-| `Graphite/Fog.glsl` | `Graphite_ApplyFog(color, pos)` (fog and volumetric fog), `Graphite_FogColor(pos)` |
-| `Graphite/Shadows.glsl` | The shadow atlas. Define `GRAPHITE_HARD_SHADOWS` before including it to take every shadow hard |
+| Include | What it gives | Key calls |
+| --- | --- | --- |
+| `Graphite/Lights.glsl` | Sun and local lights | `Graphite_GetDirectional(i)` (the sun is 0), `Graphite_DirectionalLightShadow(light, i, pos, geomN)`, `Graphite_BeginLights(pos)`, `Graphite_NextLight(it, L)`, `Graphite_LightRadiance(L)`, `Graphite_LocalLightShadow(L, pos, geomN)` |
+| `Graphite/Ambient.glsl` | Indirect light | `Graphite_IndirectDiffuse(N, lightmapUV)`, `Graphite_AmbientLight(N)`, `Graphite_SkyAmbient(N)` |
+| `Graphite/Probes.glsl` | Reflection probes | `Graphite_FindProbes(pos)`, `Graphite_ProbeRadiance(set, N, V, alpha)`, `Graphite_SampleSkyProbe(dir, roughness)` |
+| `Graphite/Fog.glsl` | Fog and volumetric fog | `Graphite_ApplyFog(color, pos)`, `Graphite_FogColor(pos)` |
+| `Graphite/Shadows.glsl` | The shadow atlas | Define `GRAPHITE_HARD_SHADOWS` before including to make every shadow hard |
 
 ## Graphite/PBR
 
-The OpenPBR model the Lit shader uses.
+The OpenPBR model the Lit shader uses. `Closure.glsl` includes Lighting.glsl and the other PBR files.
 
-| File | Gives |
-| --- | --- |
-| `Graphite/PBR/Closure.glsl` | Includes Lighting.glsl and the rest below. `PBR_Prepare(p, pos, V, geomN, mapVariance)`, `PBR_ShadeLights(c)`, `PBR_EvaluateLight(c, l)`, `PBR_EvaluateDiffuse(c, L)`, `PBR_EvaluateSpecular(c, L)`, `PBR_EvaluateAmbient(c, i)`, `PBR_FindProbes(c)`, `PBR_GatherIndirect(c, lightmapUV, probes)`, `PBR_TopReflectance(c, out normal, out roughness)` |
-| `Graphite/PBR/Params.glsl` | `PBR_Params` and `PBR_DefaultParams(normal, tangent)` |
-| `Graphite/PBR/Microfacet.glsl` | `PBR_Alpha`, `PBR_DistributionGGX`, `PBR_VisibilitySmithGGX` and anisotropic versions |
-| `Graphite/PBR/Fresnel.glsl` | `PBR_FresnelDielectric`, `PBR_FresnelF82` |
-| `Graphite/PBR/Diffuse.glsl` | `PBR_Eon`, the energy preserving Oren-Nayar diffuse |
-| `Graphite/PBR/Fuzz.glsl`, `ThinFilm.glsl`, `Transmission.glsl` | The optional layers |
+| Include | What it gives | Key calls |
+| --- | --- | --- |
+| `Graphite/PBR/Closure.glsl` | The full lit surface | `PBR_Prepare(p, pos, V, geomN, mapVariance)`, `PBR_ShadeLights(c)`, `PBR_FindProbes(c)`, `PBR_GatherIndirect(c, lightmapUV, probes)`, `PBR_TopReflectance(c, out normal, out roughness)` |
+| `Graphite/PBR/Params.glsl` | The material inputs | `PBR_Params`, `PBR_DefaultParams(normal, tangent)` |
+| `Graphite/PBR/Microfacet.glsl`, `Fresnel.glsl`, `Diffuse.glsl` | Specular, Fresnel and diffuse terms | `PBR_DistributionGGX`, `PBR_VisibilitySmithGGX`, `PBR_FresnelDielectric`, `PBR_Eon` |
+| `Graphite/PBR/Fuzz.glsl`, `ThinFilm.glsl`, `Transmission.glsl` | The optional layers | |
 
-Define `GRAPHITE_CUSTOM_BRDF` or `GRAPHITE_CUSTOM_AMBIENT_BRDF` before including `Closure.glsl` to supply `Graphite_BRDF` or `Graphite_AmbientBRDF` yourself. Surface Lighting blocks do this for you, see [Custom lighting](06-custom-lighting.md).
+Define `GRAPHITE_CUSTOM_BRDF` or `GRAPHITE_CUSTOM_AMBIENT_BRDF` before including `Closure.glsl` to supply `Graphite_BRDF` or `Graphite_AmbientBRDF`. Surface Lighting blocks do this for you, see [Custom lighting](06-custom-lighting.md).
 
 ## Surface and screen
 

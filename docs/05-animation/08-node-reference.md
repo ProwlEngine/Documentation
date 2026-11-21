@@ -3,1061 +3,225 @@ title: Node reference
 description: Every built-in animation graph node, with its inputs and settings.
 ---
 
-Prowl ships 84 graph node types. They are grouped here like the editor's add menu. Three are hidden from that menu: Graph Output, State Output and Parameter. In saved graphs and the CLI, each node has the id shown in its table.
+Prowl has 84 graph nodes, grouped like the editor's add menu. Three are hidden from that menu: Graph Output, State Output and Parameter.
+
+How to read the tables:
+
+- A setting marked `*` is a number that can also be wired as a pin. It is listed under Settings only.
+- "(many)" means the pin repeats. Some carry a value, such as a weight.
+
+![The Clip node in the graph editor](images/nodes/clip.png)
 
 > [!TIP]
-> Your own nodes appear in the add menu too: any class deriving from `AnimationGraphNode` with a parameterless constructor is found automatically.
+> Your own nodes show up in the add menu too. Any class that derives from `AnimationGraphNode` and has a parameterless constructor is found automatically.
 
 ## Sources
 
 Where poses come from.
 
-### Animation Pose
-
-![The Animation Pose node in the graph editor](images/nodes/animation-pose.png)
-
-Samples one clip at a time a value node picks, with no clock of its own.
-
-| | |
-| --- | --- |
-| Id | `motion.animationPose` |
-| Inputs | Time |
-| Settings | Clip |
-
-### Clip
-
-![The Clip node in the graph editor](images/nodes/clip.png)
-
-Plays one animation clip.
-
-| | |
-| --- | --- |
-| Id | `motion.clip` |
-| Inputs | Reverse, Restart |
-| Settings | Clip, Looping, Speed, Start, Random Start |
-
-### External Pose
-
-![The External Pose node in the graph editor](images/nodes/external-pose.png)
-
-A pose the game writes in each frame: a ragdoll, a hit reaction, a tracked performer.
-
-| | |
-| --- | --- |
-| Id | `motion.externalPose` |
-| Inputs | None |
-| Settings | Source, Mode |
-
-### Graph Output
-
-![The Graph Output node in the graph editor](images/nodes/graph-output.png)
-
-What an embedded sub graph plays.
-
-| | |
-| --- | --- |
-| Id | `motion.graphOutput` |
-| Inputs | Pose |
-| Settings | None |
-
-### Graph Slot
-
-![The Graph Slot node in the graph editor](images/nodes/graph-slot.png)
-
-A named hole the game plugs a running graph into, falling back to its input.
-
-| | |
-| --- | --- |
-| Id | `motion.externalGraphSlot` |
-| Inputs | Fallback |
-| Settings | None |
-
-### Reference Pose
-
-![The Reference Pose node in the graph editor](images/nodes/reference-pose.png)
-
-The rig as it was authored.
-
-| | |
-| --- | --- |
-| Id | `motion.referencePose` |
-| Inputs | None |
-| Settings | None |
-
-### Sub Graph
-
-![The Sub Graph node in the graph editor](images/nodes/sub-graph.png)
-
-Runs another graph as one node, either its own nodes or a graph asset. An asset's parameters are ports: wire in what each should read, or leave one at its default.
-
-| | |
-| --- | --- |
-| Id | `motion.subGraph` |
-| Inputs | None |
-| Settings | Graph asset or embedded nodes |
-
-### Zero Pose
-
-![The Zero Pose node in the graph editor](images/nodes/zero-pose.png)
-
-The additive identity: no rotation, no translation.
-
-| | |
-| --- | --- |
-| Id | `motion.zeroPose` |
-| Inputs | None |
-| Settings | None |
+| Node | Does | Inputs | Settings |
+| --- | --- | --- | --- |
+| Animation Pose | Shows a clip at the time you wire in. It has no clock of its own. | Time | Clip |
+| Clip | Plays one animation clip. | Reverse, Restart | Clip, Looping, Speed, Start, Random Start, Seed |
+| External Pose | Shows a pose the game writes each frame, such as a ragdoll. | | Name, Source, Mode |
+| Graph Output (hidden) | Holds the pose an embedded sub graph plays. | Pose | |
+| Graph Slot | A named slot the game can plug a graph into. Empty slots play Fallback. | Fallback | Slot |
+| Reference Pose | The rig as it was authored. | | |
+| Sub Graph | Runs another graph as one node. An asset's parameters appear as pins. | | Embedded, Graph |
+| Zero Pose | A pose with no turn and no movement, for use as a base to add onto. | | |
 
 ## Logic
 
 State machines and nodes that choose between poses.
 
-### Choose Pose at Random
-
-![The Choose Pose at Random node in the graph editor](images/nodes/choose-pose-at-random.png)
-
-Picks one input at random each time it starts. Each input carries its weight.
-
-| | |
-| --- | --- |
-| Id | `motion.randomSelector` |
-| Inputs | Poses |
-| Settings | None |
-
-### Choose Pose by Condition
-
-![The Choose Pose by Condition node in the graph editor](images/nodes/choose-pose-by-condition.png)
-
-Shows the first input whose condition reads true.
-
-| | |
-| --- | --- |
-| Id | `motion.conditionSelector` |
-| Inputs | Pose, Condition |
-| Settings | None |
-
-### Choose Pose by Index
-
-![The Choose Pose by Index node in the graph editor](images/nodes/choose-pose-by-index.png)
-
-Shows whichever input an integer picks.
-
-| | |
-| --- | --- |
-| Id | `motion.selector` |
-| Inputs | Index, Poses |
-| Settings | None |
-
-### Sequence
-
-![The Sequence node in the graph editor](images/nodes/sequence.png)
-
-Plays its inputs one after another.
-
-| | |
-| --- | --- |
-| Id | `motion.sequence` |
-| Inputs | Poses |
-| Settings | Loop |
-
-### State Done
-
-![The State Done node in the graph editor](images/nodes/state-done.png)
-
-True once the current state has played through, or has run for a while. Inside a state, it reads that state's machine unless wired.
-
-| | |
-| --- | --- |
-| Id | `motion.stateFinished` |
-| Inputs | State Machine |
-| Settings | By, Threshold, Seconds |
-
-### State Machine
-
 ![The State Machine node in the graph editor](images/nodes/state-machine.png)
 
-States and the transitions between them.
+| Node | Does | Inputs | Settings |
+| --- | --- | --- | --- |
+| Choose Pose at Random | Picks one pose at random each time it starts. Each pose has a weight. | Poses (many) | Seed |
+| Choose Pose by Condition | Plays the first pose whose condition is true. | Pose, Condition (many) | |
+| Choose Pose by Index | Plays the pose that a whole number picks. | Index, Poses (many) | |
+| Sequence | Plays its poses one after another. | Poses (many) | Loop |
+| State Done | True when the current state has finished, or has run long enough. | State Machine | By, Threshold, Seconds |
+| State Machine | Holds states and the moves between them. | | |
+| State Output (hidden) | Sets what a state plays, and when it can be entered or left. | Enter, Exit, Pose | |
+| State Query | Reports how long a state machine has been in its state, or how far through it is. | State Machine | Query |
 
-| | |
-| --- | --- |
-| Id | `motion.stateMachine` |
-| Inputs | None |
-| Settings | None |
-
-### State Output
-
-![The State Output node in the graph editor](images/nodes/state-output.png)
-
-What a state plays, whether it wants to be entered, and whether it is willing to be left.
-
-| | |
-| --- | --- |
-| Id | `motion.stateOutput` |
-| Inputs | Enter, Exit, Pose |
-| Settings | None |
-
-### State Query
-
-![The State Query node in the graph editor](images/nodes/state-query.png)
-
-How long a state machine has been in its state, or how far through it is. Inside a state, it reads that state's machine unless wired.
-
-| | |
-| --- | --- |
-| Id | `motion.stateQuery` |
-| Inputs | State Machine |
-| Settings | Query |
+Inside a state, State Done and State Query use that state's machine unless you wire one in.
 
 ## Blending
 
 Mixing poses together.
 
-### Blend 1D
-
 ![The Blend 1D node in the graph editor](images/nodes/blend-1d.png)
 
-Blends a line of poses by one number. Each input carries its threshold. The clips under it follow its timeline rather than their own looping.
+| Node | Does | Inputs | Settings |
+| --- | --- | --- | --- |
+| Blend 1D | Blends poses by one number. Each pose has a threshold. | Parameter, Poses (many) | Loop |
+| Blend 2D | Blends poses by two numbers. Each pose has a position. | X, Y, Poses (many) | Loop |
+| Crossfade | Fades to the On pose when Active turns true, and back when it turns false. | Off, On, Active | Seconds, Easing |
+| Layer | Blends a layer over a base pose, or adds it on top. | Base, Layer, Mask | Weight*, Additive |
+| Layer Stack | Stacks layers over a base pose, each with a weight and mask. | Base, Layer, Weight, Mask (many) | Base Root Motion Only |
+| Make Additive | Turns a pose into its difference from a reference pose. | Pose, Reference | |
+| Muscle Layer | Layers poses by muscle instead of by bone. Needs a humanoid Avatar. | Base, Layer, Weight, Reference | Additive, Mask |
+| Velocity Blend | Blends travelling clips by the speed each one covers. | Speed, Poses (many) | Loop |
+| Weighted Blend | Mixes poses by weight. The weights are scaled to add up to 1. | Pose, Weight (many) | |
 
-| | |
-| --- | --- |
-| Id | `motion.blend1d` |
-| Inputs | Parameter, Poses |
-| Settings | Loop |
-
-### Blend 2D
-
-![The Blend 2D node in the graph editor](images/nodes/blend-2d.png)
-
-Blends a field of poses by two numbers. Each input carries its position. The clips under it follow its timeline rather than their own looping.
-
-| | |
-| --- | --- |
-| Id | `motion.blend2d` |
-| Inputs | X, Y, Poses |
-| Settings | Loop |
-
-### Crossfade
-
-![The Crossfade node in the graph editor](images/nodes/crossfade.png)
-
-Fades from one pose to the other as a flag turns on, and back as it turns off.
-
-| | |
-| --- | --- |
-| Id | `motion.crossfade` |
-| Inputs | Off, On, Active |
-| Settings | Seconds, Easing |
-
-### Layer
-
-![The Layer node in the graph editor](images/nodes/layer.png)
-
-Blends a layer over a base pose through an optional mask, or adds it on top.
-
-| | |
-| --- | --- |
-| Id | `motion.layer` |
-| Inputs | Base, Layer, Mask |
-| Settings | Mask, Additive |
-
-### Layer Stack
-
-![The Layer Stack node in the graph editor](images/nodes/layer-stack.png)
-
-A stack of layers over a base pose, each with its own weight, mask and additive flag.
-
-| | |
-| --- | --- |
-| Id | `motion.layerBlend` |
-| Inputs | Base, Layer, Weight, Mask |
-| Settings | Mask, Base Root Motion Only |
-
-### Make Additive
-
-![The Make Additive node in the graph editor](images/nodes/make-additive.png)
-
-Turns a pose into the difference from a reference.
-
-| | |
-| --- | --- |
-| Id | `motion.makeAdditive` |
-| Inputs | Pose, Reference |
-| Settings | None |
-
-### Muscle Layer
-
-![The Muscle Layer node in the graph editor](images/nodes/muscle-layer.png)
-
-Layers in muscle space, so the body keeps its meaning where a bone blend would not.
-
-> [!NOTE]
-> Requires a humanoid Avatar.
-
-| | |
-| --- | --- |
-| Id | `motion.muscleLayer` |
-| Inputs | Base, Layer, Weight, Reference |
-| Settings | Additive, Mask |
-
-### Velocity Blend
-
-![The Velocity Blend node in the graph editor](images/nodes/velocity-blend.png)
-
-Blends travelling clips by the speed each one actually covers. The clips under it follow its timeline rather than their own looping.
-
-| | |
-| --- | --- |
-| Id | `motion.velocityBlend` |
-| Inputs | Speed, Poses |
-| Settings | Loop |
-
-### Weighted Blend
-
-![The Weighted Blend node in the graph editor](images/nodes/weighted-blend.png)
-
-Mixes any number of poses by weight, normalized across them.
-
-| | |
-| --- | --- |
-| Id | `motion.weightedBlend` |
-| Inputs | Pose, Weight |
-| Settings | None |
+Blend 1D, Blend 2D and Velocity Blend play their clips on their own timeline, so each clip's own looping is ignored.
 
 ## Locomotion
 
 Making travel, turning and footwork look right.
 
-### Character Motion
-
-![The Character Motion node in the graph editor](images/nodes/character-motion.png)
-
-How the character is moving and turning, read from where it goes each frame.
-
-| | |
-| --- | --- |
-| Id | `motion.characterMotion` |
-| Inputs | None |
-| Settings | Read, Smoothing |
-
-### Foot Grounding
-
-![The Foot Grounding node in the graph editor](images/nodes/foot-grounding.png)
-
-Moves the feet by the height of the ground under them, drops the hips so both legs reach, and tilts planted feet onto slopes. The ground is found by the node, or wired in as world heights.
-
-> [!NOTE]
-> Requires a humanoid Avatar.
-
-| | |
-| --- | --- |
-| Id | `motion.footGrounding` |
-| Inputs | Pose, Left Y, Right Y, Weight, Left Normal (optional), Right Normal (optional) |
-| Settings | Find Ground, Adjust Hips, Max Step Up, Max Step Down, Foot Smoothing, Hips Smoothing, Max Foot Angle, Foot Lift Height |
-
-### Foot Lock
-
-![The Foot Lock node in the graph editor](images/nodes/foot-lock.png)
-
-Pins a planted foot in world space so it stops sliding.
-
-| | |
-| --- | --- |
-| Id | `motion.footLock` |
-| Inputs | Pose, Locked |
-| Settings | Upper, Mid, End |
-
-### Orientation Warp
-
-![The Orientation Warp node in the graph editor](images/nodes/orientation-warp.png)
-
-Bends a travelling clip so it heads where it is steered: toward a direction, or by an angle in degrees.
-
-| | |
-| --- | --- |
-| Id | `motion.orientationWarp` |
-| Inputs | Pose, Direction, Degrees |
-| Settings | Steer By |
-
-### Root Motion
-
-![The Root Motion node in the graph editor](images/nodes/root-motion.png)
-
-Keeps, scales and caps the root motion: which channels survive, how much travel and turn, and how fast either may go.
-
-| | |
-| --- | --- |
-| Id | `motion.rootMotionFilter` |
-| Inputs | Pose |
-| Settings | Keep, Travel Scale, Turn Scale, Max Speed, Max Turn |
-
-### Stride Warp
-
-![The Stride Warp node in the graph editor](images/nodes/stride-warp.png)
-
-Bends playback rate so the clip covers ground at the speed asked for.
-
-| | |
-| --- | --- |
-| Id | `motion.strideWarp` |
-| Inputs | Pose, Speed |
-| Settings | Natural Speed, Min Scale, Max Scale |
-
-### Target Warp
-
-![The Target Warp node in the graph editor](images/nodes/target-warp.png)
-
-Stretches a clip's travel so it lands on a displacement.
-
-| | |
-| --- | --- |
-| Id | `motion.targetWarp` |
-| Inputs | Pose, Displacement |
-| Settings | None |
-
-### Turn Warp
-
-![The Turn Warp node in the graph editor](images/nodes/turn-warp.png)
-
-Makes a clip that turns on the spot turn by the angle asked, in degrees, read when it starts.
-
-| | |
-| --- | --- |
-| Id | `motion.turnWarp` |
-| Inputs | Pose, Degrees |
-| Settings | None |
+| Node | Does | Inputs | Settings |
+| --- | --- | --- | --- |
+| Character Motion | Reads how the character moves and turns, from where it goes each frame. | | Read, Smoothing |
+| Foot Grounding | Puts feet on the ground, lowers the hips, and tilts feet onto slopes. Needs a humanoid Avatar. | Pose, Left Y, Right Y, Weight, Left Normal (optional), Right Normal (optional) | Find Ground, Max Step Up, Max Step Down, Adjust Hips, Foot Smoothing, Hips Smoothing, Max Foot Angle, Foot Lift Height |
+| Foot Lock | Pins a planted foot in place so it does not slide. | Pose, Locked | Upper, Mid, End |
+| Orientation Warp | Turns a travelling clip toward a direction, or by an angle in degrees. | Pose, Direction, Degrees | Steer By |
+| Root Motion | Keeps, scales and caps root motion. | Pose | Keep, Travel Scale*, Turn Scale*, Max Speed*, Max Turn* |
+| Stride Warp | Changes playback speed so the clip covers ground at the speed you ask for. | Pose, Speed | Natural Speed*, Min Scale*, Max Scale* |
+| Target Warp | Stretches a clip's travel so it ends at a given offset. | Pose, Displacement | |
+| Turn Warp | Makes an on-the-spot turn clip turn by a given angle in degrees, read when it starts. | Pose, Degrees | |
 
 ## Rig
 
 IK, constraints, secondary motion and ragdolls.
 
-### Aim Constraint
-
-![The Aim Constraint node in the graph editor](images/nodes/aim-constraint.png)
-
-Points one bone's axis at a target.
-
-| | |
-| --- | --- |
-| Id | `motion.aimConstraint` |
-| Inputs | Pose, Target |
-| Settings | Bone |
-
-### Copy Transform
-
-![The Copy Transform node in the graph editor](images/nodes/copy-transform.png)
-
-Puts a bone where another bone is, or where a target says.
-
-| | |
-| --- | --- |
-| Id | `motion.copyConstraint` |
-| Inputs | Pose, Target |
-| Settings | Bone, Source, From, Channels |
-
-### IK Rig
-
-![The IK Rig node in the graph editor](images/nodes/ik-rig.png)
-
-Solves several effectors at once. Each input names its effector and its bone chain.
-
-| | |
-| --- | --- |
-| Id | `motion.ikRig` |
-| Inputs | Pose, Target, Weight |
-| Settings | None |
-
-### Look At
-
-![The Look At node in the graph editor](images/nodes/look-at.png)
-
-Turns the spine, head and eyes toward a target.
-
-| | |
-| --- | --- |
-| Id | `motion.lookAt` |
-| Inputs | Pose, Target |
-| Settings | Clamp, Body, Head, Eyes, Weight |
-
-### Ragdoll
-
-![The Ragdoll node in the graph editor](images/nodes/ragdoll.png)
-
-Makes a physics ragdoll of the humanoid that follows the pose, and shows the pose it took. Muscles turn the joints toward the animation, the pin holds every part or only the hips to it. Active 1 follows the animation, 0 goes limp. Blend sets how much of the ragdoll pose is shown.
-
-| | |
-| --- | --- |
-| Id | `motion.ragdoll` |
-| Inputs | Pose, Active |
-| Settings | Active, Muscle Strength, Pin Strength, Pinning, Blend, Total Mass, Hands and Feet |
-
-### Spring Bones
-
-![The Spring Bones node in the graph editor](images/nodes/spring-bones.png)
-
-Gives a chain secondary motion that lags and settles.
-
-| | |
-| --- | --- |
-| Id | `motion.springBones` |
-| Inputs | Pose |
-| Settings | Root, Stiffness, Damping |
-
-### Twist Distribution
-
-![The Twist Distribution node in the graph editor](images/nodes/twist-distribution.png)
-
-Spreads a bone's roll across twist bones. Write the twist bones as "bone:share" pairs.
-
-| | |
-| --- | --- |
-| Id | `motion.twistDistribution` |
-| Inputs | Pose |
-| Settings | Driver, Twist, Axis |
-
-### Two Bone IK
-
 ![The Two Bone IK node in the graph editor](images/nodes/two-bone-ik.png)
 
-Bends a limb so its end reaches a target. Weight is a pin. Wire a number into it, or leave it unwired and type a value on the node.
+| Node | Does | Inputs | Settings |
+| --- | --- | --- | --- |
+| Aim Constraint | Points a bone's axis at a target. | Pose, Target | Bone, Axis |
+| Copy Transform | Copies a bone's or a target's transform onto a bone. | Pose, Target | Bone, From, Source, Channels |
+| IK Rig | Reaches with several bone chains at once. Each target names its chain. | Pose, Target, Weight (many) | |
+| Look At | Turns the spine, head and eyes toward a target. | Pose, Target | Clamp*, Body*, Head*, Eyes*, Weight* |
+| Ragdoll | Runs a physics ragdoll of the humanoid that follows the pose, and outputs its pose. | Pose | Active*, Muscle Strength*, Pin Strength*, Pinning, Blend*, Total Mass, Hands and Feet |
+| Spring Bones | Gives a bone chain a springy lag that settles. | Pose | Root, Count, Stiffness*, Damping*, Gravity |
+| Twist Distribution | Spreads a bone's roll across twist bones. | Pose | Driver, Twist, Axis |
+| Two Bone IK | Bends a limb so its end reaches a target. | Pose, Target | Upper, Mid, End, Weight* |
 
-| | |
-| --- | --- |
-| Id | `motion.twoBoneIK` |
-| Inputs | Pose, Target, Weight |
-| Settings | Upper, Mid, End |
+- Ragdoll: Active is 1 to follow the animation and 0 to go limp. Blend sets how much of the ragdoll pose shows. Pinning holds every part or only the hips to the animation.
+- Twist Distribution: write Twist as "bone:share" pairs.
+- Two Bone IK: Weight is one pin. Wire a number into it, or leave it unwired and type a value on the node.
 
 ## Modify
 
 Changing a pose after it is made.
 
-### Inertial Blend
-
-![The Inertial Blend node in the graph editor](images/nodes/inertial-blend.png)
-
-Smooths a sudden pose change out over time.
-
-| | |
-| --- | --- |
-| Id | `motion.inertialBlend` |
-| Inputs | Pose, Trigger |
-| Settings | Seconds |
-
-### Mirror
-
-![The Mirror node in the graph editor](images/nodes/mirror.png)
-
-Swaps left and right, while Enabled reads true or is left unwired.
-
-| | |
-| --- | --- |
-| Id | `motion.mirror` |
-| Inputs | Pose, Enabled |
-| Settings | None |
-
-### Passthrough
-
-![The Passthrough node in the graph editor](images/nodes/passthrough.png)
-
-Hands its input straight on, for keeping a graph tidy.
-
-| | |
-| --- | --- |
-| Id | `motion.passthrough` |
-| Inputs | Pose |
-| Settings | None |
-
-### Pose Smoothing
-
-![The Pose Smoothing node in the graph editor](images/nodes/pose-smoothing.png)
-
-Damps the pose so it lags and settles.
-
-| | |
-| --- | --- |
-| Id | `motion.poseSmoothing` |
-| Inputs | Pose |
-| Settings | Half Life |
-
-### Pose Snapshot
-
-![The Pose Snapshot node in the graph editor](images/nodes/pose-snapshot.png)
-
-Freezes the pose while a flag reads true.
-
-| | |
-| --- | --- |
-| Id | `motion.poseSnapshot` |
-| Inputs | Pose, Hold |
-| Settings | None |
-
-### Speed Scale
-
-![The Speed Scale node in the graph editor](images/nodes/speed-scale.png)
-
-Plays its input faster or slower.
-
-| | |
-| --- | --- |
-| Id | `motion.speedScale` |
-| Inputs | Pose |
-| Settings | Speed |
+| Node | Does | Inputs | Settings |
+| --- | --- | --- | --- |
+| Inertial Blend | Smooths a sudden pose change over time. | Pose, Trigger | Seconds |
+| Mirror | Swaps left and right while Enabled is true, or when it is unwired. | Pose, Enabled | |
+| Passthrough | Passes its input on unchanged, to keep a graph tidy. | Pose | |
+| Pose Smoothing | Smooths the pose so it lags and settles. | Pose | Half Life* |
+| Pose Snapshot | Freezes the pose while Hold is true. | Pose, Hold | |
+| Speed Scale | Plays its input faster or slower. | Pose | Speed* |
 
 ## Masks
 
 Per-bone weights for layers.
 
-### Blend Masks
-
-![The Blend Masks node in the graph editor](images/nodes/blend-masks.png)
-
-Mixes two masks by a number.
-
-| | |
-| --- | --- |
-| Id | `motion.maskBlend` |
-| Inputs | A, B, Blend |
-| Settings | None |
-
-### Bone Mask
-
-![The Bone Mask node in the graph editor](images/nodes/bone-mask.png)
-
-A mask seeded from bones and their weights, spread down the hierarchy. Bones no seed reaches take the rest weight.
-
-| | |
-| --- | --- |
-| Id | `motion.boneMask` |
-| Inputs | None |
-| Settings | Rest Weight |
-
-### Choose Mask
-
-![The Choose Mask node in the graph editor](images/nodes/choose-mask.png)
-
-Picks whichever mask an integer chooses.
-
-| | |
-| --- | --- |
-| Id | `motion.maskSelector` |
-| Inputs | Index, Masks |
-| Settings | None |
-
-### Mask Asset
-
-![The Mask Asset node in the graph editor](images/nodes/mask-asset.png)
-
-A mask saved as an asset.
-
-| | |
-| --- | --- |
-| Id | `motion.maskAsset` |
-| Inputs | None |
-| Settings | None |
+| Node | Does | Inputs | Settings |
+| --- | --- | --- | --- |
+| Blend Masks | Mixes two masks by a number. | A, B, Blend | |
+| Bone Mask | Builds a mask from bones and weights, spread down the hierarchy. Other bones get the rest weight. | | Bones, Rest Weight |
+| Choose Mask | Picks the mask that a whole number chooses. | Index, Masks (many) | |
+| Mask Asset | Uses a mask saved as an asset. | | Mask |
 
 ## Channels
 
-Scalar channels carried with a pose, for corrective shapes.
+Number channels carried with a pose, used for corrective shapes.
 
-### Drive Channels
-
-![The Drive Channels node in the graph editor](images/nodes/drive-channels.png)
-
-Writes scalar channels onto a pose. Each input names the channel it drives.
-
-| | |
-| --- | --- |
-| Id | `motion.channelLayer` |
-| Inputs | Pose, Value |
-| Settings | Mode |
-
-### Driven Channel
-
-![The Driven Channel node in the graph editor](images/nodes/driven-channel.png)
-
-Drives a channel from how far a bone has turned, for a corrective shape.
-
-| | |
-| --- | --- |
-| Id | `motion.drivenChannel` |
-| Inputs | Pose |
-| Settings | Bone, From, To |
-
-### Read Channel
-
-![The Read Channel node in the graph editor](images/nodes/read-channel.png)
-
-Reads a scalar channel out of a pose.
-
-| | |
-| --- | --- |
-| Id | `motion.poseChannel` |
-| Inputs | Pose |
-| Settings | Default |
+| Node | Does | Inputs | Settings |
+| --- | --- | --- | --- |
+| Drive Channels | Writes number channels onto a pose. Each input names its channel. | Pose, Value (many) | Mode |
+| Driven Channel | Sets a channel from how far a bone has turned. | Pose | Bone, Channel, From, To |
+| Read Channel | Reads a number channel from a pose. | Pose | Channel, Default |
 
 ## Events
 
-Reading the markers authored on clips.
+Reading the markers set on clips.
 
-### Event Fired
-
-![The Event Fired node in the graph editor](images/nodes/event-fired.png)
-
-True on a frame the clip fired one of these named events.
-
-| | |
-| --- | --- |
-| Id | `motion.idEvent` |
-| Inputs | None |
-| Settings | Match All |
-
-### Foot Phase
-
-![The Foot Phase node in the graph editor](images/nodes/foot-phase.png)
-
-True while the clip says a foot is in the chosen phase.
-
-| | |
-| --- | --- |
-| Id | `motion.footEvent` |
-| Inputs | None |
-| Settings | Phase |
-
-### Transition Window
-
-![The Transition Window node in the graph editor](images/nodes/transition-window.png)
-
-True while the clip marks a good moment to leave it.
-
-| | |
-| --- | --- |
-| Id | `motion.transitionEvent` |
-| Inputs | None |
-| Settings | Rule |
+| Node | Does | Inputs | Settings |
+| --- | --- | --- | --- |
+| Event Fired | True on a frame when the clip fires one of the named events. | | Names, Match All |
+| Foot Phase | True while the clip says a foot is in the chosen phase. | | Phase |
+| Transition Window | True while the clip marks a good moment to leave it. | | Rule, Require Id |
 
 ## Values
 
 Numbers, flags, vectors and targets that drive other nodes.
 
-### Angle
+| Node | Does | Inputs | Settings |
+| --- | --- | --- | --- |
+| Angle | Wraps or flips an angle in degrees. | Degrees | Op |
+| Choose Number | Gives the value of the first true condition, or Default. | Condition, Value (many) | Default*, Ease Time, Easing |
+| Compare | Tests two numbers against each other. | A, B | Op |
+| Curve | Passes a number through a curve. | Value | Curve |
+| Ease | Moves smoothly toward its input instead of jumping. | Value | Seconds, Easing, Use Start Value, Start Value |
+| Flag | A fixed true or false. | | Value |
+| Hold Value | Reads its input once and keeps that value. | Value, Sample | Mode |
+| In Range | True while a number is between two bounds. | Value | Min, Max, Inclusive |
+| Logic | Combines flags with And, Or or Not. | A, B | Op |
+| Make Vector | Builds a vector from three numbers. | X, Y, Z | |
+| Maths | Combines two numbers, or changes one. | A, B | Op |
+| Name | A fixed name, for matching events and states. | | Value |
+| Name Matches | Tests a name against a list of names. | Name | Comparison, Names |
+| Name To Number | Gives the number that sits beside the matching name in a list. | Name | Names, Values, Default |
+| Negate Vector | Flips a vector to point the other way. | Vector | |
+| Noise | A slowly wandering number, for idle variety. | | Frequency, Amplitude, Seed, Octaves |
+| Number | A fixed number. | | Value |
+| Offset Target | Shifts and turns a target by a fixed amount. | Target | Rotation, Translation |
+| Parameter (hidden) | Reads a value the game sets on the animator. | | Name |
+| Remap | Maps a number from one range onto another. With Clamp on, it stops at the ends. | Value | In Min, In Max, Out Min, Out Max, Clamp |
+| Spring | Follows its input like a spring, so it never jumps. | Value | Frequency, Damping |
+| Target Info | Reads one fact from a target, such as its point or distance. | Target | Info |
+| Timer | Counts seconds. Loop is the loop length in seconds, and 0 means no loop. With Normalized on it counts 0 to 1 over each loop. | Reset | Loop, Normalized |
+| Vector | A fixed direction or position. | | Value |
+| Vector Component | Reads one part of a vector, or its length. | Vector | Component |
+| Virtual Parameter | Names a value so Parameter nodes can read it. | Value | Name |
+| Whole Number | A fixed whole number. | | Value |
 
-![The Angle node in the graph editor](images/nodes/angle.png)
+## Node ids
 
-Wraps or flips an angle in degrees.
+Saved graphs and the CLI use node ids. Most are `motion.` plus the name in camel case, such as `motion.footLock`. These differ:
 
-| | |
+| Node | Id |
 | --- | --- |
-| Id | `motion.floatAngle` |
-| Inputs | Degrees |
-| Settings | Op |
-
-### Choose Number
-
-![The Choose Number node in the graph editor](images/nodes/choose-number.png)
-
-The value beside the first condition that reads true, or the default when none does.
-
-| | |
-| --- | --- |
-| Id | `motion.pickNumber` |
-| Inputs | Condition, Value |
-| Settings | Default, Ease Time, Easing |
-
-### Compare
-
-![The Compare node in the graph editor](images/nodes/compare.png)
-
-Tests two numbers against each other.
-
-| | |
-| --- | --- |
-| Id | `motion.floatCompare` |
-| Inputs | A, B |
-| Settings | Op |
-
-### Curve
-
-![The Curve node in the graph editor](images/nodes/curve.png)
-
-Shapes a number through an authored curve.
-
-| | |
-| --- | --- |
-| Id | `motion.curve` |
-| Inputs | Value |
-| Settings | Curve |
-
-### Ease
-
-![The Ease node in the graph editor](images/nodes/ease.png)
-
-Eases toward its input rather than jumping to it.
-
-| | |
-| --- | --- |
-| Id | `motion.floatEase` |
-| Inputs | Value |
-| Settings | Seconds, Start Value, Easing, Use Start Value |
-
-### Flag
-
-![The Flag node in the graph editor](images/nodes/flag.png)
-
-A fixed true or false.
-
-| | |
-| --- | --- |
-| Id | `motion.constBool` |
-| Inputs | None |
-| Settings | Value |
-
-### Hold Value
-
-![The Hold Value node in the graph editor](images/nodes/hold-value.png)
-
-Samples its input once and holds it.
-
-| | |
-| --- | --- |
-| Id | `motion.cachedValue` |
-| Inputs | Value, Sample |
-| Settings | Mode |
-
-### In Range
-
-![The In Range node in the graph editor](images/nodes/in-range.png)
-
-True while a number sits between two bounds.
-
-| | |
-| --- | --- |
-| Id | `motion.floatRange` |
-| Inputs | Value |
-| Settings | Min, Max, Inclusive |
-
-### Logic
-
-![The Logic node in the graph editor](images/nodes/logic.png)
-
-And, Or, or Not of flags.
-
-| | |
-| --- | --- |
-| Id | `motion.logic` |
-| Inputs | A, B |
-| Settings | Op |
-
-### Make Vector
-
-![The Make Vector node in the graph editor](images/nodes/make-vector.png)
-
-Builds a vector from three numbers.
-
-| | |
-| --- | --- |
-| Id | `motion.vectorCreate` |
-| Inputs | X, Y, Z |
-| Settings | None |
-
-### Maths
-
-![The Maths node in the graph editor](images/nodes/maths.png)
-
-Combines two numbers, or changes one.
-
-| | |
-| --- | --- |
-| Id | `motion.floatMath` |
-| Inputs | A, B |
-| Settings | Op |
-
-### Name
-
-![The Name node in the graph editor](images/nodes/name.png)
-
-A fixed name, for matching against events and states.
-
-| | |
-| --- | --- |
-| Id | `motion.constId` |
-| Inputs | None |
-| Settings | Value |
-
-### Name Matches
-
-![The Name Matches node in the graph editor](images/nodes/name-matches.png)
-
-Tests a name against a comma separated list.
-
-| | |
-| --- | --- |
-| Id | `motion.idComparison` |
-| Inputs | None |
-| Settings | Comparison |
-
-### Name To Number
-
-![The Name To Number node in the graph editor](images/nodes/name-to-number.png)
-
-Maps each name in a list to the number beside it.
-
-| | |
-| --- | --- |
-| Id | `motion.idToFloat` |
-| Inputs | None |
-| Settings | Default |
-
-### Negate Vector
-
-![The Negate Vector node in the graph editor](images/nodes/negate-vector.png)
-
-Points a vector the other way.
-
-| | |
-| --- | --- |
-| Id | `motion.vectorNegate` |
-| Inputs | Vector |
-| Settings | None |
-
-### Noise
-
-![The Noise node in the graph editor](images/nodes/noise.png)
-
-A wandering number, for idle variation.
-
-| | |
-| --- | --- |
-| Id | `motion.noise` |
-| Inputs | None |
-| Settings | Frequency, Amplitude |
-
-### Number
-
-![The Number node in the graph editor](images/nodes/number.png)
-
-A fixed number.
-
-| | |
-| --- | --- |
-| Id | `motion.constFloat` |
-| Inputs | None |
-| Settings | Value |
-
-### Offset Target
-
-![The Offset Target node in the graph editor](images/nodes/offset-target.png)
-
-Shifts and turns a target by a fixed amount.
-
-| | |
-| --- | --- |
-| Id | `motion.targetOffset` |
-| Inputs | Target |
-| Settings | None |
-
-### Parameter
-
-![The Parameter node in the graph editor](images/nodes/parameter.png)
-
-Reads a value the game sets on the animator.
-
-| | |
-| --- | --- |
-| Id | `motion.parameter` |
-| Inputs | None |
-| Settings | None |
-
-### Remap
-
-![The Remap node in the graph editor](images/nodes/remap.png)
-
-Maps a number from one range onto another. Clamp stops it at the ends, which with the same range on both sides is a plain clamp.
-
-| | |
-| --- | --- |
-| Id | `motion.floatRemap` |
-| Inputs | Value |
-| Settings | In Min, In Max, Out Min, Out Max, Clamp |
-
-### Spring
-
-![The Spring node in the graph editor](images/nodes/spring.png)
-
-Chases its input under a spring, so it never jumps.
-
-| | |
-| --- | --- |
-| Id | `motion.floatSpring` |
-| Inputs | Value |
-| Settings | Frequency, Damping |
-
-### Target Info
-
-![The Target Info node in the graph editor](images/nodes/target-info.png)
-
-Reads something out of a target: whether it is set, its point, a distance or an angle.
-
-| | |
-| --- | --- |
-| Id | `motion.targetInfo` |
-| Inputs | Target |
-| Settings | Info |
-
-### Timer
-
-![The Timer node in the graph editor](images/nodes/timer.png)
-
-Counts seconds. Loop is the loop length in seconds. At 0 it never loops. Normalized gives 0 to 1 over each loop.
-
-| | |
-| --- | --- |
-| Id | `motion.timer` |
-| Inputs | Reset |
-| Settings | Loop, Normalized |
-
-### Vector
-
-![The Vector node in the graph editor](images/nodes/vector.png)
-
-A fixed direction or position.
-
-| | |
-| --- | --- |
-| Id | `motion.constVector` |
-| Inputs | None |
-| Settings | Value |
-
-### Vector Component
-
-![The Vector Component node in the graph editor](images/nodes/vector-component.png)
-
-Reads one component of a vector, or its length.
-
-| | |
-| --- | --- |
-| Id | `motion.vectorInfo` |
-| Inputs | Vector |
-| Settings | Component |
-
-### Virtual Parameter
-
-![The Virtual Parameter node in the graph editor](images/nodes/virtual-parameter.png)
-
-Names a value, which Parameter nodes can then read by that name like any parameter.
-
-| | |
-| --- | --- |
-| Id | `motion.virtualParameter` |
-| Inputs | Value |
-| Settings | None |
-
-### Whole Number
-
-![The Whole Number node in the graph editor](images/nodes/whole-number.png)
-
-A fixed integer.
-
-| | |
-| --- | --- |
-| Id | `motion.constInt` |
-| Inputs | None |
-| Settings | Value |
+| Angle | `motion.floatAngle` |
+| Blend Masks | `motion.maskBlend` |
+| Choose Mask | `motion.maskSelector` |
+| Choose Number | `motion.pickNumber` |
+| Choose Pose at Random | `motion.randomSelector` |
+| Choose Pose by Condition | `motion.conditionSelector` |
+| Choose Pose by Index | `motion.selector` |
+| Compare | `motion.floatCompare` |
+| Copy Transform | `motion.copyConstraint` |
+| Drive Channels | `motion.channelLayer` |
+| Ease | `motion.floatEase` |
+| Event Fired | `motion.idEvent` |
+| Flag | `motion.constBool` |
+| Foot Phase | `motion.footEvent` |
+| Graph Slot | `motion.externalGraphSlot` |
+| Hold Value | `motion.cachedValue` |
+| IK Rig | `motion.ikRig` |
+| In Range | `motion.floatRange` |
+| Layer Stack | `motion.layerBlend` |
+| Make Vector | `motion.vectorCreate` |
+| Maths | `motion.floatMath` |
+| Name | `motion.constId` |
+| Name Matches | `motion.idComparison` |
+| Name To Number | `motion.idToFloat` |
+| Negate Vector | `motion.vectorNegate` |
+| Number | `motion.constFloat` |
+| Offset Target | `motion.targetOffset` |
+| Read Channel | `motion.poseChannel` |
+| Remap | `motion.floatRemap` |
+| Root Motion | `motion.rootMotionFilter` |
+| Spring | `motion.floatSpring` |
+| State Done | `motion.stateFinished` |
+| Transition Window | `motion.transitionEvent` |
+| Vector | `motion.constVector` |
+| Vector Component | `motion.vectorInfo` |
+| Whole Number | `motion.constInt` |
