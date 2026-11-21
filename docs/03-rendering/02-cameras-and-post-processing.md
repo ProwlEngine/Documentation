@@ -44,7 +44,7 @@ Light in Prowl is in real units: the sun in lux, bulbs in candela, glowing surfa
 
 A pixel's light is multiplied by `1 / (1.2 * 2^EV100)` before tonemapping, so each step up halves the image's brightness. At EV100 14 that maps about 20000 nits to white.
 
-An **Auto Exposure** volume component meters the scene instead and adapts over time, taking over from `EV100` after the first frame:
+An **Auto Exposure** volume component meters the scene instead and adapts over time, taking over from `EV100` after the first frame. It must be enabled: `Enabled` is false by default, and `CreateCameraDefault` turns it on.
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
@@ -150,5 +150,3 @@ public sealed class SoftTonemap : PostEffect
 }
 ```
 
-> [!NOTE]
-> Using `override string Shader` does mean the Build pipeline cant pre-compile the shader. Using a Material is preferred, but for Simplicity sake the override is fine.

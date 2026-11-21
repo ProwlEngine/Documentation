@@ -102,7 +102,12 @@ With only forward clips, **Orientation Warp** bends a forward clip so it heads t
 
 Add a **Turn** state with a turn-in-place clip under a **Turn Warp**, which makes it turn by exactly the angle asked, read when it starts. Have your script set a Number parameter `TurnAngle`: the signed angle in degrees between where the character faces and where it should face.
 
-The state wants in while the character is nearly still **and** the angle is above 45 degrees either way, and lets go when the clip is done:
+The state wants in while the character is nearly still **and** the angle is above 45 degrees either way, and lets go when the clip is done. Wire it on the Turn state's **State Output**:
+
+| Pin | Wire |
+| --- | --- |
+| Enter | **Logic** (And) of two checks: Speed below 0.1, and the angle above 45 or below -45 (**Compare** nodes joined by a **Logic** Or) |
+| Exit | **State Done** |
 
 ## Step 6: starts and stops
 

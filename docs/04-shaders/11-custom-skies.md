@@ -112,4 +112,4 @@ public sealed class SkySwitcher : Component
 The built-in skies are all `Surface "Sky"` shaders and a good reference: `Procedural`, `Gradient`, `Cubemap`, `Panorama` and `SixSided`. See [Sky, fog and clouds](../03-rendering/04-environment.md) for the sky probe's capture settings. Load one with `Shader.LoadDefault(DefaultShader.GradientSky)`, or create one with `SceneEnvironment.CreateSkyMaterial(BuiltInSky.Procedural)`.
 
 > [!TIP]
-> It is also rendered into the sky probe so keep your skies cheap.
+> A sky is also rendered into the sky probe, so keep it cheap.

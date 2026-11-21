@@ -79,7 +79,13 @@ All five can be driven by numbers, so you can fade it in and out.
 
 ## Smooth weights, no popping
 
-Never snap IK weight between 0 and 1. Wire **Target Info** (`IsSet`) through **Choose Number** or a number into **Ease**, and the Ease into the IK node's Weight:
+Never snap IK weight between 0 and 1. Fade it instead:
+
+1. Add a **Target Info** node on the target and set Info to `IsSet`.
+2. Wire it into the **Condition** pin of a **Choose Number**. Set Value to 1 and Default to 0.
+3. Set Ease Time on the Choose Number, for example 0.2. Wire its output into the IK node's **Weight** pin.
+
+The weight now fades in and out when the target is set or cleared. You can also wire any number into an **Ease** node and then into Weight.
 
 ## Example: hands on a steering wheel
 
@@ -97,8 +103,6 @@ Animator.SetTarget("RightGrip", Target.FromWorld(new Transform3D(RightHandle.Tra
 The hands follow the wheel as it turns.
 
 ## Secondary motion
-
-![A tail swinging and settling with Spring Bones](images/spring-bones.gif)
 
 | Node | Does |
 | --- | --- |

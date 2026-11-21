@@ -43,10 +43,14 @@ For rebindable controls, create an Input Actions asset from the create menu and 
 Input.RegisterActionMap(map);
 map.Enable();   // actions start disabled
 
-var move = Input.FindAction("Move");
+InputAction move = Input.FindAction("Move")!;
+InputAction jump = Input.FindAction("Jump")!;
+
 Float2 value = move.ReadValue<Float2>();
-if (Input.FindAction("Jump").WasPressedThisFrame()) Jump();
+if (jump.WasPressedThisFrame()) Jump();
 ```
+
+`FindAction` returns null if no action has that name. The `!` says you know it exists. Find actions once, for example in `OnEnable`, and keep them in fields.
 
 ## Logging
 

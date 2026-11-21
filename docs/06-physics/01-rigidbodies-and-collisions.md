@@ -13,11 +13,11 @@ description: Motion types, forces, collision callbacks and trigger volumes.
 - A collider with no `Rigidbody3D` on it or a parent is static. Interpolation is on by default.
 
 > [!WARNING]
-> `LinearDamping` and `AngularDamping` remove that fraction of velocity every physics step, so they are strong. At 60 steps a second, 0.1 leaves under 1 percent of the speed after one second. The defaults are 0.002 and 0.005. This may change in the future.
+> `LinearDamping` and `AngularDamping` are the fraction of velocity removed every 1/60 s, whatever the timestep. The range is 0 to 1 and both default to 0. Small values are strong: 0.1 leaves under 1 percent of the speed after one second.
 
 ## Colliders
 
-Box, sphere, capsule, cylinder, cone, convex or concave mesh, and terrain.
+Box, sphere, capsule, cylinder, cone, convex or concave mesh, and terrain. `WheelCollider` is a raycast wheel for vehicles, not a shape.
 
 ## Collision callbacks
 

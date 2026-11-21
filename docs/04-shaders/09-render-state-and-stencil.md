@@ -20,7 +20,7 @@ Render state commands go inside a `Pass`, before `GLSLPROGRAM`, in any order. An
 | `ZTest` | `Disabled`, `Never`, `Less`, `Equal`, `LessEqual`, `Greater`, `NotEqual`, `GreaterEqual`, `Always` | `GreaterEqual` |
 | `ZWrite` | `On`, `Off` | `On` |
 | `ZClip` | `On`, `Off` (clamp depth instead of clipping) | `On` |
-| `Offset factor units` | Depth bias, for example `Offset 1 1` to pull toward the camera | none |
+| `Offset factor units` | Depth bias, for example `Offset 1 1` to pull toward the camera. `factor` is the slope factor and `units` is the constant bias | none |
 
 > [!IMPORTANT]
 > Graphite uses **reversed Z**: depth is 1 at the near plane and falls toward 0 far away, so nearer surfaces have the **greater** depth. A normal depth test is `GreaterEqual`, `Less` passes only behind what is already drawn (for x-ray effects through walls), and a positive `Offset` pulls toward the camera. Leave `ZTest` out to get the renderer's default.

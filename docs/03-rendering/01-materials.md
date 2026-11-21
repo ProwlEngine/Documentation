@@ -51,7 +51,7 @@ Scalar inputs read one channel of their map, colours read RGB.
 
 Coat, fuzz, thin film, subsurface, anisotropy, transmission and parallax are each compiled in only while their weight is above zero: `coat_weight`, `fuzz_weight`, `thin_film_weight`, `subsurface_weight`, either roughness anisotropy, `transmission_weight` and `height_scale`. A plain material pays for none of them.
 
-- **Parallax:** set `geometry_height_map` (white at the surface, black `height_scale` below it) and a `height_scale` above 0. Every map, and the cutout of the shadow, follows the relief. It needs mesh tangents.
+- **Parallax:** set `geometry_height_map` (white at the surface, black `height_scale` below it) and a `height_scale` above 0 (range 0 to 0.2). Every map, and the cutout of the shadow, follows the relief. It needs mesh tangents.
 - **Thin walled:** `geometry_thin_walled` on draws both sides whatever the material's culling. With subsurface it makes leaves and paper glow when lit from behind.
 - **Transmission:** glass and liquids. A material with `transmission_weight` above 0 draws as transparent whatever its surface type, refracting the opaque scene behind it.
 

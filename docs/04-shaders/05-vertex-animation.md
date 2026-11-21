@@ -21,6 +21,9 @@ A Surface block's `Vertex` block moves vertices before they are transformed, **i
 > [!IMPORTANT]
 > Animate with `v.time`, never `Graphite_View().time`. The motion vector pass needs to rerun your function at last frame's time, and only `v.time` changes for it.
 
+> [!TIP]
+> For wind that follows the scene's wind setting, call `Graphite_WindSway(relativePos, time, bend)` from `Graphite/Wind.glsl`. The `"Foliage"` surface model does the rest for plants, see [Surface shaders](02-surface-shaders.md).
+
 ## Example: foliage in the wind
 
 ```glsl

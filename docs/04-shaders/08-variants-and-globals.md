@@ -59,9 +59,10 @@ A `global` axis is set for every material at once, by the renderer, a quality le
 | Axis | Values | Set by |
 | --- | --- | --- |
 | `PBR_TIER` | `FULL`, `LITE` | The quality level, see [Quality levels](../03-rendering/06-quality.md) |
-| `GRAPHITE_DEBUG` | `UNLIT` (normal drawing), `ALBEDO`, `NORMALS`, `ROUGHNESS`, `METALLIC`, `AO`, `EMISSION`, `LIGHTING` and more | The editor's debug views |
+| `GRAPHITE_DEBUG` | `UNLIT` (normal drawing), `ALBEDO`, `NORMALS`, `ROUGHNESS`, `METALLIC`, `AO`, `EMISSION`, `LIGHTING` and 15 more, 25 in all | The editor's debug views. A shader may declare only some of them, Unlit declares 10 |
 | `GRAPHITE_DECALS`, `GRAPHITE_LIGHT_MASKS`, `GRAPHITE_CONTACT_SHADOWS` | toggles | On while the scene has decals, light cookies or profiles, or contact hardening shadows |
 | `GRAPHITE_PREPASS` | `DEPTH`, `MOTION`, `NORMALS` | What the camera's effects need from the depth prepass |
+| `GRAPHITE_LOD_FADE` | toggle | On for prepass draws of levels of detail cross fading |
 
 A shader that declares one of these must use the same default and only its values, though it may leave values out. A shader declaring `GRAPHITE_DEBUG` with a value `OFF` fails to load.
 

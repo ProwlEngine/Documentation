@@ -59,6 +59,8 @@ A **Fog Volume** component (**Rendering > Fog Volume**) adds volumetric fog insi
 
 Ray marched clouds over the whole scene, turned on with `VolumetricClouds.Enabled`. They shade the ground, the volumetric fog and the water under them, block the sun when dense, and appear in reflection probes.
 
+This table shows the common settings. The rest are in the inspector.
+
 | Group | Settings |
 | --- | --- |
 | Shape | `Altitude`, `Thickness`, `Coverage`, `Density`, `PatternScale`, `Erosion`, `DetailScale`, `Wisps`, `Lobes`, and the top layer's `TopStrength` and `TopCoverage` |

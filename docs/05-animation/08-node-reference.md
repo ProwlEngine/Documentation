@@ -3,7 +3,7 @@ title: Node reference
 description: Every built-in animation graph node, with its inputs and settings.
 ---
 
-Prowl ships 84 graph node types, grouped as they are in the editor's add menu. In saved graphs and the CLI, each node has the id shown in its table.
+Prowl ships 84 graph node types. They are grouped here like the editor's add menu. Three are hidden from that menu: Graph Output, State Output and Parameter. In saved graphs and the CLI, each node has the id shown in its table.
 
 > [!TIP]
 > Your own nodes appear in the add menu too: any class deriving from `AnimationGraphNode` with a parameterless constructor is found automatically.
@@ -462,7 +462,7 @@ Solves several effectors at once. Each input names its effector and its bone cha
 
 | | |
 | --- | --- |
-| Id | `motion.iKRig` |
+| Id | `motion.ikRig` |
 | Inputs | Pose, Target, Weight |
 | Settings | None |
 
@@ -482,13 +482,13 @@ Turns the spine, head and eyes toward a target.
 
 ![The Ragdoll node in the graph editor](images/nodes/ragdoll.png)
 
-Makes a physics ragdoll of the humanoid that follows the pose, and shows the pose it took. Muscles turn the joints toward the animation, the pin holds every part or only the hips to it. Active slides from following (1) to limp (0).
+Makes a physics ragdoll of the humanoid that follows the pose, and shows the pose it took. Muscles turn the joints toward the animation, the pin holds every part or only the hips to it. Active 1 follows the animation, 0 goes limp. Blend sets how much of the ragdoll pose is shown.
 
 | | |
 | --- | --- |
 | Id | `motion.ragdoll` |
-| Inputs | Pose |
-| Settings | Muscle Strength, Pin Strength, Blend, Total Mass, Pinning, Hands and Feet |
+| Inputs | Pose, Active |
+| Settings | Active, Muscle Strength, Pin Strength, Pinning, Blend, Total Mass, Hands and Feet |
 
 ### Spring Bones
 
@@ -506,25 +506,25 @@ Gives a chain secondary motion that lags and settles.
 
 ![The Twist Distribution node in the graph editor](images/nodes/twist-distribution.png)
 
-Spreads a bone's roll across twist bones, written as 
+Spreads a bone's roll across twist bones. Write the twist bones as "bone:share" pairs.
 
 | | |
 | --- | --- |
 | Id | `motion.twistDistribution` |
 | Inputs | Pose |
-| Settings | Driver |
+| Settings | Driver, Twist, Axis |
 
 ### Two Bone IK
 
 ![The Two Bone IK node in the graph editor](images/nodes/two-bone-ik.png)
 
-Bends a limb so its end reaches a target.
+Bends a limb so its end reaches a target. Weight is a pin. Wire a number into it, or leave it unwired and type a value on the node.
 
 | | |
 | --- | --- |
 | Id | `motion.twoBoneIK` |
 | Inputs | Pose, Target, Weight |
-| Settings | Upper, Mid, End, Weight |
+| Settings | Upper, Mid, End |
 
 ## Modify
 
@@ -1006,7 +1006,7 @@ Reads something out of a target: whether it is set, its point, a distance or an 
 
 ![The Timer node in the graph editor](images/nodes/timer.png)
 
-Counts seconds, optionally looping.
+Counts seconds. Loop is the loop length in seconds. At 0 it never loops. Normalized gives 0 to 1 over each loop.
 
 | | |
 | --- | --- |

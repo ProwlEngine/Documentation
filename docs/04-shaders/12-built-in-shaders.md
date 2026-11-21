@@ -14,7 +14,7 @@ material.Surface = new SurfaceSettings(SurfaceType.Cutout);
 
 ## Lit
 
-`DefaultShader.Lit`, `Graphite/Lit`. The standard physically based surface, OpenPBR Surface v1.1.1, and the `"Lit"` surface model, which takes a Surface function, a `Vertex` block and a `Lighting` block. It has Forward, Transmission, BackDepth, Prepass, ShadowCaster and Debug passes.
+`DefaultShader.Lit`, `Graphite/Lit`. The standard physically based surface, OpenPBR Surface v1.1.1, and the `"Lit"` surface model, which takes a Surface function, a `Vertex` block and a `Lighting` block. It has Forward, Transmission, BackDepth, Prepass, ShadowCaster, Voxelize, Impostor and Debug passes.
 
 | Group | Properties | Turns on |
 | --- | --- | --- |
@@ -46,6 +46,8 @@ Every texturable input `X` has a `[Map]` texture `X_map`, plus `geometry_normal_
 
 All `Surface "Sky"` shaders, giving their light in nits.
 
+`intensity` is 1 by default on Procedural and 20000 on the others.
+
 | Shader | `DefaultShader` | Properties |
 | --- | --- | --- |
 | Procedural | `ProceduralSky` | `_SunSize`, `_SunGlow`, `intensity`, `_Tint`, `_GroundColor`. Lit by the scene's sun |
@@ -62,7 +64,13 @@ All `Surface "Sky"` shaders, giving their light in nits.
 | --- | --- |
 | `Graphite/Fallback` | Flat grey. Drawn while a shader compiles or after it fails, and a good `Fallback` for your own shaders |
 | `Graphite/DepthCaster` | The shadow of materials without a ShadowCaster pass |
-| `Graphite/Water` | The [Ocean](../03-rendering/05-ocean.md)'s surface, drawn by the Ocean component |
+| `Graphite/Foliage` | The `"Foliage"` surface model: Lit with a translucency lobe, soft normals and wind. Draws both sides |
+| `Graphite/Foliage/Leaves` | Leaves and needles on `"Foliage"`: the base colour map cut out by alpha, swaying with the wind more toward the top. Has `wind_bend` |
+| `Graphite/Terrain` | The `"Terrain"` surface model: Lit on the terrain's page pools, with holes |
+| `Graphite/Terrain/Default` | The terrain material when you give it none. Has a `_TerrainDebug` view |
+| `Graphite/Terrain/Grass` | Terrain grass cards on `"Foliage"`, one instance per card, with wind |
+| `Graphite/Impostor` | A card that shows a baked impostor, blending the frames nearest the view |
+| `Graphite/Ocean` | The [Ocean](../03-rendering/05-ocean.md)'s surface, drawn by the Ocean component |
 
 ## Prowl shaders
 
@@ -75,7 +83,7 @@ All `Surface "Sky"` shaders, giving their light in nits.
 | `Grass` | Terrain grass and details: a `Surface "Lit"` shader with thin walled subsurface for light through the blades, and wind | `base_color`, `specular_roughness`, `subsurface_weight`, `subsurface_color`, `_WindStrength`, `_WindSpeed`, `_Billboard`, `_AlignToNormal` |
 | `Refraction` | Refracting glass and water surfaces through the scene colour | `_RefractionStrength`, `_NoiseScale`, `_Tint`, `_BlurRadius`, `_BlurMIP`, `_BlurSteps` |
 | `DefaultUI`, `DefaultText`, `DefaultTextMesh` | The GameObject UI and text | |
-| `Gizmos`, `GizmoIcon`, `Invalid` | Editor drawing, and the pink invalid shader | |
+| `Invalid` | The pink invalid shader (`Hidden/Invalid`) | |
 
 `Sprite`, `Line` and unlit particles write their colour as it is, whatever the camera's exposure, so a sprite always shows its texture's colours. Use the Unlit shader for glowing things that should brighten and dim with the exposure like the rest of the scene.
 

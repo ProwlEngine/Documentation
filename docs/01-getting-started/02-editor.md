@@ -30,6 +30,15 @@ Closed a panel? Every one is under **Window › General**. Panels dock, resize a
 
 ![The editor with an empty scene, panels labelled](images/editor-panels.png)
 
+## Menus
+
+| Menu | Items |
+| --- | --- |
+| **File** | New Scene, Open Scene, Save Scene, Save Scene As..., Build Project..., Exit |
+| **Edit** | Undo, Redo, Project Settings..., Save Layout, Preferences... |
+
+On macOS, Cmd replaces Ctrl in shortcuts.
+
 ## 3. Build a scene
 
 1. **GameObject › 3D Object › Plane** for a floor.
@@ -89,9 +98,9 @@ Every shortcut can be rebound in **Window › General › Preferences**. Save yo
 
 ## 7. Build it
 
-Open **Build Settings**, click **Add Open** to add the open scenes to the build's scene list (the first one is what the game starts with), choose a build profile for your platform, and build. The build packs only the assets your scenes use, and precompiles the shader variants they need.
+Open **File › Build Project...** (the Build Settings panel), click **Add Open** to add the open scenes to the build's scene list (the first one is what the game starts with), choose a build profile for your platform, and build. The build packs only the assets your scenes use, and precompiles the shader variants they need.
 
-![The Build Settings panel with a scene in the build list](images/build-settings.png)
+![The Build Project panel with a scene in the build list](images/build-settings.png)
 
 ## Next steps
 

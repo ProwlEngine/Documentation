@@ -47,6 +47,8 @@ Pass
 | `Sky` | The sky, see [Custom skies](11-custom-skies.md) |
 | `Transmission` | In place of `Forward` for transmissive materials, see [Transparency](07-transparency-and-screen-effects.md#transmission) |
 | `BackDepth` | The far side of transmissive volumes, as distance along the view ray |
+| `Voxelize` | Voxelizing the object for voxel lighting |
+| `Impostor` | Baking the object into an impostor |
 | `Debug` | The editor's debug views (albedo, normals, lighting and so on) |
 | `ObjectId` | Object picking in the editor |
 | any other name | Drawn by a **Draw Pass** component or a render feature, such as `"Outline"` |

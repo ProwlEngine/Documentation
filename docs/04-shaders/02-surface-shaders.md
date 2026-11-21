@@ -3,7 +3,7 @@ title: Surface shaders
 description: The Surface block and its Vertex and Lighting blocks, the surface inputs, the OpenPBR parameters, and worked examples.
 ---
 
-A `Surface` block gives your shader Graphite's standard passes, **Forward**, **Prepass**, **ShadowCaster**, **Transmission**, **BackDepth** and **Debug** (the editor's debug views), with every feature of the built-in shader. You write only the parts you want to change.
+A `Surface` block gives your shader Graphite's standard passes, **Forward**, **Prepass**, **ShadowCaster**, **Transmission**, **BackDepth**, **Voxelize**, **Impostor** and **Debug** (the editor's debug views), with every feature of the built-in shader. You write only the parts you want to change.
 
 ## The three parts
 
@@ -46,6 +46,8 @@ All three are optional. A `Surface "Lit" { }` with nothing in it is the built-in
 | --- | --- | --- |
 | `"Lit"` | The OpenPBR surface: shadows, lightmaps, probes, decals, fog, normal maps, parallax, coat, fuzz, thin film, subsurface and transmission | `void Surface(inout PBR_Params p, Graphite_SurfaceData i)` |
 | `"Unlit"` | A colour that glows at a set brightness, fogged | `void Surface(inout Unlit_Params p, Graphite_SurfaceData i)` |
+| `"Foliage"` | Lit for grass, leaves and bushes: light through the blade from behind, soft normals, both sides drawn, wind in a `Vertex` block. No `Lighting` block | `void Surface(inout PBR_Params p, Graphite_SurfaceData i)` |
+| `"Terrain"` | Lit on the terrain's page pools, with holes. `Terrain_Level()` and `Terrain_Morph()` are there to read | `void Surface(inout PBR_Params p, Graphite_SurfaceData i)` |
 | `"Sky"` | A sky, see [Custom skies](11-custom-skies.md) | `vec3 Sky(vec3 direction)` |
 
 - Your `Properties` are added to the model's. A property with the same name as a standard one replaces it.
@@ -97,16 +99,16 @@ The first argument holds every OpenPBR input, already built from the material's 
 | `baseMetalness` | `float` | 0 to 1 |
 | `baseDiffuseRoughness` | `float` | Rough diffuse, like clay or the moon |
 | `specularWeight`, `specularColor`, `specularIor` | | The dielectric reflection |
-| `specularRoughness`, `specularRoughnessAnisotropy` | `float` | 0 to 1 |
-| `coatWeight`, `coatColor`, `coatRoughness`, `coatIor`, `coatDarkening` | | A clear coat on top |
+| `specularRoughness`, `specularRoughnessAnisotropy` | `float` | 0 to 1. The anisotropy stretches the highlight along `geometryTangent` |
+| `coatWeight`, `coatColor`, `coatRoughness`, `coatRoughnessAnisotropy`, `coatIor`, `coatDarkening` | | A clear coat on top |
 | `fuzzWeight`, `fuzzColor`, `fuzzRoughness` | | Velvet and dust |
-| `subsurfaceWeight`, `subsurfaceColor`, `subsurfaceRadius` | | Light scattering under the surface |
-| `transmissionWeight`, `transmissionColor`, `transmissionDepth` | | Glass and liquids |
+| `subsurfaceWeight`, `subsurfaceColor`, `subsurfaceRadius`, `subsurfaceRadiusScale`, `subsurfaceScatterAnisotropy` | | Light scattering under the surface |
+| `transmissionWeight`, `transmissionColor`, `transmissionDepth`, `transmissionScatter`, `transmissionScatterAnisotropy`, `transmissionDispersionScale`, `transmissionDispersionAbbeNumber` | | Glass and liquids |
 | `thinFilmWeight`, `thinFilmThickness`, `thinFilmIor` | | Soap bubble and oil slick colours, thickness in micrometres |
 | `emissionColor`, `emissionLuminance` | `vec3`, `float` | Light given off, in nits |
 | `geometryOpacity` | `float` | Coverage, used by cutout and transparent surfaces. Includes the vertex alpha |
 | `geometryNormal`, `geometryTangent` | `vec3` | World space shading normal after the normal map, and the anisotropy direction |
-| `geometryCoatNormal` | `vec3` | The coat's own normal |
+| `geometryCoatNormal`, `geometryCoatTangent` | `vec3` | The coat's own normal, and its anisotropy direction |
 | `geometryThinWalled` | `bool` | A thin sheet rather than a solid |
 | `occlusion` | `float` | Ambient occlusion, 1 is unoccluded. Darkens indirect light only |
 
