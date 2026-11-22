@@ -11,3 +11,5 @@ The editor is built with Paper, Prowl's immediate-mode UI. It includes the scene
 - [Multi scene editing](02-multi-scene-editing.md)
 - [Extending the editor](03-extending-the-editor.md)
 - [Assets and importers](04-assets-and-importers.md)
+- [Building your game](05-building-your-game.md)
+- [Debugging and profiling](06-debugging-and-profiling.md)
