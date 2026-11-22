@@ -12,7 +12,7 @@ Use actions when one script should work for keyboard and gamepad, or when you wa
 1. In the **Project** panel, right-click and choose **Create > Input Actions**. Name it `Controls`.
 2. Select the asset. Its editor opens in the **Inspector**. Click **Action**.
 3. Rename the action to `Move`. Set **Kind** to **Vector2**.
-4. Click **Add binding**, then choose the **WASD** composite.
+4. Click **Add binding**, then choose the **WASD** preset.
 5. Click **Save**.
 
 [screenshot needed: the Input Actions editor with a Move action and the WASD composite]

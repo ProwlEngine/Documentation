@@ -13,7 +13,7 @@ Baking computes this light once, in the editor, and saves it with the scene. Rea
 2. Save the scene. A scene with no file cannot bake.
 3. Select a light and set `BakeMode` to `Baked`.
 4. Open **Window > General > Environment** and go to the **Lightmapping** tab.
-5. Click **Generate Lighting**. Keep the panel open until the bar finishes.
+5. Click **Generate Lighting**. Wait for the progress bar to finish.
 6. Add an empty object, then **Add Component > Rendering > Reflection Probe**. Size `BoxSize` to the room.
 7. Click **Bake** in the probe's Inspector, then save the scene.
 
@@ -21,7 +21,7 @@ Baking computes this light once, in the editor, and saves it with the scene. Rea
 
 ## Reflection probes
 
-A `ReflectionProbe` captures a cubemap of its surroundings. Surfaces inside its box reflect that capture, projected onto the box, so a probe fitted to a room puts the walls in the right place. Surfaces no probe covers reflect the [sky](04-environment.md#sky).
+A `ReflectionProbe` captures a cubemap of its surroundings. Surfaces inside its box reflect that capture, projected onto the box. A probe fitted to a room puts the walls in the right place. Surfaces no probe covers reflect the [sky](04-environment.md#sky).
 
 | Setting | Default | Meaning |
 | --- | --- | --- |

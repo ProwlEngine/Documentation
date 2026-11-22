@@ -3,7 +3,7 @@ title: Playing sounds
 description: Import audio clips, play them with an AudioSource, and place them in 3D space.
 ---
 
-An **AudioClip** is an imported sound file. An **AudioSource** is a component that plays a clip from its object's position. An **AudioListener** is the point in the scene where sound is heard, normally the camera.
+An **AudioClip** is an imported sound file. An **AudioSource** is a component that plays a clip from its object's position. An **AudioListener** is the point in the scene where sound is heard, normally the camera. You use them for music and sound effects.
 
 ## Quick recipe
 
@@ -85,7 +85,7 @@ source.PlayOneShot(Step, 0.5f);
 | `Play()` | Plays `Clip` from the start |
 | `Pause()` and `Resume()` | Stop and continue from the same position |
 | `Stop()` | Stops and rewinds |
-| `PlayOneShot(clip, volumeScale)` | Plays a clip on its own voice without cutting off the main clip |
+| `PlayOneShot(clip, volumeScale)` | Plays a clip alongside `Clip` without cutting it off |
 
 Assigning a different `Clip` stops what is playing. A one shot uses the source's volume, pitch and spatial settings.
 
@@ -101,7 +101,7 @@ It creates a temporary 3D source in the active scene and destroys it when the cl
 
 ## Project audio settings
 
-**Edit > Project Settings > Audio** sets **Global Volume** (0 to 1) and the device **Sample Rate**, **Channels** and **Buffer Size**.
+**Edit > Project Settings > Audio** sets **Global Volume** (0 to 1). It also sets the device **Sample Rate**, **Channels** and **Buffer Size**.
 
 ## See also
 

@@ -51,7 +51,7 @@ To build the same thing in the editor, see [Show a button on screen](../09-how-t
 
 ## Canvas
 
-A GameCanvas is the root of one UI hierarchy. Everything under it is part of that UI. The canvas itself has no RectTransform. Create one with **GameObject > UI > Canvas**.
+A GameCanvas is the root of one UI hierarchy. Everything under it is part of that UI. The canvas itself does not need a RectTransform. Create one with **GameObject > UI > Canvas**.
 
 | Property | Use |
 | --- | --- |
@@ -74,7 +74,7 @@ A **RectTransform** places a UI element inside its parent's rectangle. Every UI 
 | **AnchoredPosition** | Offset of the pivot from the anchor, in pixels. |
 | **SizeDelta** | The size when the anchors are together. When apart, the size added to the anchor rectangle. Default is 100 x 100. |
 
-To fill the parent, set the anchors to (0, 0) and (1, 1) and **SizeDelta** to zero, as the recipe does for the label.
+To fill the parent, set the anchors to (0, 0) and (1, 1), and **SizeDelta** to zero. The recipe does this for the label.
 
 ## UI components
 
