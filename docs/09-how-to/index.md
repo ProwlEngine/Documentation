@@ -1,6 +1,7 @@
 ---
 title: How-to guides
 description: Short, step-by-step guides for common tasks.
+order: 1.5
 ---
 
 Each guide gets you one result in a few steps. There is no theory. Every guide ends with links to the pages that explain why it works.
