@@ -49,7 +49,7 @@ On macOS, Cmd replaces Ctrl in shortcuts.
 
 ## 4. Add physics
 
-1. Select the cube. In the inspector, **Add Component** > **Rigidbody3D**, then **Box Collider**.
+1. Select the cube. In the inspector, **Add Component** > **Physics** > **Rigidbody**, then **Box Collider**.
 2. Select the plane and add a **Box Collider**, sized to cover it, so the cube has something to land on.
 3. Press **F5** to play. The cube falls and lands. Press **F5** again to stop.
 
