@@ -3,7 +3,7 @@ title: Your first shader
 description: Build a pulsing, glowing surface shader step by step.
 ---
 
-This walkthrough builds a lit shader with a coloured glow that pulses over time. It uses a `Surface "Lit"` block, so shadows, lighting and fog all work without extra code.
+This walkthrough builds a lit shader with a colored glow that pulses over time. It uses a `Surface "Lit"` block, so shadows, lighting and fog all work without extra code.
 
 ## 1. Create the file
 
@@ -43,7 +43,7 @@ Shader "MyGame/Pulse"
 }
 ```
 
-Your properties are added to the standard Lit ones, so the material still has its base colour, maps and so on.
+Your properties are added to the standard Lit ones, so the material still has its base color, maps and so on.
 
 ## 3. Write the surface function
 
@@ -66,7 +66,7 @@ Your properties are added to the standard Lit ones, so the material still has it
     }
 ```
 
-`Surface` runs for every pixel before lighting. `p` already holds the material's inputs, built from its values and maps; you change what you want and leave the rest. `i` tells you about the point being shaded: its UVs, vertex colour, position and normals. It is read only.
+`Surface` runs for every pixel before lighting. `p` already holds the material's inputs, built from its values and maps; you change what you want and leave the rest. `i` tells you about the point being shaded: its UVs, vertex color, position and normals. It is read only.
 
 - Each property is read by declaring a `uniform` with the same name and a matching type.
 - `Graphite_View()` returns the camera's data. Its `time.x` is the time in seconds.
@@ -100,7 +100,7 @@ public sealed class PulseSetup : Component
 ```
 
 > [!TIP]
-> Colours are linear. A colour picked in an image editor looks washed out unless you convert it, or mark the property `[Gamma]` so the inspector converts it for you.
+> Colors are linear. A color picked in an image editor looks washed out unless you convert it, or mark the property `[Gamma]` so the inspector converts it for you.
 
 ## Next
 

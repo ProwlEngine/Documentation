@@ -34,11 +34,11 @@ Every texturable input `X` has a `[Map]` texture `X_map`, plus `geometry_normal_
 
 ## Unlit
 
-`DefaultShader.Unlit`, `Graphite/Unlit`, and the `"Unlit"` surface model, which takes a Surface function and a `Vertex` block. `base_color` times its map and the vertex colour, glowing at `emission_luminance` nits, with fog.
+`DefaultShader.Unlit`, `Graphite/Unlit`, and the `"Unlit"` surface model, which takes a Surface function and a `Vertex` block. `base_color` times its map and the vertex color, glowing at `emission_luminance` nits, with fog.
 
 | Property | Notes |
 | --- | --- |
-| `base_color`, `base_color_map` | Colour and texture |
+| `base_color`, `base_color_map` | Color and texture |
 | `emission_luminance` | Nits, 20000 by default, which shows `base_color` as it is at EV100 14 |
 | `alpha_cutoff` | Shown for cutout surfaces |
 
@@ -62,10 +62,10 @@ All `Surface "Sky"` shaders, giving their light in nits.
 
 | Shader | Use |
 | --- | --- |
-| `Graphite/Fallback` | Flat grey. Drawn while a shader compiles or after it fails, and a good `Fallback` for your own shaders |
+| `Graphite/Fallback` | Flat gray. Drawn while a shader compiles or after it fails, and a good `Fallback` for your own shaders |
 | `Graphite/DepthCaster` | The shadow of materials without a ShadowCaster pass |
 | `Graphite/Foliage` | The `"Foliage"` surface model: Lit with a translucency lobe, soft normals and wind. Draws both sides |
-| `Graphite/Foliage/Leaves` | Leaves and needles on `"Foliage"`: the base colour map cut out by alpha, swaying with the wind more toward the top. Has `wind_bend` |
+| `Graphite/Foliage/Leaves` | Leaves and needles on `"Foliage"`: the base color map cut out by alpha, swaying with the wind more toward the top. Has `wind_bend` |
 | `Graphite/Terrain` | The `"Terrain"` surface model: Lit on the terrain's page pools, with holes |
 | `Graphite/Terrain/Default` | The terrain material when you give it none. Has a `_TerrainDebug` view |
 | `Graphite/Terrain/Grass` | Terrain grass cards on `"Foliage"`, one instance per card, with wind |
@@ -81,10 +81,10 @@ All `Surface "Sky"` shaders, giving their light in nits.
 | `Line` | The line renderer | `_MainTex` |
 | `Terrain` | Terrain: a `Surface "Lit"` shader blending up to 8 splat layers, with holes | `_Heightmap`, `_Splatmap0`, `_Splatmap1`, `_HolesMap`, `_Layer0` to `_Layer7` albedo, `_Layer0Normal` and so on, plus tiling, roughness and metallic per layer |
 | `Grass` | Terrain grass and details: a `Surface "Lit"` shader with thin walled subsurface for light through the blades, and wind | `base_color`, `specular_roughness`, `subsurface_weight`, `subsurface_color`, `_WindStrength`, `_WindSpeed`, `_Billboard`, `_AlignToNormal` |
-| `Refraction` | Refracting glass and water surfaces through the scene colour | `_RefractionStrength`, `_NoiseScale`, `_Tint`, `_BlurRadius`, `_BlurMIP`, `_BlurSteps` |
+| `Refraction` | Refracting glass and water surfaces through the scene color | `_RefractionStrength`, `_NoiseScale`, `_Tint`, `_BlurRadius`, `_BlurMIP`, `_BlurSteps` |
 | `DefaultUI`, `DefaultText`, `DefaultTextMesh` | The GameObject UI and text | |
 | `Invalid` | The pink invalid shader (`Hidden/Invalid`) | |
 
-`Sprite`, `Line` and unlit particles write their colour as it is, whatever the camera's exposure, so a sprite always shows its texture's colours. Use the Unlit shader for glowing things that should brighten and dim with the exposure like the rest of the scene.
+`Sprite`, `Line` and unlit particles write their color as it is, whatever the camera's exposure, so a sprite always shows its texture's colors. Use the Unlit shader for glowing things that should brighten and dim with the exposure like the rest of the scene.
 
 For clear glass on ordinary meshes, the Lit shader's transmission is usually the better choice than `Refraction`, see [Transmission](07-transparency-and-screen-effects.md#transmission).

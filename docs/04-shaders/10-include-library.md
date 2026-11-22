@@ -11,7 +11,7 @@ Prowl labels positions `relative` or `world`. `world` is the object's actual pos
 
 ## Light is exposed
 
-Light is in real units: lux, candela and nits. Every lighting function already multiplies its result by `Graphite_Exposure()`. Colours from a lit pass are ready for tonemapping.
+Light is in real units: lux, candela and nits. Every lighting function already multiplies its result by `Graphite_Exposure()`. Colors from a lit pass are ready for tonemapping.
 
 ## How includes resolve
 
@@ -81,7 +81,7 @@ Define `GRAPHITE_CUSTOM_BRDF` or `GRAPHITE_CUSTOM_AMBIENT_BRDF` before including
 | --- | --- | --- |
 | `Graphite/Standard/Standard.glsl` | Normal map and UV helpers. Used by surface shaders, handy in your own passes | `Graphite_SurfaceNormalMap(i, texel, scale)`, `Graphite_StandardNormalMap(texel, normal, tangent, bitangent, scale)`, `Graphite_StandardTangentFrame(...)`, `Graphite_StandardUV(set, scaleOffset, rotation, i)` |
 | `Graphite/Decals.glsl` | Decals. The renderer switches them with the global `GRAPHITE_DECALS` variant, so including the file is enough | `Graphite_ApplyDecals(relativePos, geomNormal, inout albedo, inout normal, inout roughness, inout metallic, inout occlusion)`. Call it before lighting |
-| `Graphite/SceneColor.glsl` | Scene colour. See [Transparency and screen effects](07-transparency-and-screen-effects.md) | `Graphite_ScreenUV()`, `Graphite_RelativeToScreenUV(pos)`, `Graphite_SampleSceneColor(uv, lod)` |
+| `Graphite/SceneColor.glsl` | Scene color. See [Transparency and screen effects](07-transparency-and-screen-effects.md) | `Graphite_ScreenUV()`, `Graphite_RelativeToScreenUV(pos)`, `Graphite_SampleSceneColor(uv, lod)` |
 | `Graphite/SceneDepth.glsl` | Scene depth | `Graphite_FetchSceneDepth(uv)`, `Graphite_SceneLinearDepth(uv)`, `Graphite_SceneRelativePosition(uv)` |
 | `Graphite/Sky.glsl`, `Skies.glsl` | For sky passes. See [Custom skies](11-custom-skies.md) | `Graphite_SkyDirection()`, `Graphite_SunDirection()`, `Graphite_SunIlluminance()`, `Graphite_ProceduralSky(...)`, `Graphite_RotateSkyY(dir, degrees)`, `Graphite_PanoramaUV(dir)` |
 | `Graphite/Debug.glsl` | Lets a custom lit shader join the editor's debug views | `Graphite_DebugView(...)`, `Graphite_DebugInputs(...)` |
@@ -94,5 +94,5 @@ For `Debug.glsl`, add `#pragma variant global GRAPHITE_DEBUG UNLIT ALBEDO NORMAL
 | --- | --- |
 | `gammaToLinearSpace(c)` | sRGB to linear |
 | `linearToGammaSpace(c)` | Linear to sRGB |
-| `Prowl_Luminance(c)` | Luminance of a linear colour |
+| `Prowl_Luminance(c)` | Luminance of a linear color |
 | `Prowl_TangentFrame(...)`, `Prowl_ApplyNormalMap(...)` | Tangent frame and normal map helpers |

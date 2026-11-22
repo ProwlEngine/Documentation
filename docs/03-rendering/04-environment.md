@@ -13,7 +13,7 @@ Scene.Environment.SkyMaterial = SceneEnvironment.CreateSkyMaterial(BuiltInSky.Pr
 
 `SkyMaterial` is any material whose shader has a sky pass, usually one of `BuiltInSky`: `Procedural`, `Gradient`, `Cubemap`, `Panorama` or `SixSided`. Null shows the flat `SkyColor`. Skies give their light in nits, like everything else, so the Gradient, Cubemap, Panorama and SixSided skies have an `intensity` in nits, 20000 by default, and the Procedural sky follows the scene's brightest directional light. See [Custom skies](../04-shaders/11-custom-skies.md) to write your own.
 
-The sky is also captured into the **sky probe**, which lights the scene's reflections, sky ambient and sky coloured fog. `SkyCapture` sets when:
+The sky is also captured into the **sky probe**, which lights the scene's reflections, sky ambient and sky colored fog. `SkyCapture` sets when:
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
@@ -33,7 +33,7 @@ Lightmaps and light probes replace the ambient light where they are baked.
 
 ## Fog
 
-`Fog.Mode` is `Off`, `Linear` (from `Start` to `End`), `Exponential` or `ExponentialSquared` (the default, by `Density`). With `UseSky` on, the default, fog takes the colour of the sky behind it, so it meets the horizon seamlessly. Otherwise it is `Color` scaled to `Intensity` nits, 10000 by default.
+`Fog.Mode` is `Off`, `Linear` (from `Start` to `End`), `Exponential` or `ExponentialSquared` (the default, by `Density`). With `UseSky` on, the default, fog takes the color of the sky behind it, so it meets the horizon seamlessly. Otherwise it is `Color` scaled to `Intensity` nits, 10000 by default.
 
 ## Volumetric fog
 
@@ -41,12 +41,12 @@ Fog in the air lit by the scene's lights through their shadows: light shafts thr
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| `Density` | 0.02 | Light taken out per metre at `BaseHeight` |
-| `BaseHeight`, `HeightFalloff` | 0, 0.1 | It thins with height above the base, per metre |
+| `Density` | 0.02 | Light taken out per meter at `BaseHeight` |
+| `BaseHeight`, `HeightFalloff` | 0, 0.1 | It thins with height above the base, per meter |
 | `Albedo` | white | The share of that light it scatters rather than absorbs |
 | `Anisotropy` | 0.6 | 0 scatters evenly, toward 1 forward, glowing around lights seen through it |
 | `AmbientScale` | 1 | Scales the ambient light it scatters |
-| `Distance`, `Slices` | 128, 128 | How far it reaches in metres, and the depth slices it is lit in |
+| `Distance`, `Slices` | 128, 128 | How far it reaches in meters, and the depth slices it is lit in |
 | `TemporalBlend` | 0.9 | How much of last frame each frame keeps |
 
 Every fogged material reads it, transparent ones included.
@@ -64,7 +64,7 @@ This table shows the common settings. The rest are in the inspector.
 | Group | Settings |
 | --- | --- |
 | Shape | `Altitude`, `Thickness`, `Coverage`, `Density`, `PatternScale`, `Erosion`, `DetailScale`, `Wisps`, `Lobes`, and the top layer's `TopStrength` and `TopCoverage` |
-| Wind | `WindSpeed` in metres a second, `WindDirection` in degrees |
+| Wind | `WindSpeed` in meters a second, `WindDirection` in degrees |
 | Lighting | `Albedo`, `SunBrightness`, `AmbientBrightness`, `SilverLining`, `MultipleScattering`, `HorizonFade` |
 | Quality | `Resolution` (`Full`, `Half`, `Quarter`), `Temporal`, `ShadowResolution` |
 | High layer | `HighLayer`, a faint flat layer of cirrus above, with `HighLayerAltitude` and `HighLayerScale` |

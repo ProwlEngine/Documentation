@@ -25,7 +25,7 @@ Inside the root state machine, make a **Locomotion** state. Inside it:
 
 1. Add a **Blend 1D** and wire it into State Output Pose pin.
 2. Add three **Clip** nodes (idle, walk, run) and wire them into the Blend 1D's pose inputs.
-3. Set each input's threshold to the speed it represents, in metres per second: idle 0, walk 1.5, run 5.
+3. Set each input's threshold to the speed it represents, in meters per second: idle 0, walk 1.5, run 5.
 4. Add a **Parameter** node named `Speed` and wire it into the Blend 1D's **Parameter** pin.
 5. Open the state's **Enter** permanently, since it is the only state for now.
 
@@ -87,7 +87,7 @@ Replace the Parameter with Character Motion (`Speed`) and the script no longer n
 
 A blend only matches the ground speed at its exact thresholds. Between them, or when gameplay speed differs from the clip, feet slide.
 
-- **Velocity Blend** replaces Blend 1D for travelling clips. It blends by the speed each clip *actually covers*, measured from its root motion, so you do not set thresholds.
+- **Velocity Blend** replaces Blend 1D for traveling clips. It blends by the speed each clip *actually covers*, measured from its root motion, so you do not set thresholds.
 - **Stride Warp** after the blend bends the playback rate so the clip covers the ground at the speed you ask. Feed its **Speed** pin from Character Motion. **Min Scale** and **Max Scale** (0.5 and 2 by default) stop it looking silly; a **Natural Speed** of 0 measures it from the clip.
 
 ## Step 4: strafing with Blend 2D

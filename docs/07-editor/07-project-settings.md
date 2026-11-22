@@ -74,7 +74,7 @@ A build copies every page except Editor, Code Style and Build into the player. T
 
 ## Tags and layers
 
-A **tag** is a label for finding or recognising objects, such as `Player`. A layer is a group for filtering. An object has one tag and one layer.
+A **tag** is a label for finding or recognizing objects, such as `Player`. A layer is a group for filtering. An object has one tag and one layer.
 
 To add a tag:
 

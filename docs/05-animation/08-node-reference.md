@@ -73,7 +73,7 @@ Nodes that mix poses. An additive layer adds a change on top of a pose instead o
 | Layer Stack | Stacks layers over a base pose, each with a weight and mask. | Base, Layer, Weight, Mask (many) | Base Root Motion Only |
 | Make Additive | Turns a pose into its difference from a reference pose. | Pose, Reference | |
 | Muscle Layer | Layers poses by muscle instead of by bone. Needs a humanoid Avatar. | Base, Layer, Weight, Reference | Additive, Mask |
-| Velocity Blend | Blends travelling clips by the speed each one covers. | Speed, Poses (many) | Loop |
+| Velocity Blend | Blends traveling clips by the speed each one covers. | Speed, Poses (many) | Loop |
 | Weighted Blend | Mixes poses by weight, scaled to add up to 1. | Pose, Weight (many) | |
 
 Blend 1D, Blend 2D and Velocity Blend play their clips on their own timeline, so each clip's own looping is ignored.
@@ -87,7 +87,7 @@ Nodes for travel, turning and footwork ([Locomotion](./03-locomotion.md)). [Root
 | Character Motion | Reads how the character moves and turns from its position each frame. | | Read, Smoothing |
 | Foot Grounding | Puts feet on the ground, lowers the hips and tilts feet onto slopes. Needs a humanoid Avatar. | Pose, Left Y, Right Y, Weight, Left Normal (optional), Right Normal (optional) | Find Ground, Max Step Up, Max Step Down, Adjust Hips, Foot Smoothing, Hips Smoothing, Max Foot Angle, Foot Lift Height |
 | Foot Lock | Holds a planted foot in place so it does not slide. | Pose, Locked | Upper, Mid, End |
-| Orientation Warp | Turns a travelling clip toward a direction, or by an angle in degrees. | Pose, Direction, Degrees | Steer By |
+| Orientation Warp | Turns a traveling clip toward a direction, or by an angle in degrees. | Pose, Direction, Degrees | Steer By |
 | Root Motion | Keeps, scales and caps a clip's root motion. | Pose | Keep, Travel Scale*, Turn Scale*, Max Speed*, Max Turn* |
 | Stride Warp | Changes playback speed so the clip covers ground at your speed. | Pose, Speed | Natural Speed*, Min Scale*, Max Scale* |
 | Target Warp | Stretches a clip's travel so it ends at a given offset. | Pose, Displacement | |

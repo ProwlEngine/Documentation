@@ -1,11 +1,11 @@
 ---
 title: Materials
-description: The OpenPBR Lit shader, its properties and maps, linear colour and emission in nits.
+description: The OpenPBR Lit shader, its properties and maps, linear color and emission in nits.
 ---
 
 ## Quick recipe
 
-Give an object a coloured, glossy material from a script:
+Give an object a colored, glossy material from a script:
 
 ```csharp
 var mat = Material.DefaultMaterial;   // the Lit shader
@@ -16,9 +16,9 @@ GetComponent<MeshRenderer>().Material = mat;
 
 In the editor, choose **Assets > Create > Material**, select it and edit its properties in the Inspector. Then set it as the Mesh Renderer's material.
 
-## Colours are linear
+## Colors are linear
 
-Colour values in materials and lights are linear. Textures are decoded from sRGB, but a colour you type is used as is. Convert a picked colour first, roughly `value ^ 2.2`: sRGB 0.5 grey is linear 0.21.
+Color values in materials and lights are linear. Textures are decoded from sRGB, but a color you type is used as is. Convert a picked color first, roughly `value ^ 2.2`: sRGB 0.5 gray is linear 0.21.
 
 ## The Lit shader
 
@@ -36,11 +36,11 @@ The built-in Lit shader is OpenPBR Surface v1.1.1. Its properties are the spec's
 | Coat | `coat_weight`, `coat_color`, `coat_roughness`, `coat_roughness_anisotropy`, `coat_ior`, `coat_darkening` |
 | Fuzz | `fuzz_weight`, `fuzz_color`, `fuzz_roughness` |
 | Emission | `emission_luminance` (nits), `emission_color` |
-| Thin film | `thin_film_weight`, `thin_film_thickness` (micrometres), `thin_film_ior` |
+| Thin film | `thin_film_weight`, `thin_film_thickness` (micrometers), `thin_film_ior` |
 | Geometry | `geometry_opacity`, `geometry_thin_walled` |
 | Prowl extras | `ambient_occlusion`, `ambient_occlusion_map_strength`, `normal_scale`, `coat_normal_scale`, `height_scale`, `tangent_rotation`, `alpha_cutoff` |
 
-The defaults are the spec's: a grey `base_color` of 0.8, `specular_roughness` 0.3, `specular_ior` 1.5, and every optional layer off.
+The defaults are the spec's: a gray `base_color` of 0.8, `specular_roughness` 0.3, `specular_ior` 1.5, and every optional layer off.
 
 ### Maps
 
@@ -58,7 +58,7 @@ material.SetTextureScaleOffset("base_color_map", new Float4(4f, 4f, 0f, 0f));
 material.SetTextureRotation("base_color_map", MathF.PI * 0.25f);   // radians, counter clockwise
 ```
 
-Scalar inputs read one channel of their map, colours read RGB.
+Scalar inputs read one channel of their map, colors read RGB.
 
 ### Optional layers cost nothing until used
 
@@ -100,7 +100,7 @@ Transparent materials still cast shadows, dithered by how much light they let th
 
 ## Unlit
 
-The Unlit shader has `base_color`, `base_color_map`, `emission_luminance` and `alpha_cutoff`. It glows at `emission_luminance` nits, 20000 by default, which shows its colour as it is at the default exposure, EV100 14. Lower it for a scene exposed for night or indoors, or it glows past white.
+The Unlit shader has `base_color`, `base_color_map`, `emission_luminance` and `alpha_cutoff`. It glows at `emission_luminance` nits, 20000 by default, which shows its color as it is at the default exposure, EV100 14. Lower it for a scene exposed for night or indoors, or it glows past white.
 
 
 ## Writing your own

@@ -72,7 +72,7 @@ public sealed class RootMotionMover : Component
 | --- | --- |
 | **Root Motion** | Keeps `All`, `Horizontal`, `Rotation` or `None` of the channels, scales travel and turn, and caps speed and turn rate |
 | **Stride Warp** | Changes playback rate so travel matches a requested speed |
-| **Orientation Warp** | Bends a travelling clip toward a direction |
+| **Orientation Warp** | Bends a traveling clip toward a direction |
 | **Turn Warp** | Makes a turn clip turn by an exact angle |
 | **Target Warp** | Stretches a clip's travel so it lands on a displacement |
 

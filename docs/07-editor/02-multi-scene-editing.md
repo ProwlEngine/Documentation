@@ -28,7 +28,7 @@ Each scene has a header row with its name, a mark when it has unsaved changes, a
 | **Save Scene**, **Save Scene As** | Saves just this scene |
 | **Save All** | Saves everything unsaved |
 | **Add New Scene** | Adds an empty untitled scene after the open ones |
-| **Unload Scene** | Removes its objects but keeps it listed, greyed, so one click loads it back |
+| **Unload Scene** | Removes its objects but keeps it listed, grayed, so one click loads it back |
 | **Load Scene** | Loads an unloaded scene back in place |
 | **Remove Scene** | Unloads it and takes it out of the hierarchy |
 | **Select Scene Asset** | Shows the `.scene` file in the project panel |

@@ -26,7 +26,7 @@ When the scripts finish compiling, a **Tools** menu appears in the menu bar. Cho
 
 The method must be `static`, return `void` and take no parameters. The path is slash separated, and each segment before the last is a submenu. Existing menus work too: `GameObject/...` and `Assets/Create/...` add to the built-in menus.
 
-To grey the item out, add a second method with the same path and `isValidate: true`. It returns `true` when the item is usable:
+To gray the item out, add a second method with the same path and `isValidate: true`. It returns `true` when the item is usable:
 
 ```csharp
 [MenuItem("Tools/Say Hello", isValidate: true)]

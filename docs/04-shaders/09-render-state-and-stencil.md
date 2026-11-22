@@ -1,6 +1,6 @@
 ---
 title: Render state and stencil
-description: Culling, depth, blending, colour masks, depth bias and the stencil buffer.
+description: Culling, depth, blending, color masks, depth bias and the stencil buffer.
 ---
 
 Render state commands go inside a `Pass`, before `GLSLPROGRAM`, in any order. Anything you leave out uses the default.
@@ -28,8 +28,8 @@ Render state commands go inside a `Pass`, before `GLSLPROGRAM`, in any order. An
 ## Blending
 
 ```glsl
-Blend    SourceAlpha InverseSourceAlpha   // both colour and alpha
-BlendRGB One One                          // colour only
+Blend    SourceAlpha InverseSourceAlpha   // both color and alpha
+BlendRGB One One                          // color only
 BlendAlpha One Zero                       // alpha only
 BlendOp  Add                              // Add, Subtract, ReverseSubtract, Minimum, Maximum
 ```
@@ -43,7 +43,7 @@ Any `Blend` command turns blending on. Factors: `Zero`, `One`, `SourceColor`, `I
 | Premultiplied alpha | `Blend One InverseSourceAlpha` |
 | Multiply (shadows, tint) | `Blend DestinationColor Zero` |
 
-## Colour mask and alpha to coverage
+## Color mask and alpha to coverage
 
 - `ColorMask RGB` writes only the channels listed. Any combination of `R`, `G`, `B` and `A`; the default is `RGBA`.
 - `AlphaToMask On` turns alpha into MSAA coverage for smooth cutout edges without sorting.
@@ -81,7 +81,7 @@ Operations: `Keep`, `Zero`, `Replace`, `IncrementAndClamp`, `DecrementAndClamp`,
 
 ![Objects visible only through a stencil portal window](images/stencil-portal.gif)
 
-The window marks its pixels, then the world behind it draws only there. The window draws first, leaves the colour and depth as they are, and only writes the stencil.
+The window marks its pixels, then the world behind it draws only there. The window draws first, leaves the color and depth as they are, and only writes the stencil.
 
 ```glsl
 // On the window shader

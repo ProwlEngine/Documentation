@@ -1,6 +1,6 @@
 ---
 title: Transparency and screen effects
-description: Transparent surfaces, refraction with the scene colour, and soft edges with the scene depth.
+description: Transparent surfaces, refraction with the scene color, and soft edges with the scene depth.
 ---
 
 ## Transparency with the standard shaders
@@ -17,7 +17,7 @@ material.Surface = new SurfaceSettings(SurfaceType.Transparent, SurfaceBlend.Alp
 | `SurfaceBlend` | `Alpha`, `Premultiplied`, `Additive`, `Multiply` |
 | `SurfaceCull` | `Back`, `Front`, `Off` (double sided, back faces flip their normal) |
 
-Transparent surfaces draw back to front after the opaques and do not write depth. In a surface shader, set `p.geometryOpacity`. The Lit model writes premultiplied colour, its passes tagged `"Output" = "Premultiplied"`, so every `SurfaceBlend` applies the opacity once. Transparent surfaces still cast shadows, dithered by their opacity.
+Transparent surfaces draw back to front after the opaques and do not write depth. In a surface shader, set `p.geometryOpacity`. The Lit model writes premultiplied color, its passes tagged `"Output" = "Premultiplied"`, so every `SurfaceBlend` applies the opacity once. Transparent surfaces still cast shadows, dithered by their opacity.
 
 A material's surface settings also override the render state and queue of any custom shader.
 
@@ -48,16 +48,16 @@ material.SetColor("transmission_color", new Color(0.8f, 0.95f, 0.9f, 1f));
 
 To do this step by step in the editor, see [Make a see-through glass material](../09-how-to/30-make-a-glass-material.md).
 
-It refracts the opaque scene behind it through the surface's IOR (`specular_ior`), blurred by its roughness. A solid object, with `geometry_thin_walled` off, also draws its back faces' depth in a **BackDepth** pass, so the light bends through the whole volume and `transmission_depth` and `transmission_scatter` can tint and cloud it along the way, like coloured glass or murky water. `transmission_dispersion_scale` splits white light into colours. Thin walled materials, such as a window pane or a soap bubble, pass light straight through.
+It refracts the opaque scene behind it through the surface's IOR (`specular_ior`), blurred by its roughness. A solid object, with `geometry_thin_walled` off, also draws its back faces' depth in a **BackDepth** pass, so the light bends through the whole volume and `transmission_depth` and `transmission_scatter` can tint and cloud it along the way, like colored glass or murky water. `transmission_dispersion_scale` splits white light into colors. Thin walled materials, such as a window pane or a soap bubble, pass light straight through.
 
 At the `Lite` PBR tier transmissive materials refract the reflection probes instead of the scene, see [Quality levels](../03-rendering/06-quality.md).
 
-## Refraction: reading the scene colour
+## Refraction: reading the scene color
 
 
 ![Frosted glass refracting the scene behind it](images/glass-refraction.png)
 
-A pass tagged `"SceneColor" = "Read"` can sample the opaque scene behind it. The renderer copies the colour, with mips, after the opaque surfaces and the sky, and before transparent ones.
+A pass tagged `"SceneColor" = "Read"` can sample the opaque scene behind it. The renderer copies the color, with mips, after the opaque surfaces and the sky, and before transparent ones.
 
 ```glsl
 Shader "MyGame/Glass"
@@ -114,7 +114,7 @@ Shader "MyGame/Glass"
 - `Graphite_ScreenUV()` is this pixel's screen UV.
 - `Graphite_SampleSceneColor(uv, lod)` samples the scene; each mip level up is a blur twice as wide, which makes frosted glass cheap.
 - The built-in `Refraction` shader (`DefaultShader.Refraction`) is a complete example with noise and a rotating blur.
-- The scene colour is already exposed, so writing it back unchanged looks the same as the scene around it.
+- The scene color is already exposed, so writing it back unchanged looks the same as the scene around it.
 
 ## Soft edges: reading the scene depth
 
@@ -147,4 +147,4 @@ void main()
 | `Graphite_LinearDepth(deviceDepth)` | Converts any raw depth, such as `gl_FragCoord.z` |
 
 > [!NOTE]
-> The copies only run for views that actually draw a pass with these tags, so they cost nothing otherwise. Views without one read black colour and far-plane depth.
+> The copies only run for views that actually draw a pass with these tags, so they cost nothing otherwise. Views without one read black color and far-plane depth.

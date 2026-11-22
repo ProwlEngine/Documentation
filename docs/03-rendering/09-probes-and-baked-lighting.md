@@ -29,7 +29,7 @@ A `ReflectionProbe` captures a cubemap of its surroundings. Surfaces inside its 
 | `RefreshMode` | `OnEnable` | Realtime only. `OnEnable`, `EveryFrame`, or `ViaScripting` for `RenderProbe()` |
 | `TimeSlicing` | `AllFacesAtOnce` | Realtime only. `IndividualFaces` takes one face a frame |
 | `BoxSize`, `BoxOffset` | 10 by 10 by 10, zero | The area it affects. The capture is taken from the box middle |
-| `BlendDistance` | 1 | How far in from the box faces it fades, so neighbours blend |
+| `BlendDistance` | 1 | How far in from the box faces it fades, so neighbors blend |
 | `Importance` | 1 | Higher wins where probes overlap, then the smaller box |
 | `Resolution` | 128 | Cube edge length, a power of two, capped by `MaxProbeResolution` in [Quality levels](06-quality.md) |
 
@@ -56,7 +56,7 @@ The **Light Probes** scene tool moves, adds, deletes and duplicates probes by ha
 
 **Generate Lighting** bakes every loaded scene together with the Photonic path tracer, so light and shadow cross between scenes. Each scene writes its pages into a `SceneName_lightmaps` folder beside its file. The bake never saves a scene.
 
-Static renderers with a lightmap UV get a lightmap. The bake uses UV2 when the mesh has it, otherwise UV0. Static renderers without one only cast shadows and bounce colour.
+Static renderers with a lightmap UV get a lightmap. The bake uses UV2 when the mesh has it, otherwise UV0. Static renderers without one only cast shadows and bounce color.
 
 The bake will not start in play mode, with an unsaved scene, or with no static renderers. **Cancel** stops a running bake, and **Clear** deletes the baked lightmaps and probes.
 

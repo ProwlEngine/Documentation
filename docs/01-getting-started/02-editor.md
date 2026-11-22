@@ -28,7 +28,7 @@ Run the editor. The project launcher opens.
 
 Closed a panel? Every one is under **Window > General**. Panels dock, resize and remember their layout.
 
-![The editor with an empty scene, panels labelled](images/editor-panels.png)
+![The editor with an empty scene, panels labeled](images/editor-panels.png)
 
 ## Menus
 

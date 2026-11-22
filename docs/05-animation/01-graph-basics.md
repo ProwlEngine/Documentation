@@ -82,7 +82,7 @@ A graph is made of nodes. Nodes connect through **pins**, and each pin carries o
 
 The first pose node you add to the graph becomes its **root**, the pose the Animator shows.
 
-![Pins of each kind in the graph editor, showing their colours](images/pin-colours.png)
+![Pins of each kind in the graph editor, showing their colors](images/pin-colours.png)
 
 ## State machines
 

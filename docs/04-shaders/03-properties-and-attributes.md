@@ -80,7 +80,7 @@ Attributes go after the default value, each in brackets.
 | `[Range(min, max)]` | Float, Integer | A slider between the bounds |
 | `[Enum(A, B, C)]` | Integer | A dropdown, stored as the index |
 | `[Gamma]` | Color | Entered in gamma space, stored linear |
-| `[HDR]` | Color | The colour may go above 1 |
+| `[HDR]` | Color | The color may go above 1 |
 | `[Header("Text")]` | any | A heading above the property |
 | `[Space]` | any | A gap above the property |
 | `[ShowIf(AXIS)]` | any | Shown only while toggle `AXIS` is on |

@@ -30,7 +30,7 @@ Vertex
 | `position` | `vec3` | Object space position |
 | `normal` | `vec3` | Object space normal |
 | `tangent` | `vec4` | Object space tangent; `w` is the handedness |
-| `color` | `vec4` | Vertex colour, handy as a mask |
+| `color` | `vec4` | Vertex color, handy as a mask |
 | `uv`, `uv1` | `vec2` | Texture coordinates |
 | `time` | `float` | Seconds. Last frame's while the motion vector evaluation runs |
 
@@ -60,12 +60,12 @@ Shader "MyGame/Foliage"
 
             void SurfaceVertex(inout Graphite_SurfaceVertex v)
             {
-                // A world-space phase, so neighbouring plants sway out of step
+                // A world-space phase, so neighboring plants sway out of step
                 vec3 world = Graphite_RelativeToWorld(Graphite_ObjectToRelative(v.position));
                 float phase = dot(world.xz, vec2(0.35, 0.21));
                 float sway = sin(v.time * 1.7 + phase) * 0.6 + sin(v.time * 3.9 + phase * 1.3) * 0.25;
 
-                // Vertex colour red marks how free each vertex is: 0 at the trunk, 1 at the tips
+                // Vertex color red marks how free each vertex is: 0 at the trunk, 1 at the tips
                 v.position += _Wind.xyz * (sway * _Wind.w * _Flexibility * v.color.r);
             }
             ENDGLSL
@@ -80,7 +80,7 @@ Make a material with it, then set leaves to cutout and double sided:
 material.Surface = new SurfaceSettings(SurfaceType.Cutout, SurfaceBlend.Alpha, SurfaceCull.Off);
 ```
 
-Everything else comes from the Lit model: base colour with opacity, normal maps, shadows, decals and fog. For light shining through leaves, give the material `geometry_thin_walled` and a `subsurface_weight`, as the built-in Grass shader does.
+Everything else comes from the Lit model: base color with opacity, normal maps, shadows, decals and fog. For light shining through leaves, give the material `geometry_thin_walled` and a `subsurface_weight`, as the built-in Grass shader does.
 
 ### Drive the wind from C#
 

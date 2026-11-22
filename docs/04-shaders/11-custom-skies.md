@@ -61,7 +61,7 @@ Shader "MyGame/StarrySky"
 
 - `Sky(direction)` gets the unit world direction of the pixel and returns light in **nits**. The model multiplies it by the camera's exposure for you.
 - Pick nits that match the scene: a clear daytime sky is thousands of nits, a night sky well under one. This one is a night sky, so use auto exposure or a low camera `EV100` with it. See [Exposure](../03-rendering/02-cameras-and-post-processing.md#exposure-and-physical-light).
-- `Graphite/Skies.glsl` gives you the scene's sun: `Graphite_SunDirection()` and `Graphite_SunIlluminance()`, its colour times lux. The built-in Procedural sky is `Graphite_ProceduralSky` over those.
+- `Graphite/Skies.glsl` gives you the scene's sun: `Graphite_SunDirection()` and `Graphite_SunIlluminance()`, its color times lux. The built-in Procedural sky is `Graphite_ProceduralSky` over those.
 
 ## A hand-written sky pass
 

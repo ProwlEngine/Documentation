@@ -96,7 +96,7 @@ Put it on a static or kinematic rigidbody. Each link hangs from the one above. A
 
 ## Wheels
 
-A **Wheel Collider** is a raycast-vehicle wheel. It pushes on the nearest rigidbody above it with a suspension spring and tyre grip, and adds no collision shape. Add one per wheel from **Add Component > Physics > Wheel Collider**. Put each on a child of the car body, at the top of the suspension travel.
+A **Wheel Collider** is a raycast-vehicle wheel. It pushes on the nearest rigidbody above it with a suspension spring and tire grip, and adds no collision shape. Add one per wheel from **Add Component > Physics > Wheel Collider**. Put each on a child of the car body, at the top of the suspension travel.
 
 | Property | Default | Effect |
 | --- | --- | --- |
@@ -121,7 +121,7 @@ public sealed class Throttle : Component
 }
 ```
 
-`MotorTorque` and `BrakeTorque` are in newton metres. `SteerAngle` is in radians. Set `VisualTransform` to a child mesh to have it follow the wheel.
+`MotorTorque` and `BrakeTorque` are in newton meters. `SteerAngle` is in radians. Set `VisualTransform` to a child mesh to have it follow the wheel.
 
 ## See also
 

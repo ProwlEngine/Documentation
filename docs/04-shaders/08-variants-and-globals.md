@@ -89,7 +89,7 @@ Pragmas are found in the program and every file it includes, following `#if`, `#
 
 ### Keep the count down
 
-Every axis multiplies the number of combinations: four toggles is sixteen variants per pass. Variants compile on demand, the first time something draws them, and objects show flat grey until theirs is ready. Builds precompile only the variants your materials use. Prefer a uniform and a branch for cheap switches, and variants for expensive features.
+Every axis multiplies the number of combinations: four toggles is sixteen variants per pass. Variants compile on demand, the first time something draws them, and objects show flat gray until theirs is ready. Builds precompile only the variants your materials use. Prefer a uniform and a branch for cheap switches, and variants for expensive features.
 
 ## Globals
 

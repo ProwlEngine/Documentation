@@ -67,7 +67,7 @@ A **tree prototype** is a mesh, materials and a **Bend Factor** for wind. In **T
 | Setting | Default | Effect |
 | --- | --- | --- |
 | **Detail Distance** | 150 | How far details draw |
-| **Detail Density** | 2 | Cells per metre. Cost grows with its square |
+| **Detail Density** | 2 | Cells per meter. Cost grows with its square |
 | **Detail Cascades** | 4 | Bands out to that distance. Each draws a quarter as many blades |
 | **Tree View Distance** | 500 | How far trees draw |
 | **Max LOD Levels** | 4 | Surface mesh subdivisions |
