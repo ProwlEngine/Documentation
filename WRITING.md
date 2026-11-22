@@ -84,7 +84,15 @@ State a word budget before writing. Typical: concept page 300 to 600 words, tuto
 
 ## Git
 
-Commit to main in the docs repo. Never push, merge, rebase or amend. Small commits, one logical change each. For a full rewrite of one file, edit and commit one section at a time, so each commit holds one section. Never make one large commit. Use a one-line message, for example `docs(animation): explain Enter and Exit gates`. Stage files by explicit path.
+Commit to main in the docs repo. Never push, merge, rebase or amend. Stage files by explicit path. Messages are plain, one line and capitalized, with no `docs(...)` prefix, for example `Explain Enter and Exit gates`.
+
+One commit per logical change:
+
+- A real fix is its own commit: a wrong default, a bad menu name, a missing definition.
+- A new page is one commit, even if you wrote it section by section.
+- A rewrite of one page is one commit.
+- A sweep across many pages for one reason (spelling, links, wording, non-ASCII characters) is one commit, not one per page.
+- Never split one change into many tiny commits, and never lump unrelated fixes into one.
 
 ## Report back
 
