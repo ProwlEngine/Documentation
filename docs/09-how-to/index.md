@@ -12,3 +12,5 @@ Each guide gets you one result in a few steps. There is no theory. Every guide e
 - [Play a sound](04-play-a-sound.md): hear an audio clip in your game
 - [Read player input](05-read-player-input.md): move or act from keys, mouse and gamepad
 - [Show a button on screen](06-show-a-button-on-screen.md): add a clickable button to your game's screen
+- [Make an agent walk to a point](07-make-an-agent-walk-to-a-point.md): bake a NavMesh and send a character to a goal
+- [Add a particle effect](08-add-a-particle-effect.md): add a glowing effect and switch it on and off from a script

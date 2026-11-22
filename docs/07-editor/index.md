@@ -13,3 +13,4 @@ The editor is built with Paper, Prowl's immediate-mode UI. It includes the scene
 - [Assets and importers](04-assets-and-importers.md)
 - [Building your game](05-building-your-game.md)
 - [Debugging and profiling](06-debugging-and-profiling.md)
+- [Project settings](07-project-settings.md)
