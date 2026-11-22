@@ -3,6 +3,8 @@ title: Rigidbodies and collisions
 description: Motion types, forces, collision callbacks and trigger volumes.
 ---
 
+To make an object fall and bounce, see [Make an object fall and bounce](../09-how-to/50-make-an-object-fall-and-bounce.md). To react when something enters a zone, see [Detect when the player enters an area](../09-how-to/51-detect-when-the-player-enters-an-area.md).
+
 ## Rigidbody3D
 
 ![A stack of rigidbodies toppling](images/rigidbody-stack.gif)

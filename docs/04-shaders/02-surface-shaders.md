@@ -5,6 +5,32 @@ description: The Surface block and its Vertex and Lighting blocks, the surface i
 
 A `Surface` block gives your shader Graphite's standard passes, **Forward**, **Prepass**, **ShadowCaster**, **Transmission**, **BackDepth**, **Voxelize**, **Impostor** and **Debug** (the editor's debug views), with every feature of the built-in shader. You write only the parts you want to change.
 
+## Quick recipe
+
+Save this as a `.shader` file, make a material from it, and set **Tint** in the inspector. It multiplies the base colour.
+
+```glsl
+Shader "MyGame/Tinted"
+{
+    Properties
+    {
+        _Tint("Tint", Color) = (1.0, 0.5, 0.2, 1.0)
+    }
+
+    Surface "Lit"
+    {
+        GLSLPROGRAM
+        uniform vec4 _Tint;
+
+        void Surface(inout PBR_Params p, Graphite_SurfaceData i)
+        {
+            p.baseColor *= _Tint.rgb;
+        }
+        ENDGLSL
+    }
+}
+```
+
 ## The three parts
 
 ```glsl

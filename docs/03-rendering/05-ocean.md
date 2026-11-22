@@ -5,6 +5,16 @@ description: An FFT ocean to the horizon, with foam, wakes, currents, floating b
 
 Add an **Ocean** component (**Add Component > Rendering > Ocean**) and the scene has a sea at the GameObject's height, out to the horizon. Waves come from a wind driven spectrum on repeating tiles, drawn as rings around the camera that curve down with the planet.
 
+## Quick start
+
+1. Choose **GameObject > Empty Object** and move it to the water height.
+2. Choose **Add Component > Rendering > Ocean**. Press Play to see the waves move.
+3. For a boat, give it a **Physics > Rigidbody** and a **Physics > Ocean Floater**.
+
+[screenshot needed: the Scene view with the ocean and a floating object]
+
+For a full boat, see [Float a boat on the ocean](../09-how-to/20-float-a-boat-on-the-ocean.md).
+
 ## Waves
 
 | Setting | Meaning |

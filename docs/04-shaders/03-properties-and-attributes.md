@@ -3,6 +3,23 @@ title: Properties and attributes
 description: Property types, defaults, inspector attributes and the C# material API.
 ---
 
+## Quick recipe
+
+Add a property, declare a `uniform` with the same name, then set it from the inspector or from C#.
+
+```glsl
+Properties
+{
+    _Tint("Tint", Color) = (1, 1, 1, 1)
+}
+// in the GLSL program:
+uniform vec4 _Tint;
+```
+
+```csharp
+material.SetColor("_Tint", new Color(0.8f, 0.2f, 0.1f, 1f));
+```
+
 ## Declaring properties
 
 ```glsl

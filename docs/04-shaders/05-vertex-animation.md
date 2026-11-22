@@ -7,6 +7,22 @@ A Surface block's `Vertex` block moves vertices before they are transformed, **i
 
 ![Foliage swaying in the wind, with matching shadows](images/foliage-wind.gif)
 
+## Quick recipe
+
+Put this inside a `Surface "Lit"` block to make every vertex bob up and down:
+
+```glsl
+Vertex
+{
+    GLSLPROGRAM
+    void SurfaceVertex(inout Graphite_SurfaceVertex v)
+    {
+        v.position.y += sin(v.time * 2.0 + v.position.x) * 0.1;
+    }
+    ENDGLSL
+}
+```
+
 ## Graphite_SurfaceVertex
 
 | Field | Type | Meaning |

@@ -5,6 +5,18 @@ description: Drive a running editor from the terminal, scripts or AI agents.
 
 The `prowl` command talks to a running editor. New projects ship with agent skills that teach AI agents these commands.
 
+## Quick recipe
+
+With the editor open on a project, run these in a terminal:
+
+```bash
+prowl status
+prowl command
+prowl eval "1 + 1"
+```
+
+They print the editor state, the available commands, and the result of a C# expression.
+
 ## Verbs
 
 | Command | What it does |

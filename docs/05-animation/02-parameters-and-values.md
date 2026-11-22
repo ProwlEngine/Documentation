@@ -3,6 +3,16 @@ title: Parameters and values
 description: Parameters your scripts set, and the value nodes that turn them into decisions.
 ---
 
+## Quick recipe
+
+1. In the graph's **Parameters** panel, click the plus button, name the parameter `Speed`, choose **Number** and click **Create**.
+2. Drag it onto the canvas to make a node that reads it.
+3. Set it from a script in `Update`:
+
+```csharp
+GetComponent<Animator>().SetFloat("Speed", 3.2f);
+```
+
 ## Parameters
 
 ![The Parameters panel with Number, Flag and Trigger parameters](images/parameters-panel.png)

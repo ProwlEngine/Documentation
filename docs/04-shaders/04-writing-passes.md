@@ -5,6 +5,8 @@ description: Pass blocks, pass types, the GLSL sections, vertex inputs and the h
 
 When a surface shader is not enough, write the passes yourself. A pass is one way of drawing the object; the renderer picks passes by their `LightMode` tag.
 
+To start from a working pass, copy [A complete unlit shader](#a-complete-unlit-shader).
+
 ## Anatomy of a pass
 
 ```glsl

@@ -3,6 +3,19 @@ title: Materials
 description: The OpenPBR Lit shader, its properties and maps, linear colour and emission in nits.
 ---
 
+## Quick recipe
+
+Give an object a coloured, glossy material from a script:
+
+```csharp
+var mat = Material.DefaultMaterial;   // the Lit shader
+mat.SetColor("base_color", new Color(0.9f, 0.22f, 0.03f, 1f));
+mat.SetFloat("specular_roughness", 0.2f);
+GetComponent<MeshRenderer>().Material = mat;
+```
+
+In the editor, choose **Assets > Create > Material**, select it and edit its properties in the Inspector. Then set it as the Mesh Renderer's material.
+
 ## Colours are linear
 
 Colour values in materials and lights are linear. Textures are decoded from sRGB, but a colour you type is used as is. Convert a picked colour first, roughly `value ^ 2.2`: sRGB 0.5 grey is linear 0.21.

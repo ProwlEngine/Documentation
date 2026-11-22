@@ -34,6 +34,8 @@ public sealed class PlayerMover : Component
 }
 ```
 
+For which fields are saved and how to control it, see [Serialization](07-serialization.md).
+
 ## Lifecycle
 
 | Callback | When it runs |

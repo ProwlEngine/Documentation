@@ -5,6 +5,8 @@ description: Every built-in animation graph node, with its inputs and settings.
 
 A **node** is one block in an animation graph that makes or changes a pose. A graph is nodes joined by pins. This page lists all 84 built-in nodes, grouped like the add menu. To learn how graphs work, read [Graph basics](./01-graph-basics.md).
 
+To build a working graph quickly, see [Make a character walk and run with a graph](../09-how-to/40-make-a-character-walk-and-run-with-a-graph.md).
+
 - A **pin** is a socket on a node. You wire an output pin to an input pin.
 - A **pose** is the position of every bone at one moment.
 - A **setting** is a value you type on the node itself.

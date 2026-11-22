@@ -3,6 +3,14 @@ title: Lights
 description: Light components, real world units and presets, shadows and baked lighting.
 ---
 
+## Quick recipe
+
+1. Choose **GameObject > Light > Directional Light** for a sun.
+2. Choose **GameObject > Light > Point Light** for a bulb, and move it where you want it.
+3. Select a light and pick another from the preset list in its Inspector, such as a sunset or a street lamp.
+
+[screenshot needed: the Light menu and a light's preset list in the Inspector]
+
 ## Light types
 
 

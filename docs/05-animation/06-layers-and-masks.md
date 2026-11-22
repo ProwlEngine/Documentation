@@ -5,6 +5,8 @@ description: Combine animations per body part, and add motion on top with additi
 
 Layers combine poses: run with the legs while aiming with the arms, or add breathing on top of everything.
 
+To do it fast, see [Example: shoot while running](#example-shoot-while-running).
+
 ## Layer
 
 Blends a **Layer** pose over a **Base** pose, through an optional **Mask**. With **Additive** on, it adds the layer on top instead of replacing.

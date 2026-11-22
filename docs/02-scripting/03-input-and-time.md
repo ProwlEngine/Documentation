@@ -21,6 +21,8 @@ slowMo.Remove();
 
 ## Direct input
 
+To move an object from keys or a gamepad step by step, see [Read player input](../09-how-to/05-read-player-input.md).
+
 ```csharp
 if (Input.GetKeyDown(KeyCode.Space)) Jump();
 if (Input.GetMouseButton(0)) Fire();

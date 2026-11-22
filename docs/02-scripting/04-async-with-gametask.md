@@ -5,6 +5,8 @@ description: Wait, hop threads and cancel cleanly with the GameTask API.
 
 `GameTask` gives components async code that respects frames, game time and play sessions.
 
+To wait before an action, see [Do something after a delay](../09-how-to/11-do-something-after-a-delay.md).
+
 ## Waiting
 
 ```csharp

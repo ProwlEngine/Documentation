@@ -6,6 +6,12 @@ description: How animation graphs work - states, Enter and Exit gates, and trans
 > [!IMPORTANT]
 > Transitions in Prowl's graphs have no conditions of their own. Instead, **each state decides when it wants to be entered and when it is willing to be left.** Read this page before building a graph, or it will never leave its first state.
 
+Quick start:
+
+- [Play an animation on a loop](../09-how-to/01-play-an-animation-on-a-loop.md) or [switch between two animations](../09-how-to/02-switch-between-two-animations.md) with no graph.
+- [Make a character walk and run with a graph](../09-how-to/40-make-a-character-walk-and-run-with-a-graph.md).
+- [Add a hit reaction with an Any State transition](../09-how-to/41-add-a-hit-reaction-with-an-any-state-transition.md).
+
 ## Creating a graph
 
 ![The animation graph editor: state machine, parameters panel and minimap](images/graph-editor-overview.png)

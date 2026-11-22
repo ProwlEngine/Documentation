@@ -7,6 +7,8 @@ A sky is a shader with a pass tagged `"LightMode" = "Sky"`. It draws as a fullsc
 
 ![The starry sky shader over a night scene](images/starry-sky.png)
 
+To use a sky at once, make a material from its shader and assign it to **Sky Material** in the Environment panel.
+
 ## A stylized sky with stars
 
 ```glsl

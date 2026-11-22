@@ -30,6 +30,8 @@ GameObject.Instantiate(prefab, Transform.Position + Transform.Forward, Transform
 enemy.Destroy();   // removed at the end of the frame
 ```
 
+For a step-by-step setup, see [Spawn a prefab](../09-how-to/03-spawn-a-prefab.md).
+
 A prefab spawns into the active section of the world your code runs in, so it unloads with the level. `Instantiate(prefab, parent)` spawns into the parent's section instead, and copying an existing object with `Instantiate(original)` keeps the copy in the original's section.
 
 Until the end of the frame a destroyed object is still valid and keeps updating. Check `IsDestroyQueued` to treat it as gone, or call `Dispose()` to tear it down immediately.

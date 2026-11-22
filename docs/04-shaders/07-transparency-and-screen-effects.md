@@ -46,6 +46,8 @@ material.SetFloat("specular_roughness", 0.05f);
 material.SetColor("transmission_color", new Color(0.8f, 0.95f, 0.9f, 1f));
 ```
 
+To do this step by step in the editor, see [Make a see-through glass material](../09-how-to/30-make-a-glass-material.md).
+
 It refracts the opaque scene behind it through the surface's IOR (`specular_ior`), blurred by its roughness. A solid object, with `geometry_thin_walled` off, also draws its back faces' depth in a **BackDepth** pass, so the light bends through the whole volume and `transmission_depth` and `transmission_scatter` can tint and cloud it along the way, like coloured glass or murky water. `transmission_dispersion_scale` splits white light into colours. Thin walled materials, such as a window pane or a soap bubble, pass light straight through.
 
 At the `Lite` PBR tier transmissive materials refract the reflection probes instead of the scene, see [Quality levels](../03-rendering/06-quality.md).

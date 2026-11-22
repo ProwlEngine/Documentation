@@ -11,3 +11,4 @@ Prowl scripts are C# on .NET 11, compiled in-process with Roslyn and hot-reloade
 - [Async with GameTask](04-async-with-gametask.md)
 - [Scenes and worlds](05-scenes-and-worlds.md)
 - [Loading scenes](06-loading-scenes.md)
+- [Serialization](07-serialization.md)

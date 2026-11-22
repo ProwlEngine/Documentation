@@ -5,6 +5,8 @@ description: Build a complete walk, run and strafe setup with stride warping and
 
 This walkthrough builds character locomotion from scratch: idle, walk, run and strafe, blended by speed, with feet that do not slide and that plant on slopes.
 
+To get a basic walk and run working first, follow [Make a character walk and run with a graph](../09-how-to/40-make-a-character-walk-and-run-with-a-graph.md).
+
 ![Locomotion in action: idle, walk, run and turning on the spot](images/locomotion-result.gif)
 
 ## What you need
