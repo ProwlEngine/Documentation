@@ -21,13 +21,11 @@ Root travel is extracted by default, so the clips play in place while your scrip
 
 ![The Locomotion state: three clips into a Blend 1D, driven by Speed](images/step1-blend1d.png)
 
-Inside the root state machine, make a **Locomotion** state. Inside it:
+Inside the root state machine, make a **Locomotion** state.
 
-1. Add a **Blend 1D** and wire it into State Output Pose pin.
-2. Add three **Clip** nodes (idle, walk, run) and wire them into the Blend 1D's pose inputs.
-3. Set each input's threshold to the speed it represents, in meters per second: idle 0, walk 1.5, run 5.
-4. Add a **Parameter** node named `Speed` and wire it into the Blend 1D's **Parameter** pin.
-5. Open the state's **Enter** permanently, since it is the only state for now.
+Build it as in steps 5 to 9 of [Make a character walk and run with a graph](../09-how-to/40-make-a-character-walk-and-run-with-a-graph.md): a **Blend 1D** of idle, walk and run clips, driven by a `Speed` parameter, with **Enter** open.
+
+Set each clip's threshold to the speed it represents, in meters per second: idle 0, walk 1.5, run 5.
 
 > [!NOTE]
 > Each Blend 1D input's threshold is set on its input. They default to 1, so set every one. Clips under a blend follow the blend's timeline instead of their own looping, so walk and run stay in phase.
