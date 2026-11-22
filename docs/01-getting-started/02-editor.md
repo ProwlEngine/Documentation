@@ -26,7 +26,7 @@ Run the editor. The project launcher opens.
 | **Console** | Logs, warnings and compile errors |
 | **Game** | What the camera sees while playing |
 
-Closed a panel? Every one is under **Window › General**. Panels dock, resize and remember their layout.
+Closed a panel? Every one is under **Window > General**. Panels dock, resize and remember their layout.
 
 ![The editor with an empty scene, panels labelled](images/editor-panels.png)
 
@@ -41,15 +41,15 @@ On macOS, Cmd replaces Ctrl in shortcuts.
 
 ## 3. Build a scene
 
-1. **GameObject › 3D Object › Plane** for a floor.
-2. **GameObject › 3D Object › Cube**. Move it up a few units with the gizmo, so it floats above the floor.
-3. If the scene has no camera or light yet, add **GameObject › Camera** and **GameObject › Light › Directional Light**, and point the camera at the cube.
+1. **GameObject > 3D Object > Plane** for a floor.
+2. **GameObject > 3D Object > Cube**. Move it up a few units with the gizmo, so it floats above the floor.
+3. If the scene has no camera or light yet, add **GameObject > Camera** and **GameObject > Light > Directional Light**, and point the camera at the cube.
 
 ![A cube floating above a plane in the scene view](images/first-scene.png)
 
 ## 4. Add physics
 
-1. Select the cube. In the inspector, **Add Component** › **Rigidbody3D**, then **Box Collider**.
+1. Select the cube. In the inspector, **Add Component** > **Rigidbody3D**, then **Box Collider**.
 2. Select the plane and add a **Box Collider**, sized to cover it, so the cube has something to land on.
 3. Press **F5** to play. The cube falls and lands. Press **F5** again to stop.
 
@@ -57,7 +57,7 @@ On macOS, Cmd replaces Ctrl in shortcuts.
 
 ## 5. Write a script
 
-1. In the Project panel, **Create › C# Script**, and name it `Spinner`.
+1. In the Project panel, **Create > C# Script**, and name it `Spinner`.
 2. Double-click it to open it in the built-in code editor, and replace its contents:
 
 ```csharp
@@ -76,7 +76,7 @@ public sealed class Spinner : Component
 ```
 
 3. Save. The script compiles in the editor and hot-reloads; compile errors appear on the line and in the console.
-4. Add a second cube with **GameObject › 3D Object › Cube**, and leave it without physics.
+4. Add a second cube with **GameObject > 3D Object > Cube**, and leave it without physics.
 5. Select it, **Add Component**, and find **Spinner**. Its `DegreesPerSecond` field shows in the inspector, where you can change it, even while playing.
 
 > [!NOTE]
@@ -94,11 +94,11 @@ public sealed class Spinner : Component
 | **Ctrl+S** | Save all: every changed scene, plus anything else unsaved |
 | **Ctrl+Shift+S** | Save the active scene as a new file |
 
-Every shortcut can be rebound in **Window › General › Preferences**. Save your scene into the Assets folder before building. To work on several scenes at once, see [Multi scene editing](../07-editor/02-multi-scene-editing.md).
+Every shortcut can be rebound in **Window > General > Preferences**. Save your scene into the Assets folder before building. To work on several scenes at once, see [Multi scene editing](../07-editor/02-multi-scene-editing.md).
 
 ## 7. Build it
 
-Open **File › Build Project...** (the Build Settings panel), click **Add Open** to add the open scenes to the build's scene list (the first one is what the game starts with), choose a build profile for your platform, and build. The build packs only the assets your scenes use, and precompiles the shader variants they need.
+Open **File > Build Project...** (the Build Settings panel), click **Add Open** to add the open scenes to the build's scene list (the first one is what the game starts with), choose a build profile for your platform, and build. The build packs only the assets your scenes use, and precompiles the shader variants they need.
 
 ![The Build Project panel with a scene in the build list](images/build-settings.png)
 

@@ -23,7 +23,7 @@ Root travel is extracted by default, so the clips play in place while your scrip
 
 Inside the root state machine, make a **Locomotion** state. Inside it:
 
-1. Add a **Blend 1D** and wire it into State Output → Pose.
+1. Add a **Blend 1D** and wire it into State Output Pose pin.
 2. Add three **Clip** nodes (idle, walk, run) and wire them into the Blend 1D's pose inputs.
 3. Set each input's threshold to the speed it represents, in metres per second: idle 0, walk 1.5, run 5.
 4. Add a **Parameter** node named `Speed` and wire it into the Blend 1D's **Parameter** pin.
@@ -138,7 +138,7 @@ Put **Foot Grounding** last, just before State Output, or on the root after the 
 | Max Step Up, Max Step Down | 0.5 m |
 | Adjust Hips | on |
 | Foot Smoothing, Hips Smoothing | 0.04 s, 0.08 s |
-| Max Foot Angle | 45° |
+| Max Foot Angle | 45 degrees |
 | Foot Lift Height | 0.1 m |
 
 Wire a **Number** 1 into its **Weight**, or blend it down while jumping.
