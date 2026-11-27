@@ -20,11 +20,6 @@
             "Requirements",
             "Download a release",
             "Build from source",
-            "1. Clone both repositories side by side",
-            "2. Turn on local Anthology",
-            "3. Open the solution and run",
-            "Other ways to switch",
-            "Building against NuGet instead",
             "Run the samples"
           ],
           "order": 1
@@ -372,12 +367,13 @@
           "type": "page",
           "slug": "scripting/scenes-and-worlds",
           "title": "Scenes and worlds",
-          "description": "Scene assets, live worlds and sections, finding objects, the main camera, persistent objects and when a world ends.",
+          "description": "Scene assets, live worlds and sections, building a level in code, finding objects, the main camera, persistent objects and when a world ends.",
           "path": "docs/02-scripting/05-scenes-and-worlds.md",
           "headings": [
             "Scenes, worlds and sections",
             "The active world",
             "Main and other worlds",
+            "Building a level in code",
             "Sections",
             "Finding objects",
             "The main camera",
