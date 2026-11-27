@@ -3,7 +3,33 @@ title: Surface shaders
 description: The Surface block and its Vertex and Lighting blocks, the surface inputs, the OpenPBR parameters, and worked examples.
 ---
 
-A `Surface` block gives your shader Graphite's standard passes, **Forward**, **Prepass**, **ShadowCaster**, **Transmission**, **BackDepth** and **Debug** (the editor's debug views), with every feature of the built-in shader. You write only the parts you want to change.
+A `Surface` block gives your shader Graphite's standard passes, **Forward**, **Prepass**, **ShadowCaster**, **Transmission**, **BackDepth**, **Voxelize**, **Impostor** and **Debug** (the editor's debug views), with every feature of the built-in shader. You write only the parts you want to change.
+
+## Quick recipe
+
+Save this as a `.shader` file, make a material from it, and set **Tint** in the inspector. It multiplies the base color.
+
+```glsl
+Shader "MyGame/Tinted"
+{
+    Properties
+    {
+        _Tint("Tint", Color) = (1.0, 0.5, 0.2, 1.0)
+    }
+
+    Surface "Lit"
+    {
+        GLSLPROGRAM
+        uniform vec4 _Tint;
+
+        void Surface(inout PBR_Params p, Graphite_SurfaceData i)
+        {
+            p.baseColor *= _Tint.rgb;
+        }
+        ENDGLSL
+    }
+}
+```
 
 ## The three parts
 
@@ -11,7 +37,7 @@ A `Surface` block gives your shader Graphite's standard passes, **Forward**, **P
 Surface "Lit"
 {
     GLSLPROGRAM
-    // 1. The surface: change colour, normals, roughness, emission, opacity and every other input per pixel
+    // 1. The surface: change color, normals, roughness, emission, opacity and every other input per pixel
     void Surface(inout PBR_Params p, Graphite_SurfaceData i) { ... }
     ENDGLSL
 
@@ -45,7 +71,9 @@ All three are optional. A `Surface "Lit" { }` with nothing in it is the built-in
 | Model | Is | Surface function |
 | --- | --- | --- |
 | `"Lit"` | The OpenPBR surface: shadows, lightmaps, probes, decals, fog, normal maps, parallax, coat, fuzz, thin film, subsurface and transmission | `void Surface(inout PBR_Params p, Graphite_SurfaceData i)` |
-| `"Unlit"` | A colour that glows at a set brightness, fogged | `void Surface(inout Unlit_Params p, Graphite_SurfaceData i)` |
+| `"Unlit"` | A color that glows at a set brightness, fogged | `void Surface(inout Unlit_Params p, Graphite_SurfaceData i)` |
+| `"Foliage"` | Lit for grass, leaves and bushes: light through the blade from behind, soft normals, both sides drawn, wind in a `Vertex` block. No `Lighting` block | `void Surface(inout PBR_Params p, Graphite_SurfaceData i)` |
+| `"Terrain"` | Lit on the terrain's page pools, with holes. `Terrain_Level()` and `Terrain_Morph()` are there to read | `void Surface(inout PBR_Params p, Graphite_SurfaceData i)` |
 | `"Sky"` | A sky, see [Custom skies](11-custom-skies.md) | `vec3 Sky(vec3 direction)` |
 
 - Your `Properties` are added to the model's. A property with the same name as a standard one replaces it.
@@ -78,7 +106,7 @@ The second argument tells you about the point. It is read only.
 | --- | --- | --- |
 | `uv` | `vec2` | UV0, after parallax, before any texture's scale and offset |
 | `uv1` | `vec2` | UV1, the same |
-| `vertexColor` | `vec4` | The mesh's vertex colour times the object's colour |
+| `vertexColor` | `vec4` | The mesh's vertex color times the object's color |
 | `relativePos` | `vec3` | Position relative to the camera. `Graphite_RelativeToWorld(i.relativePos)` gives the world position |
 | `viewDir` | `vec3` | Unit direction from the surface toward the camera |
 | `geometryNormal` | `vec3` | The mesh normal, world space, facing the camera on back faces |
@@ -93,20 +121,20 @@ The first argument holds every OpenPBR input, already built from the material's 
 
 | Field | Type | Meaning |
 | --- | --- | --- |
-| `baseWeight`, `baseColor` | `float`, `vec3` | Diffuse colour, linear. `baseColor` already includes the vertex colour |
+| `baseWeight`, `baseColor` | `float`, `vec3` | Diffuse color, linear. `baseColor` already includes the vertex color |
 | `baseMetalness` | `float` | 0 to 1 |
 | `baseDiffuseRoughness` | `float` | Rough diffuse, like clay or the moon |
 | `specularWeight`, `specularColor`, `specularIor` | | The dielectric reflection |
-| `specularRoughness`, `specularRoughnessAnisotropy` | `float` | 0 to 1 |
-| `coatWeight`, `coatColor`, `coatRoughness`, `coatIor`, `coatDarkening` | | A clear coat on top |
+| `specularRoughness`, `specularRoughnessAnisotropy` | `float` | 0 to 1. The anisotropy stretches the highlight along `geometryTangent` |
+| `coatWeight`, `coatColor`, `coatRoughness`, `coatRoughnessAnisotropy`, `coatIor`, `coatDarkening` | | A clear coat on top |
 | `fuzzWeight`, `fuzzColor`, `fuzzRoughness` | | Velvet and dust |
-| `subsurfaceWeight`, `subsurfaceColor`, `subsurfaceRadius` | | Light scattering under the surface |
-| `transmissionWeight`, `transmissionColor`, `transmissionDepth` | | Glass and liquids |
-| `thinFilmWeight`, `thinFilmThickness`, `thinFilmIor` | | Soap bubble and oil slick colours, thickness in micrometres |
+| `subsurfaceWeight`, `subsurfaceColor`, `subsurfaceRadius`, `subsurfaceRadiusScale`, `subsurfaceScatterAnisotropy` | | Light scattering under the surface |
+| `transmissionWeight`, `transmissionColor`, `transmissionDepth`, `transmissionScatter`, `transmissionScatterAnisotropy`, `transmissionDispersionScale`, `transmissionDispersionAbbeNumber` | | Glass and liquids |
+| `thinFilmWeight`, `thinFilmThickness`, `thinFilmIor` | | Soap bubble and oil slick colors, thickness in micrometers |
 | `emissionColor`, `emissionLuminance` | `vec3`, `float` | Light given off, in nits |
 | `geometryOpacity` | `float` | Coverage, used by cutout and transparent surfaces. Includes the vertex alpha |
 | `geometryNormal`, `geometryTangent` | `vec3` | World space shading normal after the normal map, and the anisotropy direction |
-| `geometryCoatNormal` | `vec3` | The coat's own normal |
+| `geometryCoatNormal`, `geometryCoatTangent` | `vec3` | The coat's own normal, and its anisotropy direction |
 | `geometryThinWalled` | `bool` | A thin sheet rather than a solid |
 | `occlusion` | `float` | Ambient occlusion, 1 is unoccluded. Darkens indirect light only |
 
@@ -264,9 +292,9 @@ material.SetFloat("_Dissolve", 0.6f);
 
 Every texture property automatically has a `_ST` vector with its tiling in `xy` and offset in `zw`. Do not declare it yourself.
 
-## Example: vertex colour masks
+## Example: vertex color masks
 
-The standard surface already multiplies `baseColor` and `geometryOpacity` by the vertex colour, so a mask painted into red would also tint the surface red. Keep the vertex colour white and paint the mask into vertex alpha instead, where lower alpha means wetter.
+The standard surface already multiplies `baseColor` and `geometryOpacity` by the vertex color, so a mask painted into red would also tint the surface red. Keep the vertex color white and paint the mask into vertex alpha instead, where lower alpha means wetter.
 
 ```glsl
 void Surface(inout PBR_Params p, Graphite_SurfaceData i)
@@ -320,5 +348,5 @@ Redeclaring `coat_weight` with its `[Toggle(PBR_COAT)]` keeps the toggle while c
 
 Surface shaders cover vertex animation, custom lighting, transmission and skies. Write your own passes for:
 
-- Reading the scene colour or depth yourself: custom refraction, soft edges. See [Transparency and screen effects](07-transparency-and-screen-effects.md).
+- Reading the scene color or depth yourself: custom refraction, soft edges. See [Transparency and screen effects](07-transparency-and-screen-effects.md).
 - Anything that is not a lit surface at all.

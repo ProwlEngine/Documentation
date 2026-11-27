@@ -11,7 +11,7 @@ Prowl's shaders are `.shader` files in Graphite's **ShaderDef** format: a short,
 | --- | --- | --- |
 | You write | A `Surface` function, plus optional `Vertex` and `Lighting` blocks | Every pass: vertex and fragment code |
 | You get for free | The OpenPBR surface with its coat, fuzz, subsurface and transmission, lighting, shadows, lightmaps, probes, decals, fog, normal maps, parallax, cutout and transparency | Only what you write |
-| Good for | Colour, normals, roughness, emission, opacity, vertex animation, custom lighting such as toon, skies | Screen effects, anything that is not a lit surface |
+| Good for | Color, normals, roughness, emission, opacity, vertex animation, custom lighting such as toon, skies | Screen effects, anything that is not a lit surface |
 
 Start with a surface shader. It now covers most effects; reach for passes when you need full control.
 
@@ -62,7 +62,7 @@ Light in Prowl is in real units, so emission is in nits. At the default camera e
 Compile errors appear in the console as `file:line: error`, where the line is the line in your `.shader` file, or in the include that failed.
 
 > [!NOTE]
-> Variants compile the first time something draws them. While a variant compiles, or if it failed, objects draw in flat grey from `Graphite/Fallback`. Builds precompile every variant your materials actually use.
+> Variants compile the first time something draws them. While a variant compiles, or if it failed, objects draw in flat gray from `Graphite/Fallback`. Builds precompile every variant your materials actually use.
 
 ## In this section
 

@@ -44,7 +44,7 @@ Light in Prowl is in real units: the sun in lux, bulbs in candela, glowing surfa
 
 A pixel's light is multiplied by `1 / (1.2 * 2^EV100)` before tonemapping, so each step up halves the image's brightness. At EV100 14 that maps about 20000 nits to white.
 
-An **Auto Exposure** volume component meters the scene instead and adapts over time, taking over from `EV100` after the first frame:
+An **Auto Exposure** volume component meters the scene instead and adapts over time, taking over from `EV100` after the first frame. It must be enabled: `Enabled` is false by default, and `CreateCameraDefault` turns it on.
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
@@ -53,7 +53,7 @@ An **Auto Exposure** volume component meters the scene instead and adapts over t
 | `MinEV100`, `MaxEV100` | -6, 20 | The darkest and brightest scenes it meters |
 
 > [!TIP]
-> If everything is black or white, check the light units first. A light of intensity 1 is a candle seen from a metre, invisible in daylight. Start lights from a preset, see [Lights](03-lights.md).
+> If everything is black or white, check the light units first. A light of intensity 1 is a candle seen from a meter, invisible in daylight. Start lights from a preset, see [Lights](03-lights.md).
 
 ## Volume profiles
 
@@ -83,7 +83,7 @@ Available components include `Tonemapping`, `AutoExposure`, `Bloom`, `AmbientOcc
 | --- | --- |
 | `ACES` | The default of new cameras. Punchy, filmic contrast |
 | `AgXPunchy` | AgX with more contrast and saturation |
-| `AgXNeutral` | AgX with no look: flat and desaturated, a good base for colour grading |
+| `AgXNeutral` | AgX with no look: flat and desaturated, a good base for color grading |
 | `Reinhard` | Extended Reinhard on luminance, white at 2 |
 | `RomBinDaHouse`, `Uncharted2` | Classic game curves |
 | `None` | Off. Light above 1 clips |
@@ -112,14 +112,14 @@ public sealed class Invert : PostEffect
 }
 ```
 
-Floats, ints and enums arrive as themselves, bools as 0 or 1, colours and `Float2` to `Float4` as vectors, and a `Texture2D` as a `sampler2D`. Add the effect to a volume profile like any built-in component.
+Floats, ints and enums arrive as themselves, bools as 0 or 1, colors and `Float2` to `Float4` as vectors, and a `Texture2D` as a `sampler2D`. Add the effect to a volume profile like any built-in component.
 
 | `Stage` | Runs |
 | --- | --- |
 | `AfterOpaques` | After the opaques and sky, before transparents, in linear light |
 | `BeforeTonemap` | After transparents, in linear light, where bloom and depth of field run |
 | `Tonemap` | **Instead of** the Tonemapping component, as a custom tonemapper |
-| `AfterTonemap` (default) | On the colour as displayed |
+| `AfterTonemap` (default) | On the color as displayed |
 
 Linear light here is already multiplied by the camera's exposure, so your effect sees the same brightness the tonemapper does.
 
@@ -150,5 +150,3 @@ public sealed class SoftTonemap : PostEffect
 }
 ```
 
-> [!NOTE]
-> Using `override string Shader` does mean the Build pipeline cant pre-compile the shader. Using a Material is preferred, but for Simplicity sake the override is fine.

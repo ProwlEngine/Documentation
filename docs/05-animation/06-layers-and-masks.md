@@ -5,6 +5,8 @@ description: Combine animations per body part, and add motion on top with additi
 
 Layers combine poses: run with the legs while aiming with the arms, or add breathing on top of everything.
 
+To do it fast, see [Example: shoot while running](#example-shoot-while-running).
+
 ## Layer
 
 Blends a **Layer** pose over a **Base** pose, through an optional **Mask**. With **Additive** on, it adds the layer on top instead of replacing.
@@ -39,6 +41,12 @@ Spreading means `@Spine:1` covers the whole upper body. Lower a child to soften 
 ![The legs running while the upper body aims](images/shoot-while-running.gif)
 
 The legs keep running and the upper body aims. Ease the weight in when the player raises the weapon.
+
+1. Add a **Bone Mask** with `@Spine:1`. Leave Rest Weight at 0, so the legs are not touched.
+2. Put your run graph on the **Base** pin of a **Layer** node.
+3. Put your aim pose (a clip or Look At) on the **Layer** pin. Wire the Bone Mask into **Mask**.
+4. Add a Flag parameter `Aiming`. Wire it into the **Condition** pin of a **Choose Number** with Value 1, Default 0 and an Ease Time of 0.2.
+5. Wire the Choose Number into the Layer's **Weight** pin.
 
 ## Additive animation
 

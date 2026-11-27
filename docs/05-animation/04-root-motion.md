@@ -5,6 +5,14 @@ description: Let animation move the character, through the Animator or a Charact
 
 Root motion is the movement baked into a clip: the travel of a walk, the turn of a turn-in-place, the leap of a vault. Prowl extracts it so the clip plays in place, then hands you the movement.
 
+## Quick recipe
+
+To move a character by its clips, with no collision, turn on `ApplyRootMotion`. For collision, see the CharacterController section below.
+
+```csharp
+GetComponent<Animator>().ApplyRootMotion = true;
+```
+
 ## Extraction
 
 ![Per-clip root motion settings in the model inspector](images/root-motion-settings.png)
@@ -64,7 +72,7 @@ public sealed class RootMotionMover : Component
 | --- | --- |
 | **Root Motion** | Keeps `All`, `Horizontal`, `Rotation` or `None` of the channels, scales travel and turn, and caps speed and turn rate |
 | **Stride Warp** | Changes playback rate so travel matches a requested speed |
-| **Orientation Warp** | Bends a travelling clip toward a direction |
+| **Orientation Warp** | Bends a traveling clip toward a direction |
 | **Turn Warp** | Makes a turn clip turn by an exact angle |
 | **Target Warp** | Stretches a clip's travel so it lands on a displacement |
 

@@ -3,6 +3,14 @@ title: Lights
 description: Light components, real world units and presets, shadows and baked lighting.
 ---
 
+## Quick recipe
+
+1. Choose **GameObject > Light > Directional Light** for a sun.
+2. Choose **GameObject > Light > Point Light** for a bulb, and move it where you want it.
+3. Select a light and pick another from the preset list in its Inspector, such as a sunset or a street lamp.
+
+[screenshot needed: the Light menu and a light's preset list in the Inspector]
+
 ## Light types
 
 
@@ -43,9 +51,9 @@ bulb.Intensity = bulb.ToStored(LightUnit.Lumen, 1600f);   // a 100 W bulb
 | Flashlight, downlight, car headlight, stage spot | 300, 800, 1500 and 10000 lumens |
 | Midday sun, low sun, sunset, full moon | 100000, 20000, 2000 and 0.25 lux |
 
-## Colour and temperature
+## Color and temperature
 
-`Color` is linear. With `UseTemperature` on, the light takes the colour of a glowing body at `Temperature` Kelvin, tinted by `Color` like a filter: a candle about 1900, a bulb 2700, daylight 5600, an overcast sky 6500. `FinalColor` is the colour it shines.
+`Color` is linear. With `UseTemperature` on, the light takes the color of a glowing body at `Temperature` Kelvin, tinted by `Color` like a filter: a candle about 1900, a bulb 2700, daylight 5600, an overcast sky 6500. `FinalColor` is the color it shines.
 
 ## Range
 

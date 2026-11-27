@@ -38,6 +38,7 @@
           "headings": [
             "1. Create a project",
             "2. Find your way around",
+            "Menus",
             "3. Build a scene",
             "4. Add physics",
             "5. Write a script",
@@ -80,6 +81,230 @@
     },
     {
       "type": "folder",
+      "slug": "how-to",
+      "title": "How-to guides",
+      "description": "Short, step-by-step guides for common tasks.",
+      "path": "docs/09-how-to/index.md",
+      "headings": [],
+      "order": 1.5,
+      "children": [
+        {
+          "type": "page",
+          "slug": "how-to/play-an-animation-on-a-loop",
+          "title": "Play an animation on a loop",
+          "description": "Get an animated FBX or glTF character playing on a loop in your scene, with no graph and no code.",
+          "path": "docs/09-how-to/01-play-an-animation-on-a-loop.md",
+          "headings": [
+            "Steps",
+            "If it does not play",
+            "Play it from a script instead",
+            "Learn more"
+          ],
+          "order": 1
+        },
+        {
+          "type": "page",
+          "slug": "how-to/switch-between-two-animations",
+          "title": "Switch between two animations",
+          "description": "Fade a character from one animation to another from a script, with no animation graph.",
+          "path": "docs/09-how-to/02-switch-between-two-animations.md",
+          "headings": [
+            "Steps",
+            "If it does not work",
+            "Learn more"
+          ],
+          "order": 2
+        },
+        {
+          "type": "page",
+          "slug": "how-to/spawn-a-prefab",
+          "title": "Spawn a prefab",
+          "description": "Save an object as a prefab and spawn copies of it from a script when you press a key.",
+          "path": "docs/09-how-to/03-spawn-a-prefab.md",
+          "headings": [
+            "Steps",
+            "If it does not spawn",
+            "Learn more"
+          ],
+          "order": 3
+        },
+        {
+          "type": "page",
+          "slug": "how-to/play-a-sound",
+          "title": "Play a sound",
+          "description": "Import an audio file and hear it play from an object in your scene.",
+          "path": "docs/09-how-to/04-play-a-sound.md",
+          "headings": [
+            "Steps",
+            "If you hear nothing",
+            "Play it from a script instead",
+            "Learn more"
+          ],
+          "order": 4
+        },
+        {
+          "type": "page",
+          "slug": "how-to/read-player-input",
+          "title": "Read player input",
+          "description": "Move an object with WASD through an Input Actions asset, so you can add gamepad controls later without code changes.",
+          "path": "docs/09-how-to/05-read-player-input.md",
+          "headings": [
+            "Steps",
+            "If it does not work",
+            "Learn more"
+          ],
+          "order": 5
+        },
+        {
+          "type": "page",
+          "slug": "how-to/show-a-button-on-screen",
+          "title": "Show a button on screen",
+          "description": "Put a clickable button on the screen of your game and run code when the player clicks it.",
+          "path": "docs/09-how-to/06-show-a-button-on-screen.md",
+          "headings": [
+            "Steps",
+            "If it does not work",
+            "Learn more"
+          ],
+          "order": 6
+        },
+        {
+          "type": "page",
+          "slug": "how-to/make-an-agent-walk-to-a-point",
+          "title": "Make an agent walk to a point",
+          "description": "Bake a NavMesh and send a character to a goal object that finds its own way.",
+          "path": "docs/09-how-to/07-make-an-agent-walk-to-a-point.md",
+          "headings": [
+            "Steps",
+            "If the character does not move",
+            "Learn more"
+          ],
+          "order": 7
+        },
+        {
+          "type": "page",
+          "slug": "how-to/add-a-particle-effect",
+          "title": "Add a particle effect",
+          "description": "Put a glowing, fading particle effect in your scene and switch it on and off from a script.",
+          "path": "docs/09-how-to/08-add-a-particle-effect.md",
+          "headings": [
+            "Steps",
+            "Switch it on and off from a script",
+            "If nothing appears",
+            "Learn more"
+          ],
+          "order": 8
+        },
+        {
+          "type": "page",
+          "slug": "how-to/load-the-next-level",
+          "title": "Load the next level",
+          "description": "Switch to another scene when the player walks into a trigger.",
+          "path": "docs/09-how-to/10-load-the-next-level.md",
+          "headings": [
+            "Steps",
+            "If it does not work",
+            "Learn more"
+          ],
+          "order": 10
+        },
+        {
+          "type": "page",
+          "slug": "how-to/do-something-after-a-delay",
+          "title": "Do something after a delay",
+          "description": "Wait a few seconds in a script, then act, without freezing the game.",
+          "path": "docs/09-how-to/11-do-something-after-a-delay.md",
+          "headings": [
+            "Steps",
+            "Variations",
+            "If it does not work",
+            "Learn more"
+          ],
+          "order": 11
+        },
+        {
+          "type": "page",
+          "slug": "how-to/float-a-boat-on-the-ocean",
+          "title": "Float a boat on the ocean",
+          "description": "Add an ocean to the scene and make a physics object bob on its waves.",
+          "path": "docs/09-how-to/20-float-a-boat-on-the-ocean.md",
+          "headings": [
+            "Steps",
+            "Tune it",
+            "Learn more"
+          ],
+          "order": 20
+        },
+        {
+          "type": "page",
+          "slug": "how-to/make-a-glass-material",
+          "title": "Make a see-through glass material",
+          "description": "Make a glass sphere that refracts the scene behind it, with no custom shader.",
+          "path": "docs/09-how-to/30-make-a-glass-material.md",
+          "headings": [
+            "Steps",
+            "Flat panes and windows",
+            "Set it from a script",
+            "Learn more"
+          ],
+          "order": 30
+        },
+        {
+          "type": "page",
+          "slug": "how-to/make-a-character-walk-and-run-with-a-graph",
+          "title": "Make a character walk and run with a graph",
+          "description": "Blend idle, walk and run clips with an animation graph, driven by a Speed value from a script.",
+          "path": "docs/09-how-to/40-make-a-character-walk-and-run-with-a-graph.md",
+          "headings": [
+            "Steps",
+            "If it does not work",
+            "Learn more"
+          ],
+          "order": 40
+        },
+        {
+          "type": "page",
+          "slug": "how-to/add-a-hit-reaction-with-an-any-state-transition",
+          "title": "Add a hit reaction with an Any State transition",
+          "description": "Interrupt whatever a character is doing with a one-shot hit animation, then return to normal.",
+          "path": "docs/09-how-to/41-add-a-hit-reaction-with-an-any-state-transition.md",
+          "headings": [
+            "Steps",
+            "If it does not work",
+            "Learn more"
+          ],
+          "order": 41
+        },
+        {
+          "type": "page",
+          "slug": "how-to/make-an-object-fall-and-bounce",
+          "title": "Make an object fall and bounce",
+          "description": "Drop a sphere onto a floor and make it bounce, with no code.",
+          "path": "docs/09-how-to/50-make-an-object-fall-and-bounce.md",
+          "headings": [
+            "Steps",
+            "If it does not bounce",
+            "Learn more"
+          ],
+          "order": 50
+        },
+        {
+          "type": "page",
+          "slug": "how-to/detect-when-the-player-enters-an-area",
+          "title": "Detect when the player enters an area",
+          "description": "Use a trigger volume and a small script to react when a physics object or a character enters a zone.",
+          "path": "docs/09-how-to/51-detect-when-the-player-enters-an-area.md",
+          "headings": [
+            "Steps",
+            "If nothing prints",
+            "Learn more"
+          ],
+          "order": 51
+        }
+      ]
+    },
+    {
+      "type": "folder",
       "slug": "scripting",
       "title": "Scripting",
       "description": "Components, GameObjects, scenes and worlds, scene loading, input and async code in C#.",
@@ -96,6 +321,7 @@
           "headings": [
             "A complete component",
             "Lifecycle",
+            "Finding and checking",
             "Attributes",
             "Analyzers"
           ],
@@ -182,6 +408,59 @@
             "LoadOptions"
           ],
           "order": 6
+        },
+        {
+          "type": "page",
+          "slug": "scripting/serialization",
+          "title": "Serialization",
+          "description": "What Prowl saves from your components and assets, and how to control it.",
+          "path": "docs/02-scripting/07-serialization.md",
+          "headings": [
+            "Quick recipe",
+            "What is saved",
+            "Save a field only sometimes",
+            "Rename a field without losing data",
+            "Run code around saving",
+            "What can be saved",
+            "See also"
+          ],
+          "order": 7
+        },
+        {
+          "type": "page",
+          "slug": "scripting/prefabs",
+          "title": "Prefabs",
+          "description": "Save a GameObject as a reusable asset, edit it, override it per instance, and spawn it from a script.",
+          "path": "docs/02-scripting/08-prefabs.md",
+          "headings": [
+            "Quick recipe",
+            "Make a prefab",
+            "Edit the prefab",
+            "Overrides",
+            "Nesting",
+            "Spawn from a script",
+            "Plain field or AssetRef",
+            "Destroy",
+            "See also"
+          ],
+          "order": 8
+        },
+        {
+          "type": "page",
+          "slug": "scripting/input-actions",
+          "title": "Input actions",
+          "description": "Read player input through named actions that you bind to keys, buttons and sticks in an asset.",
+          "path": "docs/02-scripting/09-input-actions.md",
+          "headings": [
+            "Quick recipe",
+            "The asset",
+            "Kinds",
+            "Bindings and composites",
+            "Read an action",
+            "Not covered",
+            "See also"
+          ],
+          "order": 9
         }
       ]
     },
@@ -198,10 +477,11 @@
           "type": "page",
           "slug": "rendering/materials",
           "title": "Materials",
-          "description": "The OpenPBR Lit shader, its properties and maps, linear colour and emission in nits.",
+          "description": "The OpenPBR Lit shader, its properties and maps, linear color and emission in nits.",
           "path": "docs/03-rendering/01-materials.md",
           "headings": [
-            "Colours are linear",
+            "Quick recipe",
+            "Colors are linear",
             "The Lit shader",
             "Maps",
             "Optional layers cost nothing until used",
@@ -236,9 +516,10 @@
           "description": "Light components, real world units and presets, shadows and baked lighting.",
           "path": "docs/03-rendering/03-lights.md",
           "headings": [
+            "Quick recipe",
             "Light types",
             "Units and presets",
-            "Colour and temperature",
+            "Color and temperature",
             "Range",
             "Shadows",
             "Layers",
@@ -269,6 +550,7 @@
           "description": "An FFT ocean to the horizon, with foam, wakes, currents, floating bodies and lakes.",
           "path": "docs/03-rendering/05-ocean.md",
           "headings": [
+            "Quick start",
             "Waves",
             "Water",
             "Working with the water"
@@ -285,6 +567,91 @@
             "From code"
           ],
           "order": 6
+        },
+        {
+          "type": "page",
+          "slug": "rendering/particle-systems",
+          "title": "Particle systems",
+          "description": "Make fire, smoke, sparks and other effects from many small particles, and start or stop them from a script.",
+          "path": "docs/03-rendering/07-particle-systems.md",
+          "headings": [
+            "Quick recipe",
+            "Main settings",
+            "Modules",
+            "Drawing particles",
+            "Control from a script",
+            "See also"
+          ],
+          "order": 7
+        },
+        {
+          "type": "page",
+          "slug": "rendering/terrain",
+          "title": "Terrain",
+          "description": "Create a heightmap terrain, sculpt and paint it, and add grass, details and trees.",
+          "path": "docs/03-rendering/08-terrain.md",
+          "headings": [
+            "Quick recipe",
+            "Terrain Data",
+            "Editing modes",
+            "Layers and materials",
+            "Details and trees",
+            "Terrain Collider",
+            "See also"
+          ],
+          "order": 8
+        },
+        {
+          "type": "page",
+          "slug": "rendering/probes-and-baked-lighting",
+          "title": "Probes and baked lighting",
+          "description": "Reflection probes, light probes and lightmaps, and how to bake them in the editor.",
+          "path": "docs/03-rendering/09-probes-and-baked-lighting.md",
+          "headings": [
+            "Quick recipe: bake a room",
+            "Reflection probes",
+            "Light probes",
+            "Lightmaps",
+            "Settings",
+            "Light bake modes and static",
+            "See also"
+          ],
+          "order": 9
+        },
+        {
+          "type": "page",
+          "slug": "rendering/sprites-and-2d",
+          "title": "Sprites and 2D",
+          "description": "Import an image as a sprite, draw it with a Sprite Renderer, slice sprite sheets, and set up a 2D camera.",
+          "path": "docs/03-rendering/10-sprites-and-2d.md",
+          "headings": [
+            "Quick recipe",
+            "Importing a texture as a sprite",
+            "The Sprite Editor",
+            "The Sprite Renderer",
+            "Sorting",
+            "A 2D camera",
+            "Lines",
+            "See also"
+          ],
+          "order": 10
+        },
+        {
+          "type": "page",
+          "slug": "rendering/text-and-fonts",
+          "title": "Text and fonts",
+          "description": "Put text in the world with a Text Mesh, and import your own fonts.",
+          "path": "docs/03-rendering/11-text-and-fonts.md",
+          "headings": [
+            "Quick recipe",
+            "Importing a font",
+            "Text Mesh settings",
+            "Sizing text",
+            "Changing text from a script",
+            "Fonts and Scribe",
+            "See also"
+          ],
+          "order": 11
         }
       ]
     },
@@ -324,6 +691,7 @@
           "description": "The Surface block and its Vertex and Lighting blocks, the surface inputs, the OpenPBR parameters, and worked examples.",
           "path": "docs/04-shaders/02-surface-shaders.md",
           "headings": [
+            "Quick recipe",
             "The three parts",
             "How it works",
             "GraphiteSurfaceData",
@@ -335,7 +703,7 @@
             "Keywords you can test",
             "Example: tint by height",
             "Example: world-space dissolve",
-            "Example: vertex colour masks",
+            "Example: vertex color masks",
             "Example: car paint",
             "When to write passes instead"
           ],
@@ -348,6 +716,7 @@
           "description": "Property types, defaults, inspector attributes and the C# material API.",
           "path": "docs/04-shaders/03-properties-and-attributes.md",
           "headings": [
+            "Quick recipe",
             "Declaring properties",
             "Types",
             "Reading properties in GLSL",
@@ -383,6 +752,7 @@
           "description": "Move vertices for wind, waves and wobble with a Surface Vertex block, or with hand-written passes.",
           "path": "docs/04-shaders/05-vertex-animation.md",
           "headings": [
+            "Quick recipe",
             "GraphiteSurfaceVertex",
             "Example: foliage in the wind",
             "Drive the wind from C",
@@ -413,13 +783,13 @@
           "type": "page",
           "slug": "shaders/transparency-and-screen-effects",
           "title": "Transparency and screen effects",
-          "description": "Transparent surfaces, refraction with the scene colour, and soft edges with the scene depth.",
+          "description": "Transparent surfaces, refraction with the scene color, and soft edges with the scene depth.",
           "path": "docs/04-shaders/07-transparency-and-screen-effects.md",
           "headings": [
             "Transparency with the standard shaders",
             "Transparency in your own passes",
             "Transmission",
-            "Refraction: reading the scene colour",
+            "Refraction: reading the scene color",
             "Soft edges: reading the scene depth"
           ],
           "order": 7
@@ -444,13 +814,13 @@
           "type": "page",
           "slug": "shaders/render-state-and-stencil",
           "title": "Render state and stencil",
-          "description": "Culling, depth, blending, colour masks, depth bias and the stencil buffer.",
+          "description": "Culling, depth, blending, color masks, depth bias and the stencil buffer.",
           "path": "docs/04-shaders/09-render-state-and-stencil.md",
           "headings": [
             "Culling",
             "Depth",
             "Blending",
-            "Colour mask and alpha to coverage",
+            "Color mask and alpha to coverage",
             "Stencil",
             "Example: a portal window"
           ],
@@ -466,18 +836,11 @@
             "Relative and world",
             "Light is exposed",
             "How includes resolve",
-            "Graphite/Vertex.glsl",
-            "Graphite/Core.glsl",
-            "Graphite/Math.glsl",
+            "Core files",
             "View data",
-            "Graphite/Passes.glsl",
-            "Graphite/Lighting.glsl",
+            "Lighting",
             "Graphite/PBR",
-            "Graphite/Standard/Standard.glsl",
-            "Graphite/Decals.glsl",
-            "Graphite/SceneColor.glsl and SceneDepth.glsl",
-            "Graphite/Sky.glsl and Skies.glsl",
-            "Graphite/Debug.glsl",
+            "Surface and screen",
             "Prowl/Common.glsl"
           ],
           "order": 10
@@ -533,9 +896,10 @@
           "type": "page",
           "slug": "animation/graph-basics",
           "title": "Graph basics",
-          "description": "How animation graphs work - states, Enter and Exit gates, and transitions.",
+          "description": "What an animation graph is, and how states, transitions and Enter and Exit gates work.",
           "path": "docs/05-animation/01-graph-basics.md",
           "headings": [
+            "Example: idle, jump and land",
             "Creating a graph",
             "Nodes and pins",
             "State machines",
@@ -543,10 +907,7 @@
             "Default state and Any State",
             "Transitions",
             "Finishing states",
-            "Triggers",
-            "Example: idle, jump and land",
-            "Sub-graphs",
-            "Editing graphs from the terminal"
+            "Sub-graphs"
           ],
           "order": 1
         },
@@ -557,6 +918,7 @@
           "description": "Parameters your scripts set, and the value nodes that turn them into decisions.",
           "path": "docs/05-animation/02-parameters-and-values.md",
           "headings": [
+            "Quick recipe",
             "Parameters",
             "Value nodes",
             "Constants",
@@ -596,6 +958,7 @@
           "description": "Let animation move the character, through the Animator or a CharacterController.",
           "path": "docs/05-animation/04-root-motion.md",
           "headings": [
+            "Quick recipe",
             "Extraction",
             "Using root motion",
             "Directly on the Animator",
@@ -648,6 +1011,7 @@
           "description": "Mark moments and stretches in clips for gameplay, foot sync, transitions and warping.",
           "path": "docs/05-animation/07-clip-events.md",
           "headings": [
+            "Quick recipe",
             "Event kinds",
             "Foot events and sync",
             "Transition windows",
@@ -664,99 +1028,16 @@
           "path": "docs/05-animation/08-node-reference.md",
           "headings": [
             "Sources",
-            "Animation Pose",
-            "Clip",
-            "External Pose",
-            "Graph Output",
-            "Graph Slot",
-            "Reference Pose",
-            "Sub Graph",
-            "Zero Pose",
             "Logic",
-            "Choose Pose at Random",
-            "Choose Pose by Condition",
-            "Choose Pose by Index",
-            "Sequence",
-            "State Done",
-            "State Machine",
-            "State Output",
-            "State Query",
             "Blending",
-            "Blend 1D",
-            "Blend 2D",
-            "Crossfade",
-            "Layer",
-            "Layer Stack",
-            "Make Additive",
-            "Muscle Layer",
-            "Velocity Blend",
-            "Weighted Blend",
             "Locomotion",
-            "Character Motion",
-            "Foot Grounding",
-            "Foot Lock",
-            "Orientation Warp",
-            "Root Motion",
-            "Stride Warp",
-            "Target Warp",
-            "Turn Warp",
             "Rig",
-            "Aim Constraint",
-            "Copy Transform",
-            "IK Rig",
-            "Look At",
-            "Ragdoll",
-            "Spring Bones",
-            "Twist Distribution",
-            "Two Bone IK",
             "Modify",
-            "Inertial Blend",
-            "Mirror",
-            "Passthrough",
-            "Pose Smoothing",
-            "Pose Snapshot",
-            "Speed Scale",
             "Masks",
-            "Blend Masks",
-            "Bone Mask",
-            "Choose Mask",
-            "Mask Asset",
             "Channels",
-            "Drive Channels",
-            "Driven Channel",
-            "Read Channel",
             "Events",
-            "Event Fired",
-            "Foot Phase",
-            "Transition Window",
             "Values",
-            "Angle",
-            "Choose Number",
-            "Compare",
-            "Curve",
-            "Ease",
-            "Flag",
-            "Hold Value",
-            "In Range",
-            "Logic",
-            "Make Vector",
-            "Maths",
-            "Name",
-            "Name Matches",
-            "Name To Number",
-            "Negate Vector",
-            "Noise",
-            "Number",
-            "Offset Target",
-            "Parameter",
-            "Remap",
-            "Spring",
-            "Target Info",
-            "Timer",
-            "Vector",
-            "Vector Component",
-            "Virtual Parameter",
-            "Whole Number"
+            "Node ids"
           ],
           "order": 8
         }
@@ -810,6 +1091,39 @@
             "Filters"
           ],
           "order": 3
+        },
+        {
+          "type": "page",
+          "slug": "physics/joints-and-constraints",
+          "title": "Joints and constraints",
+          "description": "Connect rigidbodies with hinges, sliders and other joints, and add wheels to a vehicle.",
+          "path": "docs/06-physics/04-joints-and-constraints.md",
+          "headings": [
+            "Quick recipe",
+            "Joints and constraints",
+            "Limits and motors",
+            "Example: a door that stops",
+            "Example: a chain",
+            "Wheels",
+            "See also"
+          ],
+          "order": 4
+        },
+        {
+          "type": "page",
+          "slug": "physics/layers-and-collision",
+          "title": "Layers and collision",
+          "description": "Choose which objects collide with the layer collision matrix, ignore single pairs, and set gravity.",
+          "path": "docs/06-physics/05-layers-and-collision.md",
+          "headings": [
+            "Quick recipe",
+            "The collision matrix",
+            "Ignore one pair of bodies",
+            "Gravity",
+            "Layers in queries",
+            "See also"
+          ],
+          "order": 5
         }
       ]
     },
@@ -817,7 +1131,7 @@
       "type": "folder",
       "slug": "editor",
       "title": "Editor",
-      "description": "The Prowl editor, editing several scenes at once, and the command-line tool that drives it.",
+      "description": "The Prowl editor, multi-scene editing, extending it with C#, assets and importers, and the command-line tool.",
       "path": "docs/07-editor/index.md",
       "headings": [],
       "order": 7,
@@ -829,6 +1143,7 @@
           "description": "Drive a running editor from the terminal, scripts or AI agents.",
           "path": "docs/07-editor/01-prowl-cli.md",
           "headings": [
+            "Quick recipe",
             "Verbs",
             "Addressing things",
             "Scenes",
@@ -851,10 +1166,102 @@
             "Saving",
             "Play mode",
             "Baking with several scenes",
-            "Build settings",
+            "Build scene list",
             "Editor scripting"
           ],
           "order": 2
+        },
+        {
+          "type": "page",
+          "slug": "editor/extending-the-editor",
+          "title": "Extending the editor",
+          "description": "Add menu items, custom inspectors, editor windows and startup code to the Prowl editor from C# scripts.",
+          "path": "docs/07-editor/03-extending-the-editor.md",
+          "headings": [
+            "Add a menu item",
+            "Editor code and game code",
+            "Customize a component's inspector",
+            "Add an editor window",
+            "Run code when the editor loads",
+            "See also"
+          ],
+          "order": 3
+        },
+        {
+          "type": "page",
+          "slug": "editor/assets-and-importers",
+          "title": "Assets and importers",
+          "description": "What the editor does with files in your Assets folder, how .meta files and import settings work, and how to load assets or write an importer.",
+          "path": "docs/07-editor/04-assets-and-importers.md",
+          "headings": [
+            "The Assets folder",
+            "Meta files",
+            "Import settings",
+            "Sub-assets",
+            "The asset database",
+            "References",
+            "Load an asset from a script",
+            "Write a custom importer",
+            "See also"
+          ],
+          "order": 4
+        },
+        {
+          "type": "page",
+          "slug": "editor/building-your-game",
+          "title": "Building your game",
+          "description": "Turn a project into a standalone player that runs without the editor.",
+          "path": "docs/07-editor/05-building-your-game.md",
+          "headings": [
+            "Quick recipe",
+            "The scene list",
+            "Platforms",
+            "Settings in the panel",
+            "What ships",
+            "Packaging modes",
+            "Output and running it",
+            "Build from the command line",
+            "Common failures",
+            "See also"
+          ],
+          "order": 5
+        },
+        {
+          "type": "page",
+          "slug": "editor/debugging-and-profiling",
+          "title": "Debugging and profiling",
+          "description": "Find out what your game is doing with logs, gizmos, the Console, Frame Stats, the render profiler and the Asset Database panel.",
+          "path": "docs/07-editor/06-debugging-and-profiling.md",
+          "headings": [
+            "Quick recipe: log a message and draw a shape",
+            "Logging",
+            "The Console panel",
+            "Gizmos and debug drawing",
+            "Frame Stats",
+            "Render Profiler and snapshots",
+            "Debug views",
+            "Asset Database panel",
+            "Missing assets and crashes",
+            "See also"
+          ],
+          "order": 6
+        },
+        {
+          "type": "page",
+          "slug": "editor/project-settings",
+          "title": "Project settings",
+          "description": "Where the project-wide settings live in the editor, what each page controls, how they are saved, and how to add tags and layers.",
+          "path": "docs/07-editor/07-project-settings.md",
+          "headings": [
+            "Quick recipe: add a layer and use it",
+            "Settings pages",
+            "Where settings are stored",
+            "Tags and layers",
+            "Read a setting from a script",
+            "Preferences",
+            "See also"
+          ],
+          "order": 7
         }
       ]
     },
@@ -870,6 +1277,167 @@
       ],
       "order": 8,
       "children": []
+    },
+    {
+      "type": "folder",
+      "slug": "audio",
+      "title": "Audio",
+      "description": "Import sounds, play them from components and scripts, and shape them with mixers and effects.",
+      "path": "docs/10-audio/index.md",
+      "headings": [],
+      "order": 10,
+      "children": [
+        {
+          "type": "page",
+          "slug": "audio/playing-sounds",
+          "title": "Playing sounds",
+          "description": "Import audio clips, play them with an AudioSource, and place them in 3D space.",
+          "path": "docs/10-audio/01-playing-sounds.md",
+          "headings": [
+            "Quick recipe",
+            "Importing clips",
+            "The Audio Source",
+            "2D and 3D sound",
+            "Playing from a script",
+            "Playing at a point",
+            "Project audio settings",
+            "See also"
+          ],
+          "order": 1
+        },
+        {
+          "type": "page",
+          "slug": "audio/mixing-and-effects",
+          "title": "Mixing and effects",
+          "description": "Group sounds into mixer buses, change levels together, and add effects such as reverb.",
+          "path": "docs/10-audio/02-mixing-and-effects.md",
+          "headings": [
+            "Quick recipe",
+            "Groups",
+            "Effects",
+            "Snapshots",
+            "See also"
+          ],
+          "order": 2
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "slug": "ui",
+      "title": "In-game UI",
+      "description": "Put menus, buttons, text and HUDs on the screen of your game.",
+      "path": "docs/11-ui/index.md",
+      "headings": [],
+      "order": 11,
+      "children": [
+        {
+          "type": "page",
+          "slug": "ui/getting-started-with-ui",
+          "title": "Getting started with UI",
+          "description": "Build a canvas with text and a button, and learn how Prowl lays out and draws GameObject UI.",
+          "path": "docs/11-ui/01-getting-started-with-ui.md",
+          "headings": [
+            "Quick recipe",
+            "Canvas",
+            "Rect transform",
+            "UI components",
+            "Input",
+            "How it relates to Paper",
+            "See also"
+          ],
+          "order": 1
+        },
+        {
+          "type": "page",
+          "slug": "ui/drawing-ui-with-paper",
+          "title": "Drawing UI with Paper",
+          "description": "Draw a HUD or debug panel from code every frame with Paper's immediate-mode API.",
+          "path": "docs/11-ui/02-drawing-ui-with-paper.md",
+          "headings": [
+            "Quick recipe",
+            "How it runs",
+            "Keep clicks out of the game",
+            "Where the Paper docs live",
+            "See also"
+          ],
+          "order": 2
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "slug": "navigation",
+      "title": "Navigation",
+      "description": "Bake a walkable surface from your level and make agents find their way across it.",
+      "path": "docs/12-navigation/index.md",
+      "headings": [],
+      "order": 12,
+      "children": [
+        {
+          "type": "page",
+          "slug": "navigation/navmesh-basics",
+          "title": "NavMesh basics",
+          "description": "Bake a NavMesh from your level, choose agent types and areas, and add links, obstacles and modifiers.",
+          "path": "docs/12-navigation/01-navmesh-basics.md",
+          "headings": [
+            "Quick recipe",
+            "The NavMesh Surface",
+            "Baking",
+            "Agent types",
+            "Areas",
+            "Modifiers",
+            "Links",
+            "Obstacles",
+            "See also"
+          ],
+          "order": 1
+        },
+        {
+          "type": "page",
+          "slug": "navigation/moving-agents",
+          "title": "Moving agents",
+          "description": "Send a NavMesh Agent to a point, read its path state and tune how it moves.",
+          "path": "docs/12-navigation/02-moving-agents.md",
+          "headings": [
+            "Quick recipe",
+            "Agent settings",
+            "Setting a destination",
+            "Reacting to arrival",
+            "Stopping and teleporting",
+            "See also"
+          ],
+          "order": 2
+        }
+      ]
+    },
+    {
+      "type": "folder",
+      "slug": "xr",
+      "title": "XR",
+      "description": "Show your game in a headset through OpenXR, and read head and controller tracking from scripts.",
+      "path": "docs/13-xr/index.md",
+      "headings": [],
+      "order": 13,
+      "children": [
+        {
+          "type": "page",
+          "slug": "xr/getting-started-with-xr",
+          "title": "Getting started with XR",
+          "description": "What XR support Prowl has, what it needs, and how to see your scene in a headset.",
+          "path": "docs/13-xr/01-getting-started-with-xr.md",
+          "headings": [
+            "Requirements",
+            "Quick recipe",
+            "XR project settings",
+            "Poses",
+            "Controller input",
+            "Eye shaders",
+            "See also"
+          ],
+          "order": 1
+        }
+      ]
     }
   ],
   "news": [],

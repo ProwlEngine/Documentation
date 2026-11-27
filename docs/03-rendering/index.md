@@ -11,5 +11,10 @@ Prowl renders with Vulkan through Prowl.Graphite: a GPU-driven renderer with a r
 - [Sky, fog and clouds](04-environment.md)
 - [Ocean](05-ocean.md)
 - [Quality levels](06-quality.md)
+- [Particle systems](07-particle-systems.md)
+- [Terrain](08-terrain.md)
+- [Probes and baked lighting](09-probes-and-baked-lighting.md)
+- [Sprites and 2D](10-sprites-and-2d.md)
+- [Text and fonts](11-text-and-fonts.md)
 
 To write your own shaders, see [Shaders](../04-shaders/index.md).

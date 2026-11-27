@@ -3,6 +3,8 @@ title: Animation
 description: Animators, avatars, clips and animation graphs for characters, creatures and props.
 ---
 
+Quick start: [play an animation on a loop](../09-how-to/01-play-an-animation-on-a-loop.md).
+
 Prowl's animation system is built on Prowl.Motion. A character animates through three pieces:
 
 | Piece | What it is |

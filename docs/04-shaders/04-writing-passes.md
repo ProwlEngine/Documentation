@@ -5,6 +5,8 @@ description: Pass blocks, pass types, the GLSL sections, vertex inputs and the h
 
 When a surface shader is not enough, write the passes yourself. A pass is one way of drawing the object; the renderer picks passes by their `LightMode` tag.
 
+To start from a working pass, copy [A complete unlit shader](#a-complete-unlit-shader).
+
 ## Anatomy of a pass
 
 ```glsl
@@ -41,12 +43,14 @@ Pass
 
 | `LightMode` | Drawn as |
 | --- | --- |
-| `Forward` | The lit colour pass |
+| `Forward` | The lit color pass |
 | `Prepass` | The depth prepass |
 | `ShadowCaster` | Shadow maps |
 | `Sky` | The sky, see [Custom skies](11-custom-skies.md) |
 | `Transmission` | In place of `Forward` for transmissive materials, see [Transparency](07-transparency-and-screen-effects.md#transmission) |
 | `BackDepth` | The far side of transmissive volumes, as distance along the view ray |
+| `Voxelize` | Voxelizing the object for voxel lighting |
+| `Impostor` | Baking the object into an impostor |
 | `Debug` | The editor's debug views (albedo, normals, lighting and so on) |
 | `ObjectId` | Object picking in the editor |
 | any other name | Drawn by a **Draw Pass** component or a render feature, such as `"Outline"` |
@@ -61,11 +65,11 @@ Other tags the renderer reads:
 | Tag | Meaning |
 | --- | --- |
 | `"RenderQueue" = "3000"` | The default queue of the shader's materials. 2500 and up is transparent |
-| `"SceneColor" = "Read"` | The pass samples the opaque scene colour |
+| `"SceneColor" = "Read"` | The pass samples the opaque scene color |
 | `"SceneDepth" = "Read"` | The pass reads the opaque scene depth |
 | `"BackDepth" = "Read"` | The pass reads the back depth of transmissive volumes |
 | `"ReadsWhen" = "AXIS VALUE"` | The scene reads above only count while a global axis has that value, such as `"PBR_TIER FULL"` |
-| `"Output" = "Premultiplied"` | The pass writes premultiplied colour, so a material's `SurfaceBlend` uses premultiplied factors |
+| `"Output" = "Premultiplied"` | The pass writes premultiplied color, so a material's `SurfaceBlend` uses premultiplied factors |
 | `"Shadows" = "Off"`, `"Discards" = "On"` | On a Forward pass: no shadow from the depth only caster, see above |
 
 ## The GLSL sections
@@ -119,7 +123,7 @@ Graphite renders relative to the camera so huge worlds stay precise. A **relativ
 ## A complete unlit shader
 
 
-![Meshes drawn with the vertex colour unlit shader](images/unlit-vertex-color.png)
+![Meshes drawn with the vertex color unlit shader](images/unlit-vertex-color.png)
 
 ```glsl
 Shader "MyGame/VertexColorUnlit"
@@ -197,17 +201,17 @@ Shader "MyGame/VertexColorUnlit"
 
 ## The G-buffer
 
-An opaque Forward pass writes a thin G-buffer next to its colour: motion vectors, the world normal, and the top specular lobe's reflectance and roughness. Effects such as TAA, motion blur, screen space reflections and ambient occlusion read it. Call `Graphite_WriteGBuffer(worldNormal, reflectance, roughness)` from `Graphite/Passes.glsl` in every opaque Forward fragment shader, with `reflectance` the colour screen space reflections are weighted by, black for none. Your colour goes to `location = 0`.
+An opaque Forward pass writes a thin G-buffer next to its color: motion vectors, the world normal, and the top specular lobe's reflectance and roughness. Effects such as TAA, motion blur, screen space reflections and ambient occlusion read it. Call `Graphite_WriteGBuffer(worldNormal, reflectance, roughness)` from `Graphite/Passes.glsl` in every opaque Forward fragment shader, with `reflectance` the color screen space reflections are weighted by, black for none. Your color goes to `location = 0`.
 
 ## Brightness and exposure
 
-The colour a Forward pass writes is already exposed light: the standard shaders multiply light in nits by `Graphite_Exposure()`, which is `1 / (1.2 * 2^EV100)` for the camera drawing. A hand-written pass that writes a plain colour, like the one above, shows the same on screen whatever the exposure, which suits UI and markers. For a glow that sits in the scene like a real light, write `nits * Graphite_Exposure()`. Finish with `Graphite_ApplyFog(color, relativePos)` from `Graphite/Fog.glsl` if it should fog.
+The color a Forward pass writes is already exposed light: the standard shaders multiply light in nits by `Graphite_Exposure()`, which is `1 / (1.2 * 2^EV100)` for the camera drawing. A hand-written pass that writes a plain color, like the one above, shows the same on screen whatever the exposure, which suits UI and markers. For a glow that sits in the scene like a real light, write `nits * Graphite_Exposure()`. Finish with `Graphite_ApplyFog(color, relativePos)` from `Graphite/Fog.glsl` if it should fog.
 
 ## Useful per-draw data
 
 - `Graphite_View()` returns the camera's [view data](10-include-library.md#view-data): matrices, screen size, jitter and time.
 - `Graphite_InstanceIndex()` is the instance being drawn in an instanced draw.
-- `Graphite_Object()` is the object's record. Its `color` is the object's colour, which the standard surfaces multiply into the vertex colour, and `custom0` and `custom1` are free for the engine's own shaders.
+- `Graphite_Object()` is the object's record. Its `color` is the object's color, which the standard surfaces multiply into the vertex color, and `custom0` and `custom1` are free for the engine's own shaders.
 
 > [!NOTE]
 > The library wraps your vertex `main`: it sets up the draw first, then runs your code, then records motion vectors. Write `void main()` as usual.

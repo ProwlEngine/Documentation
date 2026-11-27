@@ -57,7 +57,7 @@ Surface "Lit"
 | `NdotV` | The cosine between them |
 | `roughness` | The base specular roughness, after the coat and specular antialiasing |
 | `metalness` | 0 to 1 |
-| `diffuseAlbedo` | The diffuse lobe's colour, after the specular layer above it took its share |
+| `diffuseAlbedo` | The diffuse lobe's color, after the specular layer above it took its share |
 | `specularAlbedo` | How much the base specular lobe reflects in total, tinted |
 | `emission` | Nits, before exposure |
 | `opacity`, `occlusion` | Coverage and ambient occlusion |
@@ -66,7 +66,7 @@ Surface "Lit"
 
 | Field | Meaning |
 | --- | --- |
-| `radiance` | The light's colour times intensity, times the camera's exposure, with **shadow**, cookie and IES profile already applied |
+| `radiance` | The light's color times intensity, times the camera's exposure, with **shadow**, cookie and IES profile already applied |
 | `diffuseL` | Unit direction to the light, for diffuse |
 | `diffuse` | The light reaching the surface per unit radiance: N.L over distance squared for a point, the shape's cosine weighted solid angle for an area light |
 | `attenuation` | The same for a surface facing the light, without the cosine |
@@ -242,7 +242,7 @@ drawPass.Stage = DrawPassStage.AfterOpaques;
 ![The toon shader with its outline](images/toon-outline.png)
 
 > [!NOTE]
-> Meshes with hard edges split their normals, which opens gaps in the inflated hull. Smooth the normals in your modelling tool, or store smoothed normals in a spare stream such as `vertexCustom0` and inflate along those.
+> Meshes with hard edges split their normals, which opens gaps in the inflated hull. Smooth the normals in your modeling tool, or store smoothed normals in a spare stream such as `vertexCustom0` and inflate along those.
 
 Draw Pass works for any extra pass: an x-ray silhouette drawn through walls with `ZTest Less` (Graphite's depth is reversed, see [Render state](09-render-state-and-stencil.md#depth)), a highlight for selected objects, and so on.
 

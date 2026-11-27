@@ -8,3 +8,5 @@ Physics in Prowl is powered by [Jitter Physics 2](https://github.com/notgiven688
 - [Rigidbodies and collisions](01-rigidbodies-and-collisions.md)
 - [Character controller](02-character-controller.md)
 - [Raycasts and queries](03-raycasts-and-queries.md)
+- [Joints and constraints](04-joints-and-constraints.md)
+- [Layers and collision](05-layers-and-collision.md)

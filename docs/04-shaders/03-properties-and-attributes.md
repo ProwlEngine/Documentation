@@ -3,6 +3,23 @@ title: Properties and attributes
 description: Property types, defaults, inspector attributes and the C# material API.
 ---
 
+## Quick recipe
+
+Add a property, declare a `uniform` with the same name, then set it from the inspector or from C#.
+
+```glsl
+Properties
+{
+    _Tint("Tint", Color) = (1, 1, 1, 1)
+}
+// in the GLSL program:
+uniform vec4 _Tint;
+```
+
+```csharp
+material.SetColor("_Tint", new Color(0.8f, 0.2f, 0.1f, 1f));
+```
+
 ## Declaring properties
 
 ```glsl
@@ -63,7 +80,7 @@ Attributes go after the default value, each in brackets.
 | `[Range(min, max)]` | Float, Integer | A slider between the bounds |
 | `[Enum(A, B, C)]` | Integer | A dropdown, stored as the index |
 | `[Gamma]` | Color | Entered in gamma space, stored linear |
-| `[HDR]` | Color | The colour may go above 1 |
+| `[HDR]` | Color | The color may go above 1 |
 | `[Header("Text")]` | any | A heading above the property |
 | `[Space]` | any | A gap above the property |
 | `[ShowIf(AXIS)]` | any | Shown only while toggle `AXIS` is on |

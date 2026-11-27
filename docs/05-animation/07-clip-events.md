@@ -5,6 +5,27 @@ description: Mark moments and stretches in clips for gameplay, foot sync, transi
 
 Clip events are markers on an animation clip: a single moment, or a stretch when it has a duration. Add them per clip in the model's inspector. Times are in seconds from the clip's start.
 
+## Quick recipe
+
+To react to a Named event from a script, read the Animator's events in `LateUpdate`:
+
+```csharp
+using Prowl.Motion;
+using Prowl.Runtime;
+
+public sealed class FootstepSounds : Component
+{
+    public Animator Animator;
+
+    public override void LateUpdate()
+    {
+        var events = Animator.Events;
+        if (events != null && events.ContainsId(new StringID("Footstep")))
+            Debug.Log("Footstep");
+    }
+}
+```
+
 ![Clip events on a clip timeline in the model inspector](images/clip-events-inspector.png)
 
 ## Event kinds

@@ -40,5 +40,5 @@ Use `obj.IsValid()` and `obj.IsNotValid()` instead. For a true reference-null ch
 
 ## Rendering
 
-- Colours are **linear**. A value picked in an image editor needs converting, roughly `value ^ 2.2`.
-- For a per-object colour, `Clone()` the material and assign the copy.
+- Colors are **linear**. A value picked in an image editor needs converting, roughly `value ^ 2.2`.
+- For a per-object color, `Clone()` the material and assign the copy.

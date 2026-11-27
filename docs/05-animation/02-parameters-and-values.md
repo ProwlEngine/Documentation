@@ -3,6 +3,16 @@ title: Parameters and values
 description: Parameters your scripts set, and the value nodes that turn them into decisions.
 ---
 
+## Quick recipe
+
+1. In the graph's **Parameters** panel, click the plus button, name the parameter `Speed`, choose **Number** and click **Create**.
+2. Drag it onto the canvas to make a node that reads it.
+3. Set it from a script in `Update`:
+
+```csharp
+GetComponent<Animator>().SetFloat("Speed", 3.2f);
+```
+
 ## Parameters
 
 ![The Parameters panel with Number, Flag and Trigger parameters](images/parameters-panel.png)
@@ -71,9 +81,9 @@ A **Virtual Parameter** names a value computed inside the graph. Parameter nodes
 
 ![The "moving or not" recipe: Parameter, Number and Compare nodes](images/recipe-is-moving.png)
 
-**Moving or not:** Parameter `Speed` → Compare `A`; Number 0.1 → Compare `B`; Op `Greater`. Wire it into the Walk state's Enter. For Idle's Enter, use Compare with `LessOrEqual`.
+**Moving or not:** Parameter `Speed` -> Compare `A`; Number 0.1 -> Compare `B`; Op `Greater`. Wire it into the Walk state's Enter. For Idle's Enter, use Compare with `LessOrEqual`.
 
 **Grounded and not attacking:** Logic `And` of Parameter `Grounded` and Logic `Not` of Parameter `Attacking`.
 
-**Smooth a jittery input:** Parameter `Speed` → Spring (Frequency 4, Damping 1) → Blend 1D's Parameter pin.
+**Smooth a jittery input:** Parameter `Speed` -> Spring (Frequency 4, Damping 1) -> Blend 1D's Parameter pin.
 

@@ -28,7 +28,7 @@ Each scene has a header row with its name, a mark when it has unsaved changes, a
 | **Save Scene**, **Save Scene As** | Saves just this scene |
 | **Save All** | Saves everything unsaved |
 | **Add New Scene** | Adds an empty untitled scene after the open ones |
-| **Unload Scene** | Removes its objects but keeps it listed, greyed, so one click loads it back |
+| **Unload Scene** | Removes its objects but keeps it listed, grayed, so one click loads it back |
 | **Load Scene** | Loads an unloaded scene back in place |
 | **Remove Scene** | Unloads it and takes it out of the hierarchy |
 | **Select Scene Asset** | Shows the `.scene` file in the project panel |
@@ -86,7 +86,7 @@ Pressing **Play** copies every loaded scene into a new play world:
 - The play world holds one section per loaded scene, in the same order, with the same active scene. Unloaded scenes are left out. Hidden scenes play like any other.
 - Each section keeps the scene it came from as its `Source`, so `Scene.Source` in game code is the scene you opened.
 - The play world becomes `Scene.Main`. Game code that loads a level replaces the play world's content and never touches your open scenes.
-- `SceneBuild.List` holds the enabled scenes from Build Settings, so `SceneBuild.Find` works as it will in the built game.
+- `SceneBuild.List` holds the enabled scenes from the build scene list (**File > Build Project...**), so `SceneBuild.Find` works as it will in the built game.
 - The edit world sleeps underneath, untouched. Its `[ExecuteAlways]` components get `OnDisable`.
 - The hierarchy shows the play world's sections, plus a **Persistent** header once something is made persistent.
 - Scenes cannot be opened, closed or saved until play stops.
@@ -117,9 +117,9 @@ One lightmap bake covers every loaded scene, so shadows and bounced light cross 
 
 At runtime, light probes from several loaded scenes are merged into one set. With probes in only one scene, its stored set is used as is.
 
-## Build settings
+## Build scene list
 
-**Add Open** in Build Settings adds every open scene that is saved and not in the list yet, in order. The first scene in the list is the one a built game starts with.
+**Add Open** in **File > Build Project...** adds every open scene that is saved and not in the list yet, in order. The first scene in the list is the one a built game starts with.
 
 ## Editor scripting
 

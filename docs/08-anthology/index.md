@@ -3,7 +3,7 @@ title: Anthology libraries
 description: Use Prowl's systems on their own, without the engine.
 ---
 
-Almost every system in Prowl is also its own `Prowl.*` NuGet package, maintained in the [Anthology repository](https://github.com/ProwlEngine/Anthology). They version together, so a change across several libraries lands in one commit.
+Many systems in Prowl are also their own `Prowl.*` NuGet packages, maintained in the [Anthology repository](https://github.com/ProwlEngine/Anthology). They version together, so a change across several libraries lands in one commit.
 
 ## Install one
 
@@ -35,3 +35,4 @@ dotnet add package Prowl.Paper
 | Prowl.Photonic | Progressive CPU lightmapper |
 | Prowl.Unwrapper | UV unwrapping |
 | Prowl.Slang | Bindings for the Slang compiler |
+| Prowl.Courier | Game networking: reliable UDP (KCP) and in-process local transports |

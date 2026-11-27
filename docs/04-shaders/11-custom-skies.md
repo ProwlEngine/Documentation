@@ -7,6 +7,8 @@ A sky is a shader with a pass tagged `"LightMode" = "Sky"`. It draws as a fullsc
 
 ![The starry sky shader over a night scene](images/starry-sky.png)
 
+To use a sky at once, make a material from its shader and assign it to **Sky Material** in the Environment panel.
+
 ## A stylized sky with stars
 
 ```glsl
@@ -59,7 +61,7 @@ Shader "MyGame/StarrySky"
 
 - `Sky(direction)` gets the unit world direction of the pixel and returns light in **nits**. The model multiplies it by the camera's exposure for you.
 - Pick nits that match the scene: a clear daytime sky is thousands of nits, a night sky well under one. This one is a night sky, so use auto exposure or a low camera `EV100` with it. See [Exposure](../03-rendering/02-cameras-and-post-processing.md#exposure-and-physical-light).
-- `Graphite/Skies.glsl` gives you the scene's sun: `Graphite_SunDirection()` and `Graphite_SunIlluminance()`, its colour times lux. The built-in Procedural sky is `Graphite_ProceduralSky` over those.
+- `Graphite/Skies.glsl` gives you the scene's sun: `Graphite_SunDirection()` and `Graphite_SunIlluminance()`, its color times lux. The built-in Procedural sky is `Graphite_ProceduralSky` over those.
 
 ## A hand-written sky pass
 
@@ -112,4 +114,4 @@ public sealed class SkySwitcher : Component
 The built-in skies are all `Surface "Sky"` shaders and a good reference: `Procedural`, `Gradient`, `Cubemap`, `Panorama` and `SixSided`. See [Sky, fog and clouds](../03-rendering/04-environment.md) for the sky probe's capture settings. Load one with `Shader.LoadDefault(DefaultShader.GradientSky)`, or create one with `SceneEnvironment.CreateSkyMaterial(BuiltInSky.Procedural)`.
 
 > [!TIP]
-> It is also rendered into the sky probe so keep your skies cheap.
+> A sky is also rendered into the sky probe, so keep it cheap.

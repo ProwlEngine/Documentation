@@ -5,6 +5,8 @@ description: Scene fields, loading a level, additive loading and streaming, open
 
 Loading lives on the scene asset: `level.Load()`, `level.LoadAdditive()` and `level.Open()`. Each one returns a `SceneLoad` handle you can await. Read [Scenes and worlds](05-scenes-and-worlds.md) first for what a world and a section are.
 
+To switch levels from a trigger with click steps, see [Load the next level](../09-how-to/10-load-the-next-level.md).
+
 ## Scene fields
 
 Hold a scene in a component as an `AssetRef<SceneAsset>`:
