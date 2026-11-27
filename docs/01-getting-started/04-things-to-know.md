@@ -26,8 +26,8 @@ Use `obj.IsValid()` and `obj.IsNotValid()` instead. For a true reference-null ch
 
 ## Scenes and objects
 
-- `Scene` is the `.scene` asset and `SceneInstance` is the running world, both in `Prowl.Runtime.Resources`. Inside a component, `Scene` is the component's own world.
-- Hold scenes in fields as `AssetRef<Scene>`, and load one with `NextLevel.Load()`. See [Loading scenes](../02-scripting/06-loading-scenes.md).
+- `SceneAsset` is the `.scene` asset and `Scene` is the running world, both in `Prowl.Runtime.Resources`. Inside a component, its `Scene` property is the component's own world.
+- Hold scenes in fields as `AssetRef<SceneAsset>`, and load one with `NextLevel.Load()`. See [Loading scenes](../02-scripting/06-loading-scenes.md).
 - `new GameObject("Name")` is in no world until you move it in with `go.MoveTo(Scene)`. `Scene.Create("Name")` makes one already in the world.
 - Loading a level destroys everything except objects marked `Persistent`.
 - Destroy an object with `go.Destroy()`. It stays valid until the end of the frame.

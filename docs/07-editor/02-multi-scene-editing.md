@@ -85,7 +85,7 @@ Pressing **Play** copies every loaded scene into a new play world:
 
 - The play world holds one section per loaded scene, in the same order, with the same active scene. Unloaded scenes are left out. Hidden scenes play like any other.
 - Each section keeps the scene it came from as its `Source`, so `Scene.Source` in game code is the scene you opened.
-- The play world becomes `SceneInstance.Main`. Game code that loads a level replaces the play world's content and never touches your open scenes.
+- The play world becomes `Scene.Main`. Game code that loads a level replaces the play world's content and never touches your open scenes.
 - `SceneBuild.List` holds the enabled scenes from Build Settings, so `SceneBuild.Find` works as it will in the built game.
 - The edit world sleeps underneath, untouched. Its `[ExecuteAlways]` components get `OnDisable`.
 - The hierarchy shows the play world's sections, plus a **Persistent** header once something is made persistent.
@@ -130,7 +130,7 @@ using Prowl.Editor.GUI.SceneView;
 using Prowl.Runtime;
 using Prowl.Runtime.Resources;
 
-Scene? lighting = EditorSceneManager.SceneAt("Levels/Forest_Lighting.scene");
+SceneAsset? lighting = EditorSceneManager.SceneAt("Levels/Forest_Lighting.scene");
 if (lighting.IsValid() && EditorSceneManager.CanEditScenes)
 {
     OpenScene open = EditorSceneManager.OpenAdditive(lighting!);   // loads at the end of the frame

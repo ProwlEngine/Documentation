@@ -7,17 +7,21 @@ Prowl.Runtime works on its own. If you would rather build a game in code, or emb
 
 ## Set up the project
 
-Create a console project targeting .NET 10, and reference `Prowl.Runtime` from your clone of the Prowl repository, as the samples do:
+Create a console project targeting .NET 11 and add the `Prowl.Runtime` NuGet package. It brings in every library the runtime is built from:
 
 ```bash
 dotnet new console -n MyGame
+cd MyGame
+dotnet add package Prowl.Runtime
 ```
+
+To work against the engine source instead, reference the project from your clone of the Prowl repository, as the samples do:
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net10.0</TargetFramework>
+    <TargetFramework>net11.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Prowl\Prowl.Runtime\Prowl.Runtime.csproj" />
@@ -25,7 +29,7 @@ dotnet new console -n MyGame
 </Project>
 ```
 
-`Prowl.Runtime` builds with the same Anthology setting as the editor. Use a [local Anthology](01-installation.md#build-from-source) for the most up to date libraries.
+The libraries live in the same repository, under `Anthology`, so a clone of Prowl is all the project reference needs. See [Build from source](01-installation.md#build-from-source).
 
 ## The game class
 
@@ -42,7 +46,7 @@ public sealed class HelloGame : Game
     public override void Initialize()
     {
         // The game world, made running and presented before Initialize.
-        SceneInstance world = SceneInstance.Main;
+        Scene world = Scene.Main;
 
         // A light, angled down like an afternoon sun.
         var sun = new GameObject("Sun");
@@ -70,7 +74,7 @@ public sealed class HelloGame : Game
 
 `new GameObject` makes a detached object. Each one is set up first and then moved into the world with `MoveTo`, so its components start with their final settings. `world.Create("Name")` makes an object straight in the world instead.
 
-The game binds a world as `SceneInstance.Main` before `Initialize` runs, and levels load into it. Override `CreateMainWorld` to set that world up differently. See [Scenes and worlds](../02-scripting/05-scenes-and-worlds.md).
+The game binds a world as `Scene.Main` before `Initialize` runs, and levels load into it. Override `CreateMainWorld` to set that world up differently. A world you make yourself with `Scene.CreateScene` draws nothing until you set `Present = true` and call `Activate()`, so build into `Scene.Main` unless you need a second world. See [Scenes and worlds](../02-scripting/05-scenes-and-worlds.md).
 
 ## The component
 

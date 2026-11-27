@@ -7,7 +7,7 @@ Loading lives on the scene asset: `level.Load()`, `level.LoadAdditive()` and `le
 
 ## Scene fields
 
-Hold a scene in a component as an `AssetRef<Scene>`:
+Hold a scene in a component as an `AssetRef<SceneAsset>`:
 
 ```csharp
 using Prowl.Runtime;
@@ -15,11 +15,11 @@ using Prowl.Runtime.Resources;
 
 public sealed class LevelExit : Component
 {
-    public AssetRef<Scene> NextLevel;   // drag a .scene onto it in the inspector
+    public AssetRef<SceneAsset> NextLevel;   // drag a .scene onto it in the inspector
 }
 ```
 
-`AssetRef<Scene>` names the scene without loading it, so holding level two never loads level two, its own next level, and everything those use. A plain `Scene` field would, and analyzer `PROWLSC002` warns about it on a component.
+`AssetRef<SceneAsset>` names the scene without loading it, so holding level two never loads level two, its own next level, and everything those use. A plain `SceneAsset` field would, and analyzer `PROWLSC002` warns about it on a component.
 
 ## Loading a level
 
@@ -28,7 +28,7 @@ public sealed class LevelExit : Component
 ```csharp
 public sealed class LevelExit : Component   // on an object with a TriggerVolume
 {
-    public AssetRef<Scene> NextLevel;
+    public AssetRef<SceneAsset> NextLevel;
 
     public override void OnTriggerEnter(Rigidbody3D other)
     {
@@ -38,10 +38,10 @@ public sealed class LevelExit : Component   // on an object with a TriggerVolume
 }
 ```
 
-`Load()` on an `AssetRef<Scene>` or on a `Scene` loads into Main. Both take an optional world, `into`, so a second world can swap its level without touching Main: `NextLevel.Load(Scene)` loads into the world this component runs in.
+`Load()` on an `AssetRef<SceneAsset>` or on a `SceneAsset` loads into Main. Both take an optional world, `into`, so a second world can swap its level without touching Main: `NextLevel.Load(Scene)` loads into the world this component runs in.
 
 > [!NOTE]
-> To get the `Scene` asset itself without loading the level, use `NextLevel.LoadImmediate()`, or `Get()` to read it without loading.
+> To get the `SceneAsset` itself without loading the level, use `NextLevel.LoadImmediate()`, or `Get()` to read it without loading.
 
 What happens, in order, at the end of the frame:
 
@@ -50,7 +50,7 @@ What happens, in order, at the end of the frame:
 3. Each unloaded section's `UnloadToken` is cancelled.
 4. The scene becomes the `ActiveSection`, so the world switches to its sky, ambient light and fog.
 5. Its objects join the world and get `OnAddedToScene`, then `OnEnable` when the world is running.
-6. `SceneInstance.Loaded` fires.
+6. `Scene.Loaded` fires.
 
 There is no gap where the world is empty or missing, and persistent objects keep running throughout.
 
@@ -64,7 +64,7 @@ There is no gap where the world is empty or missing, and persistent objects keep
 ```csharp
 public sealed class StreamingZone : Component   // on an object with a TriggerVolume
 {
-    public AssetRef<Scene> Area;
+    public AssetRef<SceneAsset> Area;
     private SceneLoad? _load;
 
     public override void OnTriggerEnter(Rigidbody3D other)
@@ -94,8 +94,8 @@ public sealed class StreamingZone : Component   // on an object with a TriggerVo
 `Open` makes a new world from a scene, dormant, with the scene as its active section. You activate it, and decide whether it is drawn:
 
 ```csharp
-SceneSection section = await MenuScene.Open();   // MenuScene is an AssetRef<Scene> field
-SceneInstance menu = section.Instance;
+SceneSection section = await MenuScene.Open();   // MenuScene is an AssetRef<SceneAsset> field
+Scene menu = section.Instance;
 menu.Present = true;
 menu.RenderOrder = 100;
 menu.Activate();
@@ -114,12 +114,12 @@ using Prowl.Runtime.Resources;
 
 public sealed class LevelFlow : Component   // on a persistent object
 {
-    public AssetRef<Scene> LoadingScreen;
+    public AssetRef<SceneAsset> LoadingScreen;
 
-    public async Task Go(Scene level)
+    public async Task Go(SceneAsset level)
     {
         SceneSection screen = await LoadingScreen.Open();
-        SceneInstance overlay = screen.Instance;
+        Scene overlay = screen.Instance;
         overlay.RenderOrder = 100;
         overlay.Present = true;
         overlay.Activate();
@@ -172,7 +172,7 @@ In game code, `await` the handle so the game keeps running while the scene loads
 `SceneBuild` holds the scenes the build ships, in build order. A built game loads the first one at startup. In the editor's play mode it holds the enabled scenes from Build Settings.
 
 ```csharp
-Scene? level = SceneBuild.Find("Level2");      // by name, or by the end of its path
+SceneAsset? level = SceneBuild.Find("Level2");      // by name, or by the end of its path
 if (level.IsValid())
     await level!.Load();
 ```
@@ -183,7 +183,7 @@ if (level.IsValid())
 | `SceneBuild.Find(nameOrPath)` | The scene with this name, or whose path ends with it, like `Levels/Forest`. Null when it is not in the build |
 | `SceneBuild.IndexOf(scene)` | Its place in the list, -1 when it is not in it |
 
-A scene reached only through an `AssetRef<Scene>` field still ships, but it is not in the build list.
+A scene reached only through an `AssetRef<SceneAsset>` field still ships, but it is not in the build list.
 
 ## Reference
 
@@ -197,7 +197,7 @@ A scene reached only through an `AssetRef<Scene>` field still ships, but it is n
 | `section.Unload()` | Unloads a section at the end of the frame |
 | `scene.ReadContent()` | A detached copy of the stored scene, in no world and with no callbacks. For tools |
 
-The same three loading calls work on an `AssetRef<Scene>`, with the `Load` caveat above.
+The same three loading calls work on an `AssetRef<SceneAsset>`, with the `Load` caveat above.
 
 ### SceneLoad
 

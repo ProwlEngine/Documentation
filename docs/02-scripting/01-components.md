@@ -83,6 +83,6 @@ Prowl ships Roslyn analyzers that catch scripting mistakes as you type, in the e
 | `PROWLEO003` | Error | `== null`, `!= null`, `is null` or `is not null` on an engine object, which misses destruction |
 | `PROWLTH001` | Warning | A blocking wait such as `.Result` or `.Wait()` in a component, which never returns for asset loads and GameTask waits |
 | `PROWLSC001` | Error | Comparing a live world with a scene asset, which are never equal. Compare `Scene.Source` with the asset |
-| `PROWLSC002` | Warning | A plain `Scene` field on a component, which keeps the scene and everything it uses loaded. Use `AssetRef<Scene>` |
+| `PROWLSC002` | Warning | A plain `SceneAsset` field on a component, which keeps the scene and everything it uses loaded. Use `AssetRef<SceneAsset>` |
 
 Use `IsValid()` and `IsNotValid()` for engine objects, `await` instead of blocking, and `OnEnable` or `Start` instead of constructors.

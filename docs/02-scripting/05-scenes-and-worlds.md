@@ -1,6 +1,6 @@
 ---
 title: Scenes and worlds
-description: Scene assets, live worlds and sections, finding objects, the main camera, persistent objects and when a world ends.
+description: Scene assets, live worlds and sections, building a level in code, finding objects, the main camera, persistent objects and when a world ends.
 ---
 
 A `.scene` file and the game that runs from it are two different things in Prowl. The file is an asset you can hold, list and load. The running game is a world with its own objects, physics, clock and cameras. A world can hold several scenes at once, each one a section of it.
@@ -9,14 +9,14 @@ A `.scene` file and the game that runs from it are two different things in Prowl
 
 | Type | What it is |
 | --- | --- |
-| `Scene` | The asset, a `.scene` file. What you put in a field and load |
-| `SceneInstance` | A live world: its objects, physics, navigation, animation, cameras, clock and environment |
+| `SceneAsset` | The asset, a `.scene` file. What you put in a field and load |
+| `Scene` | A live world: its objects, physics, navigation, animation, cameras, clock and environment |
 | `SceneSection` | One scene loaded into a world. Unloading it removes exactly the objects it brought |
-| `SceneContent` | What a `Scene` stores: objects, environment and baked lighting, as plain data in no world. For tools |
+| `SceneContent` | What a `SceneAsset` stores: objects, environment and baked lighting, as plain data in no world. For tools |
 
 All four live in `Prowl.Runtime.Resources`.
 
-Most game code never names `SceneInstance`. A component reaches its world through its own `Scene` property:
+Most game code never names the `Scene` type. A component reaches its world through its own `Scene` property:
 
 ```csharp
 using Prowl.Runtime;
@@ -26,7 +26,7 @@ public sealed class Alarm : Component
 {
     public override void Start()
     {
-        SceneInstance world = Scene;                    // the world this component is in
+        Scene world = Scene;                    // the world this component is in
         GameObject? door = Scene.FindObject("Door");
         Guard[] guards = Scene.GetAll<Guard>();          // Guard is another component of yours
 
@@ -36,26 +36,26 @@ public sealed class Alarm : Component
 ```
 
 > [!NOTE]
-> Inside a component, `Scene` in an expression is the component's world, a `SceneInstance`. In a type, like `AssetRef<Scene>`, it is the asset. That is why the `Scene` asset has no static methods: inside a component they could never be reached.
+> Inside a component, `Scene` is both the world type and the component's `Scene` property, which returns its world. The stored `.scene` file is a `SceneAsset`.
 
 `Component.Scene` throws when the component is in no world: on a detached object, on a prefab asset, and in `OnValidate` and `OnAfterDeserialize`, which run detached. Check `IsInWorld` first where that can happen. `GameObject.Scene` returns null instead.
 
 ## The active world
 
-Code with no component to ask, such as a static helper, uses `SceneInstance.Active`, the world whose code is running right now:
+Code with no component to ask, such as a static helper, uses `Scene.Active`, the world whose code is running right now:
 
 - While the engine runs a callback on a component, it is that component's world.
 - Inside `using (world.Enter()) { }`, it is that world. Scopes nest.
 - After an `await`, it is the world that was active where the await started.
-- Otherwise it is `SceneInstance.Main`.
+- Otherwise it is `Scene.Main`.
 
 The static conveniences all go through it, so a component always talks to its own world, even when several worlds run at once:
 
 | Static | Acts on |
 | --- | --- |
-| `Camera.Main` | `SceneInstance.Active.MainCamera` |
-| `Physics.Raycast` and every other `Physics` call | `SceneInstance.Active.Physics` |
-| `Time.DeltaTime`, `Time.TimeScale`, `Time.TimeSinceStartup` and the other scaled values | `SceneInstance.Active.Clock` |
+| `Camera.Main` | `Scene.Active.MainCamera` |
+| `Physics.Raycast` and every other `Physics` call | `Scene.Active.Physics` |
+| `Time.DeltaTime`, `Time.TimeScale`, `Time.TimeSinceStartup` and the other scaled values | `Scene.Active.Clock` |
 | `GameObject.Instantiate(prefab)` | The active world's `ActiveSection` |
 | `AudioSource.PlayClipAtPoint` | The active world |
 | `Debug.DrawLine` and the other gizmo draws | The active world's gizmos |
@@ -69,16 +69,16 @@ using (minimap.Enter())
 }
 ```
 
-`SceneInstance.Active` and everything that goes through it are main thread only. Reading it from a worker throws.
+`Scene.Active` and everything that goes through it are main thread only. Reading it from a worker throws.
 
 ## Main and other worlds
 
-`SceneInstance.Main` is the game world. The player creates it before your first scene loads and keeps it until the game quits, and levels load into it. In the editor, Main is the edit world outside play and the play world during play. Reading Main when nothing is bound throws. It is never created on the fly.
+`Scene.Main` is the game world. The player creates it before your first scene loads and keeps it until the game quits, and levels load into it. In the editor, Main is the edit world outside play and the play world during play. Reading Main when nothing is bound throws. It is never created on the fly.
 
 You can run more worlds beside Main: a pause menu, a minimap, a loading screen.
 
 ```csharp
-SceneInstance menu = SceneInstance.Create("Pause Menu");
+Scene menu = Scene.CreateScene("Pause Menu");
 menu.Present = true;        // draw it to the game's output
 menu.RenderOrder = 100;     // over Main
 
@@ -100,7 +100,7 @@ menu.Activate();            // dormant until now
 
 A world's life:
 
-1. `SceneInstance.Create(name)` makes a **dormant** world with one empty section. Objects exist and get `OnAddedToScene`, but no `OnEnable`, and nothing ticks.
+1. `Scene.CreateScene(name)` makes a **dormant** world with one empty section. Objects exist and get `OnAddedToScene`, but no `OnEnable`, and nothing ticks.
 2. `Activate()` makes it **running** and delivers `OnEnable`. The engine ticks every running game world that is not paused.
 3. `Deactivate()` delivers `OnDisable` and sends it back to dormant, keeping everything in it. You can activate it again.
 4. `Destroy()` tears it down at the end of the frame: every component gets `OnDisable`, then `OnRemovedFromScene`, then is disposed. `Dispose()` does the same at once.
@@ -111,6 +111,48 @@ A world's life:
 Pausing stops the world's UI too, since UI updates in `Update`. To freeze the game under a pause menu, either put the menu in its own world and pause Main, or keep one world and set `Time.TimeScale = 0`, which keeps `Update` running.
 
 Each world has its own clock, so a paused world's time stands still while a menu world over it keeps animating. `Time.FixedDeltaTime`, `Time.UnscaledDeltaTime` and `Time.FrameCount` are shared by every world.
+
+## Building a level in code
+
+Main is already running and presented when your code first runs, so a level built in code goes straight into it. In a game with no editor that is `Game.Initialize`:
+
+```csharp
+public sealed class MyGame : Game
+{
+    public override void Initialize()
+    {
+        Scene world = Scene.Main;
+
+        GameObject sun = world.Create("Sun");
+        sun.AddComponent<DirectionalLight>();
+        sun.Transform.LocalEulerAngles = new Float3(50f, 30f, 0f);
+
+        GameObject camera = world.Create("Main Camera");
+        camera.AddComponent<Camera>();
+    }
+}
+```
+
+To build the level as a world of its own, the world needs three things: `Present` so it is drawn, `Activate()` so it runs, and a reference that keeps it alive.
+
+```csharp
+private Scene? _level;
+
+public override void Initialize()
+{
+    _level = Scene.CreateScene("Level 1");
+    _level.Present = true;
+    _level.Activate();
+
+    GameObject camera = _level.Create("Main Camera");
+    camera.AddComponent<Camera>();
+}
+```
+
+> [!WARNING]
+> A world from `Scene.CreateScene` is dormant and not presented. Without `Present = true` none of its cameras draw to the window and the screen stays black, even with a camera and a light in it.
+
+Assigning `Scene.Main = world` does not fix that. Binding Main only changes which world `Scene.Main` and the statics fall back to. It does not present or activate the new world, and it does not unload the old Main, which keeps running beside it. To start the game in a different main world, override `Game.CreateMainWorld` and return a world that is presented and activated.
 
 ## Sections
 
@@ -126,7 +168,7 @@ SceneSection mine = GameObject.Section!;
 - `Sections` lists them: `Persistent` first, then in load order.
 - `Persistent` is the section that survives every load. It is never saved and never active.
 - `ActiveSection` is where new objects go by default, and the world shows its sky, ambient light, fog and baked lighting. Setting it switches the environment. `world.Environment` is the active section's.
-- `Source` on a section is the `Scene` asset it was loaded from, null for one made at runtime. `world.Source` is the active section's.
+- `Source` on a section is the `SceneAsset` it was loaded from, null for one made at runtime. `world.Source` is the active section's.
 - `CreateSection(name)` adds an empty runtime section.
 - `section.Unload()` removes it and everything in it at the end of the frame. The persistent section and the last other section cannot be unloaded. Load another scene instead.
 
@@ -238,13 +280,13 @@ public override async void Start()
 }
 ```
 
-`GameTask.Delay` already counts game time of the world it was called in: it holds while that world is paused, and is cancelled when that world is destroyed. After an `await`, `SceneInstance.Active` is still your world. If that world has been destroyed in the meantime, reading it throws `ObjectDisposedException` rather than quietly acting on another world. See [Async with GameTask](04-async-with-gametask.md).
+`GameTask.Delay` already counts game time of the world it was called in: it holds while that world is paused, and is cancelled when that world is destroyed. After an `await`, `Scene.Active` is still your world. If that world has been destroyed in the meantime, reading it throws `ObjectDisposedException` rather than quietly acting on another world. See [Async with GameTask](04-async-with-gametask.md).
 
 ## World events
 
 ```csharp
-public override void OnEnable() => SceneInstance.Loaded += OnLoaded;
-public override void OnDisable() => SceneInstance.Loaded -= OnLoaded;
+public override void OnEnable() => Scene.Loaded += OnLoaded;
+public override void OnDisable() => Scene.Loaded -= OnLoaded;
 
 private void OnLoaded(SceneLoadedArgs args)
 {
@@ -254,11 +296,11 @@ private void OnLoaded(SceneLoadedArgs args)
 
 | Event | Fires |
 | --- | --- |
-| `SceneInstance.Loaded` | A section finished loading. `SceneLoadedArgs` has the `Section` and whether it was `Additive` |
-| `SceneInstance.Unloading` | Before a section's objects tear down |
-| `SceneInstance.Created` | A world was made with `SceneInstance.Create` |
-| `SceneInstance.Destroying` | A world starts its teardown |
-| `SceneInstance.MainChanged` | Main was bound to another world, with the old and the new one |
+| `Scene.Loaded` | A section finished loading. `SceneLoadedArgs` has the `Section` and whether it was `Additive` |
+| `Scene.Unloading` | Before a section's objects tear down |
+| `Scene.Created` | A world was made with `Scene.CreateScene` |
+| `Scene.Destroying` | A world starts its teardown |
+| `Scene.MainChanged` | Main was bound to another world, with the old and the new one |
 
 The events are static and fire for every world. Each handler runs inside the world that raised it, and one that throws is logged without stopping the others. Unsubscribe in `OnDisable`, or a destroyed component keeps receiving them.
 
@@ -266,7 +308,9 @@ The events are static and fire for every world. Each handler runs inside the wor
 
 - **`new GameObject("Name")` is in no world.** Use `Scene.Create("Name")`, or build the object and then `go.MoveTo(Scene)`.
 - **Comparing a world with a scene asset.** `Scene == level` compiles but is always false, and analyzer `PROWLSC001` makes it an error. Compare the asset the world came from: `Scene.Source == level`, or `GameObject.Section?.Source == level`.
-- **A plain `Scene` field.** It keeps the scene and everything it uses loaded with your component, and analyzer `PROWLSC002` warns. Use `AssetRef<Scene>`. See [Loading scenes](06-loading-scenes.md).
+- **A plain `SceneAsset` field.** It keeps the scene and everything it uses loaded with your component, and analyzer `PROWLSC002` warns. Use `AssetRef<SceneAsset>`. See [Loading scenes](06-loading-scenes.md).
+- **A world you created shows a black screen.** `Scene.CreateScene` leaves `Present` false, and only presented worlds draw to the window. Set `Present = true` and call `Activate()`, or build into `Scene.Main`. See [Building a level in code](#building-a-level-in-code).
+- **Rebinding `Scene.Main` to switch levels.** It presents, activates and unloads nothing. Load a scene into Main, or put the objects in Main.
 - **Querying a world that is not running.** A dormant world's `Get<T>()` and `GetAll<T>()` return nothing.
 - **Dropping the reference to a world you made.** It is collected without its teardown. Keep it in a field and `Destroy()` it when done.
 - **Expecting `OnAddedToScene` to wait for play.** It runs whenever an object joins a world, the editor's edit world included. `OnEnable` and the rest only run in a playing world, or with `[ExecuteAlways]`.

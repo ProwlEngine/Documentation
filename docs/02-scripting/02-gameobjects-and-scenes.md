@@ -46,9 +46,10 @@ Float3 ahead = Transform.TransformPoint(new Float3(0f, 0f, 2f));
 
 ## Scenes
 
-A `Scene` is the `.scene` asset. The running game is a world, a `SceneInstance`, which a component reaches through its `Scene` property. A world holds one section per scene loaded into it.
+A `SceneAsset` is the `.scene` asset. The running game is a world, a `Scene`, which a component reaches through its `Scene` property. A world holds one section per scene loaded into it.
 
 - `NextLevel.Load()` replaces the level, `LoadAdditive` adds one beside it, and `Open` makes a separate world.
+- `Scene.Main` is the game world, already running and drawn. A world from `Scene.CreateScene` draws nothing until it has `Present = true` and `Activate()`.
 - `GameObject.Persistent = true` keeps a root object across loads.
 - `Scene.Environment` holds the sky, ambient light and fog of the world's active section.
 - `Camera.Main` is the main camera of the world your code runs in.
