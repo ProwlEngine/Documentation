@@ -75,7 +75,7 @@ Prefabs do not nest. When you save an object that contains instances of other pr
 | `Instantiate(prefab)` | The active world's active section, at the prefab's own transform |
 | `Instantiate(prefab, position, rotation)` | The same, placed before `OnEnable` runs |
 | `Instantiate(prefab, parent)` | Under `parent`, in its section |
-| `Instantiate(prefab, scene)` | A specific `SceneInstance` |
+| `Instantiate(prefab, scene)` | A specific `Scene` |
 
 The `parent` overload takes a `worldPositionStays` argument, off by default, so the prefab's transform becomes an offset from the parent. A null `parent` spawns the prefab at the active scene's root. Worlds and sections are covered in [Scenes and worlds](05-scenes-and-worlds.md).
 

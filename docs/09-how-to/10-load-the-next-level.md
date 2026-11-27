@@ -23,7 +23,7 @@ using Prowl.Runtime.Resources;
 
 public sealed class LevelExit : Component
 {
-    public AssetRef<Scene> NextLevel;
+    public AssetRef<SceneAsset> NextLevel;
 
     public override void OnTriggerEnter(Rigidbody3D other)
     {
